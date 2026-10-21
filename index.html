@@ -374,6 +374,7 @@
 
     <script>
         var CATALOG = [
+            // UNDER 2500 - UNFLAVORED
             {
                 brand: "AS-IT-IS Nutrition",
                 title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
@@ -393,6 +394,17 @@
                 url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
             },
             {
+                brand: "NAKPRO Nutrition",
+                title: "NAKPRO Gold Whey Protein Concentrate Unflavored (1kg)",
+                desc: "Trustified certified clean raw whey with 28g protein per serving.",
+                category: "unflavored",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/NAKPRO-GOLD-Protein-Concentrate-Unflavored/dp/B07M7YZ57R?tag=pickmyprote03-21"
+            },
+            
+            // 2500 TO 4000 - UNFLAVORED & FLAVORED
+            {
                 brand: "Wellbeing Nutrition",
                 title: "100% Raw Whey Protein Concentrate with Probiotics",
                 desc: "27g protein with added natural digestive enzymes and 4B CFU probiotics.",
@@ -411,6 +423,17 @@
                 url: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?tag=pickmyprote03-21"
             },
             {
+                brand: "Avvatar",
+                title: "Avvatar Whey Protein - Malai Kulfi Flavour",
+                desc: "Fresh cow milk whey with 24g protein and naturally occurring BCAAs.",
+                category: "flavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/gp/aw/d/B09CKM57HL?tag=pickmyprote03-21"
+            },
+
+            // ABOVE 4000 - PREMIUM FLAVORED & ISOLATES
+            {
                 brand: "Optimum Nutrition (ON)",
                 title: "Gold Standard 100% Whey - Alphonso Mango",
                 desc: "World standard whey protein with 24g premium protein blend per serving.",
@@ -428,6 +451,8 @@
                 priceText: "Above ₹4,000",
                 url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?tag=pickmyprote03-21"
             },
+
+            // ISOLATE OPTIONS
             {
                 brand: "AS-IT-IS Nutrition",
                 title: "Soy Protein Isolate 90% (1kg)",
@@ -437,15 +462,8 @@
                 priceText: "Under ₹2,500",
                 url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
             },
-            {
-                brand: "Origin Nutrition",
-                title: "Daily Plant Protein - Classic Unflavoured (1kg)",
-                desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
-                category: "plant",
-                priceBracket: "2500to4000",
-                priceText: "₹2,500 - ₹4,000",
-                url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
-            },
+
+            // PLANT OPTIONS
             {
                 brand: "OZiva",
                 title: "Organic Plant Protein Isolate (1kg)",
@@ -454,6 +472,15 @@
                 priceBracket: "under2500",
                 priceText: "Under ₹2,500",
                 url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
+            },
+            {
+                brand: "Origin Nutrition",
+                title: "Daily Plant Protein - Classic Unflavoured (1kg)",
+                desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
+                category: "plant",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
             }
         ];
 
@@ -482,15 +509,15 @@
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
             document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
-            // Filter CATALOG by diet preference and price range
+            // Strict Filter by price bracket FIRST, then fallback if needed
             var matches = CATALOG.filter(function(item) {
-                return item.category === diet && item.priceBracket === priceBracket;
+                return item.priceBracket === priceBracket && (item.category === diet || diet === 'unflavored');
             });
 
-            // Fallback if no exact match in both filters: return diet category matches
+            // If no match in exact category + price combination, filter strictly by priceBracket
             if (matches.length === 0) {
                 matches = CATALOG.filter(function(item) {
-                    return item.category === diet;
+                    return item.priceBracket === priceBracket;
                 });
             }
 
