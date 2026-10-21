@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Protein - Smart Calculator & Product Matcher</title>
+    <title>Pick My Protein - Smart Daily Target & Product Matcher</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
-            --accent: #f59e0b;
-            --accent-hover: #d97706;
+            --accent: #ff9900;
+            --accent-hover: #e68a00;
             --bg-color: #f1f5f9;
             --text-main: #0f172a;
             --text-muted: #475569;
@@ -22,58 +22,81 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 40px;
+            padding-bottom: 50px;
         }
 
-        /* ATTRACTIVE HERO HEADER */
+        /* HERO HEADER WITH LOGO */
         .hero {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
             text-align: center;
-            padding: 40px 20px 50px 20px;
-            margin-bottom: -30px;
+            padding: 40px 20px 60px 20px;
+            margin-bottom: -35px;
         }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(37, 99, 235, 0.3);
-            border: 1px solid #3b82f6;
-            color: #93c5fd;
-            font-weight: 600;
-            font-size: 0.8rem;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .hero h1 {
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            font-weight: 900;
+            font-size: 1.6rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+        .brand-title {
             font-size: 2.2rem;
             font-weight: 800;
-            margin-bottom: 8px;
             background: linear-gradient(to right, #ffffff, #93c5fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero p {
             color: #94a3b8;
-            font-size: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
+            font-size: 1.05rem;
+            max-width: 520px;
+            margin: 8px auto 0 auto;
         }
 
-        /* MAIN CONTAINER CARD */
+        /* CONTAINER CARD */
         .container {
-            max-width: 600px;
+            max-width: 620px;
             margin: 0 auto;
             padding: 0 16px;
         }
         .card {
             background: var(--card-bg);
-            padding: 32px 24px;
+            padding: 32px 26px;
             border-radius: 20px;
             box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
             border: 1px solid var(--border-color);
         }
+
+        /* PROTEIN FACTS & AWARENESS SECTION */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0 24px 0;
+            text-align: center;
+        }
+        .fact-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px 8px;
+            border-radius: 12px;
+        }
+        .fact-card .icon { font-size: 1.3rem; margin-bottom: 4px; display: block; }
+        .fact-card .title { font-size: 0.75rem; font-weight: 700; color: #1e293b; text-transform: uppercase; }
+        .fact-card .desc { font-size: 0.75rem; color: #64748b; margin-top: 2px; }
 
         /* FORM STYLING */
         .form-group { margin-bottom: 22px; text-align: left; }
@@ -107,7 +130,7 @@
             font-weight: 700;
             width: 100%;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-            transition: transform 0.15 ease, box-shadow 0.15s ease;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
         .btn-primary:hover {
             transform: translateY(-1px);
@@ -125,7 +148,7 @@
         }
         .results-box h2 {
             color: #1e40af;
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             margin-bottom: 6px;
         }
@@ -167,37 +190,58 @@
         .buy-btn {
             display: block;
             text-align: center;
-            background: linear-gradient(135deg, #ffd814 0%, #f7ca00 100%);
-            color: #111111;
-            border: 1px solid #f2c200;
+            background: linear-gradient(135deg, #ff9900 0%, #e68a00 100%);
+            color: #ffffff;
             padding: 12px 20px;
             border-radius: 10px;
             font-weight: 700;
             text-decoration: none;
             font-size: 0.95rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(255, 153, 0, 0.3);
             transition: background 0.2s ease;
         }
         .buy-btn:hover {
-            background: linear-gradient(135deg, #f7ca00 0%, #f0b800 100%);
+            background: linear-gradient(135deg, #e68a00 0%, #cc7a00 100%);
         }
     </style>
 </head>
 <body>
 
-    <!-- HERO HEADER -->
+    <!-- HERO HEADER WITH LOGO -->
     <div class="hero">
-        <span class="hero-badge">⚡ Quick Protein Matcher</span>
-        <h1>Pick My Protein</h1>
-        <p>Calculate your daily protein targets and find top-rated protein powders tailored to your body and budget.</p>
+        <div class="logo-wrapper">
+            <div class="logo-icon">P</div>
+            <h1 class="brand-title">Pick My Protein</h1>
+        </div>
+        <p>Calculate your daily target & match top protein powders tailored to your body and fitness goals.</p>
     </div>
 
     <div class="container">
-        <!-- STEP 1: WELCOME SCREEN -->
+        <!-- STEP 1: WELCOME & PROTEIN AWARENESS -->
         <div class="card" id="step-1" style="display: block;">
-            <h2 style="font-size: 1.4rem; margin-bottom: 12px; color: #0f172a;">Find Your Exact Daily Target</h2>
-            <p style="color: var(--text-muted); margin-bottom: 24px;">Answer 3 quick questions about your body weight, goals, and diet preference to reveal your personalized recommendation.</p>
-            <button type="button" class="btn-primary" id="start-btn">Start Quick Quiz &rarr;</button>
+            <h2 style="font-size: 1.35rem; margin-bottom: 8px; color: #0f172a;">Why Protein Matters Most</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Protein fuels muscle recovery, boosts metabolism, and keeps you full longer throughout the day.</p>
+            
+            <!-- AWARENESS GRID -->
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <span class="icon">🏋️</span>
+                    <div class="title">1.6 - 2.2g</div>
+                    <div class="desc">Per kg body weight for muscle growth</div>
+                </div>
+                <div class="fact-card">
+                    <span class="icon">🥤</span>
+                    <div class="title">1 Scoop</div>
+                    <div class="desc">Provides ~24g of pure quality protein</div>
+                </div>
+                <div class="fact-card">
+                    <span class="icon">⚡</span>
+                    <div class="title">Post-Workout</div>
+                    <div class="desc">Optimal timing within 60 mins</div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-primary" id="start-btn">Calculate My Protein Needs &rarr;</button>
         </div>
 
         <!-- STEP 2: CALCULATOR QUIZ -->
@@ -254,7 +298,7 @@
                 {
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
-                    desc: "100% raw, unflavored concentrate without artificial additives. Maximum protein per rupee.",
+                    desc: "100% raw, unflavored concentrate without artificial additives. Maximum protein yield per rupee.",
                     url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Whey+Protein+Concentrate+80%25+1kg&rh=p_89%3AAS-IT-IS+Nutrition&" + TAG
                 },
                 {
