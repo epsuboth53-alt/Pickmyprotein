@@ -169,7 +169,7 @@
         }
         .results-box p { color: #c2410c; font-size: 0.95rem; font-weight: 600; }
 
-        /* PRODUCT CARDS WITH IMAGES */
+        /* PRODUCT CARDS WITH BADGE */
         .product-card {
             border: 1px solid var(--border-color);
             padding: 20px;
@@ -183,16 +183,23 @@
             transition: border-color 0.2s ease;
         }
         .product-card:hover { border-color: #fdba74; }
-        .product-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 12px;
-            background: #ffffff;
-            border: 1px solid #f1f5f9;
-            padding: 6px;
+        .product-badge-box {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border: 2px solid #fed7aa;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            text-align: center;
+            padding: 6px;
         }
+        .product-badge-box .p-icon { font-size: 1.8rem; }
+        .product-badge-box .p-text { font-size: 0.65rem; font-weight: 800; color: #9a3412; text-transform: uppercase; margin-top: 2px; }
+        
         .product-info { flex-grow: 1; }
         .tag {
             display: inline-block;
@@ -359,14 +366,12 @@
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
                     desc: "100% raw unflavored concentrate without artificial additives. Maximum protein per rupee.",
-                    img: "https://m.media-amazon.com/images/I/61I2a-R-i9L._SX679_.jpg",
                     url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?tag=pickmyprote03-21"
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Raw Whey Protein 80% Unflavored (1kg)",
                     desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
-                    img: "https://m.media-amazon.com/images/I/61kCqXk1qJL._SX679_.jpg",
                     url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
                 }
             ],
@@ -375,14 +380,12 @@
                     brand: "Optimum Nutrition (ON)",
                     title: "Gold Standard 100% Whey - Alphonso Mango",
                     desc: "World standard whey protein with 24g premium protein blend per serving.",
-                    img: "https://m.media-amazon.com/images/I/71R2fVb7R1L._SX679_.jpg",
                     url: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?tag=pickmyprote03-21"
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Biozyme Performance Whey PR - Rich Chocolate",
                     desc: "Clinically tested digestive enzymes for 50% higher protein absorption.",
-                    img: "https://m.media-amazon.com/images/I/71I3u7vXbGL._SX679_.jpg",
                     url: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?tag=pickmyprote03-21"
                 }
             ],
@@ -391,14 +394,12 @@
                     brand: "Isopure",
                     title: "Zero Carb 100% Whey Protein Isolate Unflavored",
                     desc: "100% pure whey isolate with zero carbs and lactose-free digestive profile.",
-                    img: "https://m.media-amazon.com/images/I/61WvQcT11PL._SX679_.jpg",
                     url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?tag=pickmyprote03-21"
                 },
                 {
                     brand: "AS-IT-IS Nutrition",
                     title: "Soy Protein Isolate 90% (1kg)",
                     desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
-                    img: "https://m.media-amazon.com/images/I/614kS9vS4pL._SX679_.jpg",
                     url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
                 }
             ],
@@ -407,14 +408,12 @@
                     brand: "Origin Nutrition",
                     title: "Daily Plant Protein - Classic Unflavoured (1kg)",
                     desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
-                    img: "https://m.media-amazon.com/images/I/71X8k8gC2bL._SX679_.jpg",
                     url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
                 },
                 {
                     brand: "OZiva",
                     title: "Organic Plant Protein Isolate (1kg)",
                     desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
-                    img: "https://m.media-amazon.com/images/I/71l22X9Q-pL._SX679_.jpg",
                     url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
                 }
             ]
@@ -450,7 +449,10 @@
             for (var i = 0; i < selectedProducts.length; i++) {
                 var item = selectedProducts[i];
                 productsHtml += '<div class="product-card">' +
-                    '<img src="' + item.img + '" alt="' + item.brand + '" class="product-img">' +
+                    '<div class="product-badge-box">' +
+                        '<span class="p-icon">🥛</span>' +
+                        '<span class="p-text">100% Pure</span>' +
+                    '</div>' +
                     '<div class="product-info">' +
                         '<span class="tag">' + item.brand + '</span>' +
                         '<h3>' + item.title + '</h3>' +
