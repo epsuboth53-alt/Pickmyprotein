@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare
 
 on:
   push:
@@ -20,8 +20,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Publish to Cloudflare Pages
-        run: npx wrangler pages deploy . --project-name=pickmyprotein --branch=main
+      - name: Deploy to Cloudflare Workers
+        run: npx wrangler deploy --name=restless-dawn-0166 --assets=.
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
