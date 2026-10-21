@@ -3,57 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Protein - Smart Daily Target & Product Matcher</title>
+    <title>Pick My Protein - Personal Daily Target & Matcher</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
-            --accent: #ff9900;
-            --accent-hover: #e68a00;
-            --bg-color: #f1f5f9;
-            --text-main: #0f172a;
-            --text-muted: #475569;
+            --accent-orange: #ff9900;
+            --accent-orange-hover: #e68a00;
+            --bg-body: #f8fafc;
             --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
             --border-color: #e2e8f0;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
         }
 
-        /* HERO HEADER WITH LOGO */
+        /* HERO HEADER */
         .hero {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
             text-align: center;
-            padding: 40px 20px 60px 20px;
-            margin-bottom: -35px;
+            padding: 45px 20px 65px 20px;
+            margin-bottom: -40px;
         }
-        .logo-wrapper {
+        .logo-container {
             display: inline-flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 12px;
         }
-        .logo-icon {
-            width: 44px;
-            height: 44px;
+        .logo-badge {
+            width: 46px;
+            height: 46px;
             background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
             color: white;
             font-weight: 900;
-            font-size: 1.6rem;
-            border-radius: 12px;
+            font-size: 1.7rem;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
         }
         .brand-title {
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             font-weight: 800;
             background: linear-gradient(to right, #ffffff, #93c5fd);
             -webkit-background-clip: text;
@@ -63,11 +65,11 @@
             color: #94a3b8;
             font-size: 1.05rem;
             max-width: 520px;
-            margin: 8px auto 0 auto;
+            margin: 6px auto 0 auto;
         }
 
-        /* CONTAINER CARD */
-        .container {
+        /* MAIN APP CONTAINER */
+        .app-container {
             max-width: 620px;
             margin: 0 auto;
             padding: 0 16px;
@@ -76,29 +78,44 @@
             background: var(--card-bg);
             padding: 32px 26px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
             border: 1px solid var(--border-color);
         }
 
-        /* PROTEIN FACTS & AWARENESS SECTION */
+        /* PROGRESS TRACKER */
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* PROTEIN AWARENESS GRID */
         .facts-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin: 20px 0 24px 0;
-            text-align: center;
         }
         .fact-card {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
-            padding: 12px 8px;
-            border-radius: 12px;
+            padding: 14px 10px;
+            border-radius: 14px;
+            text-align: center;
         }
-        .fact-card .icon { font-size: 1.3rem; margin-bottom: 4px; display: block; }
-        .fact-card .title { font-size: 0.75rem; font-weight: 700; color: #1e293b; text-transform: uppercase; }
+        .fact-card .icon { font-size: 1.4rem; margin-bottom: 4px; display: block; }
+        .fact-card .title { font-size: 0.8rem; font-weight: 700; color: #0f172a; text-transform: uppercase; }
         .fact-card .desc { font-size: 0.75rem; color: #64748b; margin-top: 2px; }
 
-        /* FORM STYLING */
+        /* FORM ELEMENTS */
         .form-group { margin-bottom: 22px; text-align: left; }
         label { display: block; font-weight: 700; margin-bottom: 8px; color: #334155; font-size: 0.95rem; }
         input, select {
@@ -129,15 +146,15 @@
             cursor: pointer;
             font-weight: 700;
             width: 100%;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+            transition: all 0.2s ease;
         }
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
         }
 
-        /* RESULTS SECTION */
+        /* RESULTS BOX */
         .results-box {
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
             border: 1px solid #bfdbfe;
@@ -148,7 +165,7 @@
         }
         .results-box h2 {
             color: #1e40af;
-            font-size: 2.1rem;
+            font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 6px;
         }
@@ -161,6 +178,7 @@
             border-radius: 16px;
             margin-bottom: 18px;
             background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
             transition: border-color 0.2s ease;
         }
         .product-card:hover { border-color: #cbd5e1; }
@@ -190,62 +208,73 @@
         .buy-btn {
             display: block;
             text-align: center;
-            background: linear-gradient(135deg, #ff9900 0%, #e68a00 100%);
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-hover) 100%);
             color: #ffffff;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border-radius: 10px;
             font-weight: 700;
             text-decoration: none;
             font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(255, 153, 0, 0.3);
-            transition: background 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+            transition: all 0.2s ease;
         }
         .buy-btn:hover {
-            background: linear-gradient(135deg, #e68a00 0%, #cc7a00 100%);
+            background: linear-gradient(135deg, var(--accent-orange-hover) 0%, #cc7a00 100%);
+            transform: translateY(-1px);
         }
     </style>
 </head>
 <body>
 
-    <!-- HERO HEADER WITH LOGO -->
+    <!-- HERO HEADER -->
     <div class="hero">
-        <div class="logo-wrapper">
-            <div class="logo-icon">P</div>
+        <div class="logo-container">
+            <div class="logo-badge">P</div>
             <h1 class="brand-title">Pick My Protein</h1>
         </div>
-        <p>Calculate your daily target & match top protein powders tailored to your body and fitness goals.</p>
+        <p>Calculate your daily protein requirements & get matched with top-rated powders instantly.</p>
     </div>
 
-    <div class="container">
-        <!-- STEP 1: WELCOME & PROTEIN AWARENESS -->
+    <div class="app-container">
+        <!-- STEP 1: WELCOME SCREEN -->
         <div class="card" id="step-1" style="display: block;">
-            <h2 style="font-size: 1.35rem; margin-bottom: 8px; color: #0f172a;">Why Protein Matters Most</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Protein fuels muscle recovery, boosts metabolism, and keeps you full longer throughout the day.</p>
+            <div class="progress-bar">
+                <span>Step 1 of 3</span>
+                <span>Overview</span>
+            </div>
+
+            <h2 style="font-size: 1.35rem; margin-bottom: 8px; color: #0f172a;">Why Track Your Protein?</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Protein supports muscle repair, maintains weight balance, and ensures efficient workout recovery.</p>
             
-            <!-- AWARENESS GRID -->
+            <!-- FACTS GRID -->
             <div class="facts-grid">
                 <div class="fact-card">
                     <span class="icon">🏋️</span>
-                    <div class="title">1.6 - 2.2g</div>
-                    <div class="desc">Per kg body weight for muscle growth</div>
+                    <div class="title">1.6 - 2.0g</div>
+                    <div class="desc">Per kg for active fitness training</div>
                 </div>
                 <div class="fact-card">
                     <span class="icon">🥤</span>
-                    <div class="title">1 Scoop</div>
-                    <div class="desc">Provides ~24g of pure quality protein</div>
+                    <div class="title">24g Protein</div>
+                    <div class="desc">Average yield per single scoop</div>
                 </div>
                 <div class="fact-card">
                     <span class="icon">⚡</span>
-                    <div class="title">Post-Workout</div>
-                    <div class="desc">Optimal timing within 60 mins</div>
+                    <div class="title">60 Mins</div>
+                    <div class="desc">Optimal post-workout recovery window</div>
                 </div>
             </div>
 
-            <button type="button" class="btn-primary" id="start-btn">Calculate My Protein Needs &rarr;</button>
+            <button type="button" class="btn-primary" id="start-btn">Start Daily Calculator &rarr;</button>
         </div>
 
         <!-- STEP 2: CALCULATOR QUIZ -->
         <div class="card" id="step-2" style="display: none;">
+            <div class="progress-bar">
+                <span>Step 2 of 3</span>
+                <span>Calculator Quiz</span>
+            </div>
+
             <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: #0f172a;">Enter Your Details</h2>
             
             <div class="form-group">
@@ -277,13 +306,18 @@
 
         <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
         <div class="card" id="step-3" style="display: none;">
+            <div class="progress-bar">
+                <span>Step 3 of 3</span>
+                <span>Your Matches</span>
+            </div>
+
             <div class="results-box">
-                <p style="font-size: 0.8rem; color: #1e40af; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Your Daily Target</p>
+                <p style="font-size: 0.8rem; color: #1e40af; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Recommended Daily Intake</p>
                 <h2 id="target-output">0g / day</h2>
                 <p id="target-summary"></p>
             </div>
 
-            <h3 style="margin-bottom: 16px; font-size: 1.15rem; color: #0f172a;">Best Matches For You</h3>
+            <h3 style="margin-bottom: 16px; font-size: 1.15rem; color: #0f172a;">Recommended Products For You</h3>
             <div id="product-list"></div>
 
             <button type="button" class="btn-primary" style="background: #64748b; margin-top: 16px; box-shadow: none;" id="restart-btn">&larr; Recalculate</button>
@@ -298,13 +332,13 @@
                 {
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
-                    desc: "100% raw, unflavored concentrate without artificial additives. Maximum protein yield per rupee.",
+                    desc: "100% raw, unflavored concentrate without artificial additives. Maximum pure protein yield per rupee.",
                     url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Whey+Protein+Concentrate+80%25+1kg&rh=p_89%3AAS-IT-IS+Nutrition&" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Raw Whey Protein 80% Unflavored (1kg)",
-                    desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
+                    desc: "Labdoor USA certified clean unflavored raw whey with 24g protein and 5.2g BCAA per scoop.",
                     url: "https://www.amazon.in/s?k=MuscleBlaze+Raw+Whey+Protein+80%25+1kg&rh=p_89%3AMuscleBlaze&" + TAG
                 }
             ],
@@ -312,13 +346,13 @@
                 {
                     brand: "Optimum Nutrition (ON)",
                     title: "Gold Standard 100% Whey - Double Rich Chocolate",
-                    desc: "The world's benchmark whey protein powder with 24g premium protein blend.",
+                    desc: "The world's benchmark whey protein powder with 24g premium protein blend per serving.",
                     url: "https://www.amazon.in/s?k=Optimum+Nutrition+Gold+Standard+100%25+Whey+Chocolate&rh=p_89%3AOptimum+Nutrition&" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Biozyme Performance Whey - Rich Chocolate",
-                    desc: "Enhanced absorption formula with clinically tested digestive enzymes.",
+                    desc: "Enhanced absorption formula with clinically tested digestive enzymes for smooth digestion.",
                     url: "https://www.amazon.in/s?k=MuscleBlaze+Biozyme+Performance+Whey+Chocolate&rh=p_89%3AMuscleBlaze&" + TAG
                 }
             ],
@@ -332,7 +366,7 @@
                 {
                     brand: "Dymatize",
                     title: "ISO100 Hydrolyzed 100% Whey Isolate",
-                    desc: "Fast-absorbing hydrolyzed whey isolate engineered for rapid recovery.",
+                    desc: "Fast-absorbing hydrolyzed whey isolate engineered for rapid muscle recovery.",
                     url: "https://www.amazon.in/s?k=Dymatize+ISO100+Hydrolyzed+100%25+Whey+Isolate&rh=p_89%3ADymatize&" + TAG
                 }
             ],
@@ -356,6 +390,7 @@
             document.getElementById('step-1').style.display = 'none';
             document.getElementById('step-2').style.display = 'block';
             document.getElementById('step-3').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         document.getElementById('calc-btn').addEventListener('click', function() {
@@ -373,7 +408,7 @@
             const scoopsNeeded = (supplementProtein / 24).toFixed(1);
 
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
-            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole food + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
+            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
             const selectedProducts = PRODUCTS[diet] || PRODUCTS['unflavored'];
             let productsHtml = "";
@@ -384,7 +419,7 @@
                         <span class="tag">${item.brand}</span>
                         <h3>${item.title}</h3>
                         <p>${item.desc}</p>
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link buy-btn">🛒 Buy on Amazon &rarr;</a>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link buy-btn">🛒 Buy Direct on Amazon &rarr;</a>
                     </div>
                 `;
             });
@@ -393,12 +428,14 @@
             document.getElementById('step-1').style.display = 'none';
             document.getElementById('step-2').style.display = 'none';
             document.getElementById('step-3').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         document.getElementById('restart-btn').addEventListener('click', function() {
             document.getElementById('step-1').style.display = 'block';
             document.getElementById('step-2').style.display = 'none';
             document.getElementById('step-3').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
 </body>
