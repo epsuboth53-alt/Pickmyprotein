@@ -169,7 +169,7 @@
         }
         .results-box p { color: #c2410c; font-size: 0.95rem; font-weight: 600; }
 
-        /* PRODUCT CARDS WITH BADGE */
+        /* PRODUCT CARDS */
         .product-card {
             border: 1px solid var(--border-color);
             padding: 20px;
@@ -201,6 +201,7 @@
         .product-badge-box .p-text { font-size: 0.65rem; font-weight: 800; color: #9a3412; text-transform: uppercase; margin-top: 2px; }
         
         .product-info { flex-grow: 1; }
+        .tag-group { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
         .tag {
             display: inline-block;
             background: #ffedd5;
@@ -209,8 +210,11 @@
             font-weight: 800;
             padding: 3px 8px;
             border-radius: 6px;
-            margin-bottom: 6px;
             text-transform: uppercase;
+        }
+        .price-tag {
+            background: #dcfce7;
+            color: #166534;
         }
         .product-card h3 {
             font-size: 1.05rem;
@@ -336,6 +340,15 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="price">Budget / Price Range</label>
+                <select id="price">
+                    <option value="under2500">Under ₹2,500 (Best Value & Budget Options)</option>
+                    <option value="2500to4000">₹2,500 - ₹4,000 (Mid-Range & Popular Picks)</option>
+                    <option value="above4000">Above ₹4,000 (Premium & Gold Standard)</option>
+                </select>
+            </div>
+
             <button type="button" class="btn-primary" id="calc-btn">Find My Best Protein Match ✨</button>
         </div>
 
@@ -360,64 +373,89 @@
     </div>
 
     <script>
-        var PRODUCTS = {
-            unflavored: [
-                {
-                    brand: "AS-IT-IS Nutrition",
-                    title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
-                    desc: "100% raw unflavored concentrate without artificial additives. Maximum protein per rupee.",
-                    url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?tag=pickmyprote03-21"
-                },
-                {
-                    brand: "MuscleBlaze",
-                    title: "Raw Whey Protein 80% Unflavored (1kg)",
-                    desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
-                    url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
-                }
-            ],
-            flavored: [
-                {
-                    brand: "Optimum Nutrition (ON)",
-                    title: "Gold Standard 100% Whey - Alphonso Mango",
-                    desc: "World standard whey protein with 24g premium protein blend per serving.",
-                    url: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?tag=pickmyprote03-21"
-                },
-                {
-                    brand: "MuscleBlaze",
-                    title: "Biozyme Performance Whey PR - Rich Chocolate",
-                    desc: "Clinically tested digestive enzymes for 50% higher protein absorption.",
-                    url: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?tag=pickmyprote03-21"
-                }
-            ],
-            isolate: [
-                {
-                    brand: "Isopure",
-                    title: "Zero Carb 100% Whey Protein Isolate Unflavored",
-                    desc: "100% pure whey isolate with zero carbs and lactose-free digestive profile.",
-                    url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?tag=pickmyprote03-21"
-                },
-                {
-                    brand: "AS-IT-IS Nutrition",
-                    title: "Soy Protein Isolate 90% (1kg)",
-                    desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
-                    url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
-                }
-            ],
-            plant: [
-                {
-                    brand: "Origin Nutrition",
-                    title: "Daily Plant Protein - Classic Unflavoured (1kg)",
-                    desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
-                    url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
-                },
-                {
-                    brand: "OZiva",
-                    title: "Organic Plant Protein Isolate (1kg)",
-                    desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
-                    url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
-                }
-            ]
-        };
+        var CATALOG = [
+            {
+                brand: "AS-IT-IS Nutrition",
+                title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
+                desc: "100% raw unflavored concentrate without artificial additives. Maximum protein per rupee.",
+                category: "unflavored",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?tag=pickmyprote03-21"
+            },
+            {
+                brand: "MuscleBlaze",
+                title: "Raw Whey Protein 80% Unflavored (1kg)",
+                desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
+                category: "unflavored",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
+            },
+            {
+                brand: "Wellbeing Nutrition",
+                title: "100% Raw Whey Protein Concentrate with Probiotics",
+                desc: "27g protein with added natural digestive enzymes and 4B CFU probiotics.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/Wellbeing-Nutrition-Concentrate-Unflavoured-Probiotics/dp/B0DMNWWH5S?tag=pickmyprote03-21"
+            },
+            {
+                brand: "MuscleBlaze",
+                title: "Biozyme Performance Whey PR - Rich Chocolate",
+                desc: "Clinically tested digestive enzymes for 50% higher protein absorption.",
+                category: "flavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?tag=pickmyprote03-21"
+            },
+            {
+                brand: "Optimum Nutrition (ON)",
+                title: "Gold Standard 100% Whey - Alphonso Mango",
+                desc: "World standard whey protein with 24g premium protein blend per serving.",
+                category: "flavored",
+                priceBracket: "above4000",
+                priceText: "Above ₹4,000",
+                url: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?tag=pickmyprote03-21"
+            },
+            {
+                brand: "Isopure",
+                title: "Zero Carb 100% Whey Protein Isolate Unflavored",
+                desc: "100% pure whey isolate with zero carbs and lactose-free digestive profile.",
+                category: "isolate",
+                priceBracket: "above4000",
+                priceText: "Above ₹4,000",
+                url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?tag=pickmyprote03-21"
+            },
+            {
+                brand: "AS-IT-IS Nutrition",
+                title: "Soy Protein Isolate 90% (1kg)",
+                desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
+                category: "isolate",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
+            },
+            {
+                brand: "Origin Nutrition",
+                title: "Daily Plant Protein - Classic Unflavoured (1kg)",
+                desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
+                category: "plant",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
+            },
+            {
+                brand: "OZiva",
+                title: "Organic Plant Protein Isolate (1kg)",
+                desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
+            }
+        ];
 
         document.getElementById('start-btn').onclick = function() {
             document.getElementById('step-1').style.display = 'none';
@@ -430,6 +468,7 @@
             var weight = parseFloat(document.getElementById('weight').value) || 70;
             var goal = document.getElementById('goal').value;
             var diet = document.getElementById('diet').value;
+            var priceBracket = document.getElementById('price').value;
 
             var multiplier = 1.4;
             if (goal === 'muscle') multiplier = 2.0;
@@ -443,18 +482,32 @@
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
             document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
-            var selectedProducts = PRODUCTS[diet] || PRODUCTS['unflavored'];
+            // Filter CATALOG by diet preference and price range
+            var matches = CATALOG.filter(function(item) {
+                return item.category === diet && item.priceBracket === priceBracket;
+            });
+
+            // Fallback if no exact match in both filters: return diet category matches
+            if (matches.length === 0) {
+                matches = CATALOG.filter(function(item) {
+                    return item.category === diet;
+                });
+            }
+
             var productsHtml = "";
 
-            for (var i = 0; i < selectedProducts.length; i++) {
-                var item = selectedProducts[i];
+            for (var i = 0; i < matches.length; i++) {
+                var item = matches[i];
                 productsHtml += '<div class="product-card">' +
                     '<div class="product-badge-box">' +
                         '<span class="p-icon">🥛</span>' +
                         '<span class="p-text">100% Pure</span>' +
                     '</div>' +
                     '<div class="product-info">' +
-                        '<span class="tag">' + item.brand + '</span>' +
+                        '<div class="tag-group">' +
+                            '<span class="tag">' + item.brand + '</span>' +
+                            '<span class="tag price-tag">' + item.priceText + '</span>' +
+                        '</div>' +
                         '<h3>' + item.title + '</h3>' +
                         '<p>' + item.desc + '</p>' +
                         '<a href="' + item.url + '" target="_blank" rel="noopener noreferrer" class="buy-btn">🛒 Buy on Amazon &rarr;</a>' +
