@@ -3,158 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Protein</title>
+    <title>Pick My Protein - Smart Calculator & Product Matcher</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
-            --bg-color: #f8fafc;
-            --text-color: #0f172a;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --bg-color: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #475569;
             --card-bg: #ffffff;
             --border-color: #e2e8f0;
-            --accent-bg: #eff6ff;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.5;
-            padding: 20px;
-            max-width: 680px;
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* ATTRACTIVE HERO HEADER */
+        .hero {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px 50px 20px;
+            margin-bottom: -30px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.3);
+            border: 1px solid #3b82f6;
+            color: #93c5fd;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffffff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: #94a3b8;
+            font-size: 1rem;
+            max-width: 500px;
             margin: 0 auto;
         }
-        .header-bar { text-align: center; margin-bottom: 24px; }
-        .header-bar h1 { font-size: 1.8rem; color: var(--text-color); }
+
+        /* MAIN CONTAINER CARD */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
         .card {
             background: var(--card-bg);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 32px 24px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
             border: 1px solid var(--border-color);
-            margin-bottom: 20px;
         }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; font-weight: 600; margin-bottom: 6px; color: #334155; }
+
+        /* FORM STYLING */
+        .form-group { margin-bottom: 22px; text-align: left; }
+        label { display: block; font-weight: 700; margin-bottom: 8px; color: #334155; font-size: 0.95rem; }
         input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
             font-size: 1rem;
-            background-color: #fff;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            transition: all 0.2s ease;
         }
-        .btn {
-            background-color: var(--primary);
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
-            padding: 14px 24px;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            transition: background 0.2s ease;
-        }
-        .btn:hover { background-color: var(--primary-dark); }
-        .results-header {
-            background-color: var(--accent-bg);
-            border: 1px solid #bfdbfe;
-            padding: 20px;
+            padding: 16px 24px;
+            font-size: 1.05rem;
             border-radius: 12px;
-            margin-bottom: 24px;
+            cursor: pointer;
+            font-weight: 700;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            transition: transform 0.15 ease, box-shadow 0.15s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+        }
+
+        /* RESULTS SECTION */
+        .results-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1px solid #bfdbfe;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 28px;
             text-align: center;
         }
-        .results-header h2 { color: var(--primary-dark); margin-bottom: 8px; }
+        .results-box h2 {
+            color: #1e40af;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .results-box p { color: #1e3a8a; font-size: 0.95rem; font-weight: 500; }
+
+        /* PRODUCT CARDS */
         .product-card {
             border: 1px solid var(--border-color);
             padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            background: #fff;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            background: #ffffff;
+            transition: border-color 0.2s ease;
         }
-        .product-card h3 { margin-bottom: 6px; font-size: 1.2rem; color: #1e293b; }
+        .product-card:hover { border-color: #cbd5e1; }
         .tag {
             display: inline-block;
             background: #e0e7ff;
             color: #3730a3;
             font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-bottom: 8px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
-        .buy-link {
-            display: inline-block;
-            margin-top: 12px;
-            background: #ff9900;
-            color: #111;
-            padding: 10px 18px;
-            border-radius: 6px;
+        .product-card h3 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .product-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+        }
+
+        /* AMAZON BUY BUTTON */
+        .buy-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #ffd814 0%, #f7ca00 100%);
+            color: #111111;
+            border: 1px solid #f2c200;
+            padding: 12px 20px;
+            border-radius: 10px;
             font-weight: 700;
             text-decoration: none;
             font-size: 0.95rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background 0.2s ease;
         }
-        .buy-link:hover { background: #fa8900; }
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #f7ca00 0%, #f0b800 100%);
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-bar">
+    <!-- HERO HEADER -->
+    <div class="hero">
+        <span class="hero-badge">⚡ Quick Protein Matcher</span>
         <h1>Pick My Protein</h1>
+        <p>Calculate your daily protein targets and find top-rated protein powders tailored to your body and budget.</p>
     </div>
 
-    <!-- STEP 1: WELCOME SCREEN -->
-    <div class="card" id="step-1" style="display: block;">
-        <h2 style="margin-bottom: 12px;">How much protein do you need, and which powder fits you?</h2>
-        <p style="color: #64748b; margin-bottom: 24px;">Answer a few quick questions to get your calculated daily protein target, scoop intake, and matching top product recommendations.</p>
-        <button type="button" class="btn" id="start-btn">Start Quick Quiz</button>
-    </div>
-
-    <!-- STEP 2: CALCULATOR QUIZ -->
-    <div class="card" id="step-2" style="display: none;">
-        <h2 style="margin-bottom: 20px;">Your Details</h2>
-        
-        <div class="form-group">
-            <label for="weight">Body Weight (in kg)</label>
-            <input type="number" id="weight" value="70" placeholder="e.g. 70">
+    <div class="container">
+        <!-- STEP 1: WELCOME SCREEN -->
+        <div class="card" id="step-1" style="display: block;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 12px; color: #0f172a;">Find Your Exact Daily Target</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Answer 3 quick questions about your body weight, goals, and diet preference to reveal your personalized recommendation.</p>
+            <button type="button" class="btn-primary" id="start-btn">Start Quick Quiz &rarr;</button>
         </div>
 
-        <div class="form-group">
-            <label for="goal">Fitness Goal</label>
-            <select id="goal">
-                <option value="muscle">Muscle Growth & Strength</option>
-                <option value="fatloss">Fat Loss & Definition</option>
-                <option value="health">General Health & Fitness</option>
-            </select>
+        <!-- STEP 2: CALCULATOR QUIZ -->
+        <div class="card" id="step-2" style="display: none;">
+            <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: #0f172a;">Enter Your Details</h2>
+            
+            <div class="form-group">
+                <label for="weight">Body Weight (in kg)</label>
+                <input type="number" id="weight" value="70" placeholder="e.g. 70">
+            </div>
+
+            <div class="form-group">
+                <label for="goal">Fitness Goal</label>
+                <select id="goal">
+                    <option value="muscle">Muscle Growth & Strength</option>
+                    <option value="fatloss">Fat Loss & Definition</option>
+                    <option value="health">General Health & Maintenance</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="diet">Dietary Preference</label>
+                <select id="diet">
+                    <option value="unflavored">Unflavored Whey Concentrate (Best Value)</option>
+                    <option value="flavored">Flavored Whey Concentrate (Great Taste)</option>
+                    <option value="isolate">Whey Isolate (Low Lactose / Ultra Pure)</option>
+                    <option value="plant">Plant Protein (100% Vegan)</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-primary" id="calc-btn">Get My Protein Match ✨</button>
         </div>
 
-        <div class="form-group">
-            <label for="diet">Dietary Preference</label>
-            <select id="diet">
-                <option value="unflavored">Unflavored Whey Concentrate (Best Value / Pure Protein)</option>
-                <option value="flavored">Flavored Whey Concentrate (Great Taste & Recovery)</option>
-                <option value="isolate">Whey Isolate (Low Lactose / Fast Digesting)</option>
-                <option value="plant">Plant Protein (100% Vegan)</option>
-            </select>
+        <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
+        <div class="card" id="step-3" style="display: none;">
+            <div class="results-box">
+                <p style="font-size: 0.8rem; color: #1e40af; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Your Daily Target</p>
+                <h2 id="target-output">0g / day</h2>
+                <p id="target-summary"></p>
+            </div>
+
+            <h3 style="margin-bottom: 16px; font-size: 1.15rem; color: #0f172a;">Best Matches For You</h3>
+            <div id="product-list"></div>
+
+            <button type="button" class="btn-primary" style="background: #64748b; margin-top: 16px; box-shadow: none;" id="restart-btn">&larr; Recalculate</button>
         </div>
-
-        <button type="button" class="btn" id="calc-btn">Find My Best Protein Match</button>
-    </div>
-
-    <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
-    <div class="card" id="step-3" style="display: none;">
-        <div class="results-header">
-            <p style="font-size: 0.9rem; color: #475569; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Your Personalized Target</p>
-            <h2 id="target-output">0g / day</h2>
-            <p id="target-summary" style="color: #475569; font-size: 0.95rem;"></p>
-        </div>
-
-        <h3 style="margin-bottom: 16px;">Top Recommendations For You</h3>
-        <div id="product-list"></div>
-
-        <button type="button" class="btn" style="background-color: #64748b; margin-top: 16px;" id="restart-btn">Start Over</button>
     </div>
 
     <script>
@@ -165,13 +254,13 @@
                 {
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
-                    desc: "100% raw, unflavored concentrate without artificial additives or sweeteners. Highest protein yield per rupee.",
+                    desc: "100% raw, unflavored concentrate without artificial additives. Maximum protein per rupee.",
                     url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Whey+Protein+Concentrate+80%25+1kg&rh=p_89%3AAS-IT-IS+Nutrition&" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Raw Whey Protein 80% Unflavored (1kg)",
-                    desc: "Labdoor USA certified clean unflavored raw whey with 24g protein and 5.2g BCAA per scoop.",
+                    desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
                     url: "https://www.amazon.in/s?k=MuscleBlaze+Raw+Whey+Protein+80%25+1kg&rh=p_89%3AMuscleBlaze&" + TAG
                 }
             ],
@@ -179,13 +268,13 @@
                 {
                     brand: "Optimum Nutrition (ON)",
                     title: "Gold Standard 100% Whey - Double Rich Chocolate",
-                    desc: "The world's benchmark whey protein powder with 24g premium whey protein blend per serving.",
+                    desc: "The world's benchmark whey protein powder with 24g premium protein blend.",
                     url: "https://www.amazon.in/s?k=Optimum+Nutrition+Gold+Standard+100%25+Whey+Chocolate&rh=p_89%3AOptimum+Nutrition&" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
-                    title: "Biozyme Performance Whey Protein - Rich Chocolate",
-                    desc: "Enhanced absorption formula with clinically tested digestive enzymes for smooth digesting.",
+                    title: "Biozyme Performance Whey - Rich Chocolate",
+                    desc: "Enhanced absorption formula with clinically tested digestive enzymes.",
                     url: "https://www.amazon.in/s?k=MuscleBlaze+Biozyme+Performance+Whey+Chocolate&rh=p_89%3AMuscleBlaze&" + TAG
                 }
             ],
@@ -193,13 +282,13 @@
                 {
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Isolate 90% Unflavored",
-                    desc: "Ultra-filtered isolate delivering 27g pure protein per serving with minimal carbs and low lactose.",
+                    desc: "Ultra-filtered isolate delivering 27g pure protein with minimal carbs and low lactose.",
                     url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Pure+Whey+Protein+Isolate+90%25&rh=p_89%3AAS-IT-IS+Nutrition&" + TAG
                 },
                 {
                     brand: "Dymatize",
                     title: "ISO100 Hydrolyzed 100% Whey Isolate",
-                    desc: "Fast-absorbing hydrolyzed whey isolate engineered for rapid post-workout recovery.",
+                    desc: "Fast-absorbing hydrolyzed whey isolate engineered for rapid recovery.",
                     url: "https://www.amazon.in/s?k=Dymatize+ISO100+Hydrolyzed+100%25+Whey+Isolate&rh=p_89%3ADymatize&" + TAG
                 }
             ],
@@ -207,12 +296,12 @@
                 {
                     brand: "Fast&Up",
                     title: "Plant Protein Isolate (Pea & Brown Rice)",
-                    desc: "100% vegan protein with 24g plant protein, complete amino profile, and zero added sugar.",
+                    desc: "100% vegan protein with 24g plant protein, complete amino profile, zero added sugar.",
                     url: "https://www.amazon.in/s?k=FastAndUp+Plant+Protein+Isolate&rh=p_89%3AFast%26Up&" + TAG
                 },
                 {
                     brand: "Cosmix",
-                    title: "Plant Protein Powder (Organic Pea & Rice Blend)",
+                    title: "Plant Protein Powder (Organic Pea & Rice)",
                     desc: "Herbal-infused clean plant protein designed for easy gut digestion.",
                     url: "https://www.amazon.in/s?k=Cosmix+Plant+Protein+Powder&rh=p_89%3ACosmix&" + TAG
                 }
@@ -240,7 +329,7 @@
             const scoopsNeeded = (supplementProtein / 24).toFixed(1);
 
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
-            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
+            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole food + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
             const selectedProducts = PRODUCTS[diet] || PRODUCTS['unflavored'];
             let productsHtml = "";
@@ -250,8 +339,8 @@
                     <div class="product-card">
                         <span class="tag">${item.brand}</span>
                         <h3>${item.title}</h3>
-                        <p style="color: #475569; font-size: 0.95rem; margin-bottom: 8px;">${item.desc}</p>
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link">🛒 Buy Direct on Amazon &rarr;</a>
+                        <p>${item.desc}</p>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link buy-btn">🛒 Buy on Amazon &rarr;</a>
                     </div>
                 `;
             });
