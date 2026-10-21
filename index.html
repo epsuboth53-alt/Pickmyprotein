@@ -3,144 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Protein - Find Your Best Match</title>
+    <title>Pick My Protein - Personal Daily Target & Product Matcher</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --bg-color: #f8fafc;
-            --text-color: #1e293b;
+            --text-color: #0f172a;
             --card-bg: #ffffff;
             --border-color: #e2e8f0;
+            --accent-bg: #eff6ff;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            max-width: 700px;
-            margin: 40px auto;
+            line-height: 1.5;
             padding: 20px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .header-bar {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .header-bar h1 {
+            font-size: 1.8rem;
+            color: var(--text-color);
         }
         .card {
             background: var(--card-bg);
-            padding: 40px;
+            padding: 32px;
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--border-color);
-            text-align: center;
+            margin-bottom: 20px;
         }
-        h1 { color: #0f172a; margin-bottom: 16px; }
-        p { color: #64748b; margin-bottom: 24px; line-height: 1.5; }
+        .hidden { display: none !important; }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #fff;
+        }
         .btn {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 24px;
             font-size: 1rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-        }
-        .btn:hover { background-color: var(--primary-dark); }
-        .hidden { display: none; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: #334155; }
-        input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 1rem;
+            transition: background 0.2s ease;
         }
-        .results-grid {
-            display: grid;
-            gap: 16px;
-            margin-top: 20px;
-            text-align: left;
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        .results-header {
+            background-color: var(--accent-bg);
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .results-header h2 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
         }
         .product-card {
-            background: #f8fafc;
             border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            background: #fff;
+        }
+        .product-card h3 {
+            margin-bottom: 4px;
+            font-size: 1.2rem;
+        }
+        .tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .buy-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .buy-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="card" id="welcome-screen">
-        <h1>How much protein do you need, and which powder fits you?</h1>
-        <p>Answer a few quick questions about your weight, goal, and dietary preference to get your personalized daily protein target and powder matches.</p>
-        <button class="btn" onclick="startQuiz()">Start Quiz</button>
+
+    <div class="header-bar">
+        <h1>Pick My Protein</h1>
     </div>
 
-    <div class="card hidden" id="quiz-screen">
-        <h1>Protein Calculator Quiz</h1>
+    <!-- STEP 1: WELCOME SCREEN -->
+    <div class="card" id="step-1">
+        <h2 style="margin-bottom: 12px;">How much protein do you need, and which powder fits you?</h2>
+        <p style="color: #64748b; margin-bottom: 24px;">Answer six quick questions. You'll get a daily protein target based on your weight, goal, and activity level, plus the exact protein powder that fits your dietary needs.</p>
+        <button type="button" class="btn" onclick="goToStep(2)">Start Quick Quiz</button>
+    </div>
+
+    <!-- STEP 2: CALCULATOR QUIZ -->
+    <div class="card hidden" id="step-2">
+        <h2 style="margin-bottom: 20px;">Your Details</h2>
+        
         <div class="form-group">
-            <label for="weight">Your Body Weight (kg):</label>
-            <input type="number" id="weight" placeholder="e.g., 70" value="70">
+            <label for="weight">Body Weight (in kg)</label>
+            <input type="number" id="weight" value="70" placeholder="e.g. 70">
         </div>
+
         <div class="form-group">
-            <label for="goal">Fitness Goal:</label>
+            <label for="goal">Fitness Goal</label>
             <select id="goal">
-                <option value="muscle">Build Muscle / Hypertrophy</option>
-                <option value="fatloss">Fat Loss / Tone</option>
-                <option value="maintenance">General Health & Fitness</option>
+                <option value="muscle">Muscle Growth & Strength</option>
+                <option value="fatloss">Fat Loss & Definition</option>
+                <option value="health">General Fitness & Maintenance</option>
             </select>
         </div>
+
         <div class="form-group">
-            <label for="diet">Dietary Preference:</label>
-            <select id="diet">
-                <option value="whey">Whey Concentrate / Isolate</option>
-                <option value="plant">Plant-Based / Vegan</option>
-                <option value="lactose">Lactose-Free</option>
+            <label for="activity">Weekly Activity Level</label>
+            <select id="activity">
+                <option value="moderate">3-4 Days Workouts / Week</option>
+                <option value="high">5+ Days Heavy Lifting / Athletic Training</option>
+                <option value="light">Sedentary / Light Walking</option>
             </select>
         </div>
-        <button class="btn" onclick="calculateResults()">Find My Best Protein Match</button>
+
+        <div class="form-group">
+            <label for="diet">Dietary Preference</label>
+            <select id="diet">
+                <option value="whey">Whey Concentrate (Best overall value)</option>
+                <option value="isolate">Whey Isolate (Low lactose & low carb)</option>
+                <option value="plant">Plant Protein (100% Vegan)</option>
+            </select>
+        </div>
+
+        <button type="button" class="btn" onclick="calculateAndShowResults()">Find My Best Protein Match</button>
     </div>
 
-    <div class="card hidden" id="results-screen">
-        <h1>Your Personalized Results</h1>
-        <p id="protein-target-text" style="font-size: 1.1rem; font-weight: 600; color: #2563eb;"></p>
-        <div class="results-grid" id="recommendations">
-            <!-- Dynamically populated matches -->
+    <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
+    <div class="card hidden" id="step-3">
+        <div class="results-header">
+            <p style="font-size: 0.9rem; color: #475569; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Your Personalized Target</p>
+            <h2 id="target-output">0g / day</h2>
+            <p id="target-summary" style="color: #475569; font-size: 0.95rem;"></p>
         </div>
-        <br>
-        <button class="btn" onclick="resetQuiz()">Retake Quiz</button>
+
+        <h3 style="margin-bottom: 16px;">Top Recommendations For You</h3>
+        <div id="product-list"></div>
+
+        <button type="button" class="btn" style="background-color: #64748b; margin-top: 16px;" onclick="goToStep(1)">Start Over</button>
     </div>
 
     <script>
-        function startQuiz() {
-            document.getElementById('welcome-screen').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.remove('hidden');
+        function goToStep(stepNumber) {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-3').classList.add('hidden');
+
+            document.getElementById('step-' + stepNumber).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function calculateResults() {
+        function calculateAndShowResults() {
             const weight = parseFloat(document.getElementById('weight').value) || 70;
             const goal = document.getElementById('goal').value;
             const diet = document.getElementById('diet').value;
 
-            // Simple calculation logic
-            let multiplier = goal === 'muscle' ? 2.0 : (goal === 'fatloss' ? 1.8 : 1.4);
-            let targetProtein = Math.round(weight * multiplier);
+            // Target calculation algorithm
+            let multiplier = 1.4;
+            if (goal === 'muscle') multiplier = 2.0;
+            if (goal === 'fatloss') multiplier = 1.8;
 
-            document.getElementById('protein-target-text').innerText = `Recommended Daily Protein Target: ~${targetProtein}g per day`;
+            const totalTarget = Math.round(weight * multiplier);
+            const foodProtein = Math.round(totalTarget * 0.6);
+            const supplementProtein = totalTarget - foodProtein;
+            const scoopsNeeded = (supplementProtein / 24).toFixed(1);
 
-            let recsHtml = `
-                <div class="product-card">
-                    <h3>Top Pick for Your Goal</h3>
-                    <p>Based on your selection, unflavored or flavored whey concentrate provides the best cost-per-gram value for muscle recovery.</p>
-                    <a href="https://amazon.in" target="_blank" style="color: #2563eb; font-weight: 600; text-decoration: none;">View on Amazon &rarr;</a>
-                </div>
-            `;
-            document.getElementById('recommendations').innerHTML = recsHtml;
+            document.getElementById('target-output').innerText = totalTarget + "g of protein daily";
+            document.getElementById('target-summary').innerText = "Aim for approx. " + foodProtein + "g from regular food + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('results-screen').classList.remove('hidden');
-        }
+            // Dynamic recommendations engine
+            let productsHtml = "";
 
-        function resetQuiz() {
-            document.getElementById('results-screen').classList.add('hidden');
-            document.getElementById('welcome-screen').classList.remove('hidden');
+            if (diet === 'plant') {
+                productsHtml = `
+                    <div class="product-card">
+                        <span class="tag">Top Vegan Choice</span>
+                        <h3>Plant Protein Blend (Pea & Brown Rice)</h3>
+                        <p style="color: #475569; font-size: 0.95rem;">Complete amino acid profile, easy digestion, and dairy-free.</p>
+                        <a href="https://amazon.in" target="_blank" class="buy-link">Check Options on Amazon &rarr;</a>
+                    </div>
+                `;
+            } else if (diet === 'isolate') {
+                productsHtml = `
+                    <div class="product-card">
+                        <span class="tag">Fast Absorbing / Low Lactose</span>
+                        <h3>Whey Protein Isolate 90%</h3>
+                        <p style="color: #475569; font-size: 0.95rem;">Ultra-filtered for minimal fats/carbs, fast digestion post-workout.</p>
+                        <a href="https://amazon.in" target="_blank" class="buy-link">Check Options on Amazon &rarr;</a>
+                    </div>
+                `;
+            } else {
+                productsHtml = `
+                    <div class="product-card">
+                        <span class="tag">Best Value Pick</span>
+                        <h3>Unflavored Whey Protein Concentrate 80%</h3>
+                        <p style="color: #475569; font-size: 0.95rem;">Pure protein content without added fillers or artificial sweeteners. Maximum protein per rupee.</p>
+                        <a href="https://amazon.in" target="_blank" class="buy-link">Check Options on Amazon &rarr;</a>
+                    </div>
+                `;
+            }
+
+            document.getElementById('product-list').innerHTML = productsHtml;
+            goToStep(3);
         }
     </script>
 </body>
