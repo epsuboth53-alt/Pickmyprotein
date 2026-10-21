@@ -16,9 +16,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'restless-dawn-0166'
-          directory: '.'
+          command: pages deploy . --project-name=restless-dawn-0166
