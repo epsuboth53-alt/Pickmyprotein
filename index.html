@@ -374,7 +374,7 @@
 
     <script>
         var CATALOG = [
-            // UNDER 2500 - UNFLAVORED
+            // UNDER 2500
             {
                 brand: "AS-IT-IS Nutrition",
                 title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
@@ -402,8 +402,26 @@
                 priceText: "Under ₹2,500",
                 url: "https://www.amazon.in/NAKPRO-GOLD-Protein-Concentrate-Unflavored/dp/B07M7YZ57R?tag=pickmyprote03-21"
             },
-            
-            // 2500 TO 4000 - UNFLAVORED & FLAVORED
+            {
+                brand: "AS-IT-IS Nutrition",
+                title: "Soy Protein Isolate 90% (1kg)",
+                desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
+                category: "isolate",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
+            },
+            {
+                brand: "OZiva",
+                title: "Organic Plant Protein Isolate (1kg)",
+                desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
+            },
+
+            // 2500 TO 4000
             {
                 brand: "Wellbeing Nutrition",
                 title: "100% Raw Whey Protein Concentrate with Probiotics",
@@ -431,8 +449,17 @@
                 priceText: "₹2,500 - ₹4,000",
                 url: "https://www.amazon.in/gp/aw/d/B09CKM57HL?tag=pickmyprote03-21"
             },
+            {
+                brand: "Origin Nutrition",
+                title: "Daily Plant Protein - Classic Unflavoured (1kg)",
+                desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
+                category: "plant",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
+            },
 
-            // ABOVE 4000 - PREMIUM FLAVORED & ISOLATES
+            // ABOVE 4000
             {
                 brand: "Optimum Nutrition (ON)",
                 title: "Gold Standard 100% Whey - Alphonso Mango",
@@ -450,37 +477,6 @@
                 priceBracket: "above4000",
                 priceText: "Above ₹4,000",
                 url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?tag=pickmyprote03-21"
-            },
-
-            // ISOLATE OPTIONS
-            {
-                brand: "AS-IT-IS Nutrition",
-                title: "Soy Protein Isolate 90% (1kg)",
-                desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
-                category: "isolate",
-                priceBracket: "under2500",
-                priceText: "Under ₹2,500",
-                url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
-            },
-
-            // PLANT OPTIONS
-            {
-                brand: "OZiva",
-                title: "Organic Plant Protein Isolate (1kg)",
-                desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
-                category: "plant",
-                priceBracket: "under2500",
-                priceText: "Under ₹2,500",
-                url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
-            },
-            {
-                brand: "Origin Nutrition",
-                title: "Daily Plant Protein - Classic Unflavoured (1kg)",
-                desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
-                category: "plant",
-                priceBracket: "2500to4000",
-                priceText: "₹2,500 - ₹4,000",
-                url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
             }
         ];
 
@@ -509,12 +505,12 @@
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
             document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
-            // Strict Filter by price bracket FIRST, then fallback if needed
+            // 1. STRICT FILTER: Must match BOTH the selected price range AND the selected diet category
             var matches = CATALOG.filter(function(item) {
-                return item.priceBracket === priceBracket && (item.category === diet || diet === 'unflavored');
+                return item.priceBracket === priceBracket && item.category === diet;
             });
 
-            // If no match in exact category + price combination, filter strictly by priceBracket
+            // 2. BACKUP FILTER: If no exact match for that specific diet in that price range, show ANY product in that price range
             if (matches.length === 0) {
                 matches = CATALOG.filter(function(item) {
                     return item.priceBracket === priceBracket;
