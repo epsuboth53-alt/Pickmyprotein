@@ -159,7 +159,7 @@
     </div>
 
     <script>
-        const AFFILIATE_TAG = "tag=pickmyprote03-21";
+        const TAG = "tag=pickmyprote03-21";
 
         const PRODUCTS = {
             unflavored: [
@@ -167,13 +167,13 @@
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
                     desc: "100% raw, unflavored concentrate without artificial additives or sweeteners. Highest protein yield per rupee.",
-                    url: "https://www.amazon.in/dp/B0743B9D9Y?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Whey+Protein+Concentrate+80%25+1kg&" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Raw Whey Protein 80% Unflavored (1kg)",
                     desc: "Labdoor USA certified clean unflavored raw whey with 24g protein and 5.2g BCAA per scoop.",
-                    url: "https://www.amazon.in/dp/B072LXCV5K?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=MuscleBlaze+Raw+Whey+Protein+ Concentrate+80%25+1kg&" + TAG
                 }
             ],
             flavored: [
@@ -181,13 +181,13 @@
                     brand: "Optimum Nutrition (ON)",
                     title: "Gold Standard 100% Whey - Double Rich Chocolate",
                     desc: "The world's benchmark whey protein powder with 24g premium whey protein blend per serving.",
-                    url: "https://www.amazon.in/dp/B000QSNYGI?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=Optimum+Nutrition+Gold+Standard+100%25+Whey+Double+Rich+Chocolate&" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
-                    title: "BioFuel Gold Whey Protein Concentrate - Chocolate",
+                    title: "Biozyme Performance Whey Protein - Rich Chocolate",
                     desc: "Enhanced absorption formula with clinically tested digestive enzymes for smooth digesting.",
-                    url: "https://www.amazon.in/dp/B072LXCV5K?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=MuscleBlaze+Biozyme+Performance+Whey+Protein+Rich+Chocolate&" + TAG
                 }
             ],
             isolate: [
@@ -195,13 +195,13 @@
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Isolate 90% Unflavored",
                     desc: "Ultra-filtered isolate delivering 27g pure protein per serving with minimal carbs and low lactose.",
-                    url: "https://www.amazon.in/dp/B0733CL1C1?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Pure+Whey+Protein+Isolate+90%25&" + TAG
                 },
                 {
                     brand: "Dymatize",
                     title: "ISO100 Hydrolyzed 100% Whey Isolate",
                     desc: "Fast-absorbing hydrolyzed whey isolate engineered for rapid post-workout recovery.",
-                    url: "https://www.amazon.in/dp/B000GISTZ4?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=Dymatize+ISO100+Hydrolyzed+100%25+Whey+Isolate&" + TAG
                 }
             ],
             plant: [
@@ -209,13 +209,13 @@
                     brand: "Fast&Up",
                     title: "Plant Protein Isolate (Pea & Brown Rice)",
                     desc: "100% vegan protein with 24g plant protein, complete amino profile, and zero added sugar.",
-                    url: "https://www.amazon.in/dp/B07R4A8VNS?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=FastAndUp+Plant+Protein+Isolate&" + TAG
                 },
                 {
                     brand: "Cosmix",
                     title: "Plant Protein Powder (Organic Pea & Rice Blend)",
                     desc: "Herbal-infused clean plant protein designed for easy gut digestion.",
-                    url: "https://www.amazon.in/dp/B07R4A8VNS?" + AFFILIATE_TAG
+                    url: "https://www.amazon.in/s?k=Cosmix+Plant+Protein+Powder&" + TAG
                 }
             ]
         };
@@ -228,43 +228,3 @@
             document.getElementById('step-' + stepNumber).classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        function calculateAndShowResults() {
-            const weight = parseFloat(document.getElementById('weight').value) || 70;
-            const goal = document.getElementById('goal').value;
-            const diet = document.getElementById('diet').value;
-
-            // Target calculation
-            let multiplier = 1.4;
-            if (goal === 'muscle') multiplier = 2.0;
-            if (goal === 'fatloss') multiplier = 1.8;
-
-            const totalTarget = Math.round(weight * multiplier);
-            const foodProtein = Math.round(totalTarget * 0.6);
-            const supplementProtein = totalTarget - foodProtein;
-            const scoopsNeeded = (supplementProtein / 24).toFixed(1);
-
-            document.getElementById('target-output').innerText = totalTarget + "g protein / day";
-            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
-
-            // Render direct product purchase cards
-            const selectedProducts = PRODUCTS[diet] || PRODUCTS['unflavored'];
-            let productsHtml = "";
-
-            selectedProducts.forEach(item => {
-                productsHtml += `
-                    <div class="product-card">
-                        <span class="tag">${item.brand}</span>
-                        <h3>${item.title}</h3>
-                        <p style="color: #475569; font-size: 0.95rem; margin-bottom: 8px;">${item.desc}</p>
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link">Buy Now on Amazon &rarr;</a>
-                    </div>
-                `;
-            });
-
-            document.getElementById('product-list').innerHTML = productsHtml;
-            goToStep(3);
-        }
-    </script>
-</body>
-</html>
