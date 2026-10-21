@@ -5,32 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick My Protein - Find Your Best Match</title>
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
         body {
             font-family: system-ui, -apple-system, sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            max-width: 600px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            max-width: 700px;
             margin: 40px auto;
             padding: 20px;
-            text-align: center;
         }
         .card {
-            background: white;
+            background: var(--card-bg);
             padding: 40px;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
+            text-align: center;
         }
-        h1 {
-            color: #0f172a;
-            margin-bottom: 16px;
-        }
-        p {
-            color: #64748b;
-            margin-bottom: 24px;
-        }
-        button {
-            background-color: #2563eb;
+        h1 { color: #0f172a; margin-bottom: 16px; }
+        p { color: #64748b; margin-bottom: 24px; line-height: 1.5; }
+        .btn {
+            background-color: var(--primary);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -39,16 +41,107 @@
             cursor: pointer;
             font-weight: 600;
         }
-        button:hover {
-            background-color: #1d4ed8;
+        .btn:hover { background-color: var(--primary-dark); }
+        .hidden { display: none; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #334155; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .results-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .product-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Pick My Protein</h1>
-        <p>Answer a few quick questions to find the ideal protein powder for your fitness goals and budget.</p>
-        <button onclick="alert('Quiz starting soon!')">Start Quiz</button>
+    <div class="card" id="welcome-screen">
+        <h1>How much protein do you need, and which powder fits you?</h1>
+        <p>Answer a few quick questions about your weight, goal, and dietary preference to get your personalized daily protein target and powder matches.</p>
+        <button class="btn" onclick="startQuiz()">Start Quiz</button>
     </div>
+
+    <div class="card hidden" id="quiz-screen">
+        <h1>Protein Calculator Quiz</h1>
+        <div class="form-group">
+            <label for="weight">Your Body Weight (kg):</label>
+            <input type="number" id="weight" placeholder="e.g., 70" value="70">
+        </div>
+        <div class="form-group">
+            <label for="goal">Fitness Goal:</label>
+            <select id="goal">
+                <option value="muscle">Build Muscle / Hypertrophy</option>
+                <option value="fatloss">Fat Loss / Tone</option>
+                <option value="maintenance">General Health & Fitness</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="diet">Dietary Preference:</label>
+            <select id="diet">
+                <option value="whey">Whey Concentrate / Isolate</option>
+                <option value="plant">Plant-Based / Vegan</option>
+                <option value="lactose">Lactose-Free</option>
+            </select>
+        </div>
+        <button class="btn" onclick="calculateResults()">Find My Best Protein Match</button>
+    </div>
+
+    <div class="card hidden" id="results-screen">
+        <h1>Your Personalized Results</h1>
+        <p id="protein-target-text" style="font-size: 1.1rem; font-weight: 600; color: #2563eb;"></p>
+        <div class="results-grid" id="recommendations">
+            <!-- Dynamically populated matches -->
+        </div>
+        <br>
+        <button class="btn" onclick="resetQuiz()">Retake Quiz</button>
+    </div>
+
+    <script>
+        function startQuiz() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+        }
+
+        function calculateResults() {
+            const weight = parseFloat(document.getElementById('weight').value) || 70;
+            const goal = document.getElementById('goal').value;
+            const diet = document.getElementById('diet').value;
+
+            // Simple calculation logic
+            let multiplier = goal === 'muscle' ? 2.0 : (goal === 'fatloss' ? 1.8 : 1.4);
+            let targetProtein = Math.round(weight * multiplier);
+
+            document.getElementById('protein-target-text').innerText = `Recommended Daily Protein Target: ~${targetProtein}g per day`;
+
+            let recsHtml = `
+                <div class="product-card">
+                    <h3>Top Pick for Your Goal</h3>
+                    <p>Based on your selection, unflavored or flavored whey concentrate provides the best cost-per-gram value for muscle recovery.</p>
+                    <a href="https://amazon.in" target="_blank" style="color: #2563eb; font-weight: 600; text-decoration: none;">View on Amazon &rarr;</a>
+                </div>
+            `;
+            document.getElementById('recommendations').innerHTML = recsHtml;
+
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
+        }
+
+        function resetQuiz() {
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('welcome-screen').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
