@@ -374,29 +374,11 @@
 
     <script>
         var CATALOG = [
-            // --- UNDER 2500 ---
-            {
-                brand: "AS-IT-IS Nutrition",
-                title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
-                desc: "100% raw unflavored concentrate without artificial additives. Maximum protein per rupee.",
-                category: "unflavored",
-                priceBracket: "under2500",
-                priceText: "Under ₹2,500",
-                url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?tag=pickmyprote03-21"
-            },
-            {
-                brand: "MuscleBlaze",
-                title: "Raw Whey Protein 80% Unflavored (1kg)",
-                desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
-                category: "unflavored",
-                priceBracket: "under2500",
-                priceText: "Under ₹2,500",
-                url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
-            },
+            // --- STRICTLY UNDER ₹2,500 REAL AMAZON PRICES ---
             {
                 brand: "NAKPRO Nutrition",
                 title: "NAKPRO Gold Whey Protein Concentrate Unflavored (1kg)",
-                desc: "Trustified certified clean raw whey with 28g protein per serving.",
+                desc: "Trustified certified clean raw whey with 28g protein per serving. ₹1,800 - ₹2,200 bracket.",
                 category: "unflavored",
                 priceBracket: "under2500",
                 priceText: "Under ₹2,500",
@@ -405,7 +387,7 @@
             {
                 brand: "AS-IT-IS Nutrition",
                 title: "Soy Protein Isolate 90% (1kg)",
-                desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
+                desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving. Highly affordable under ₹1,500.",
                 category: "isolate",
                 priceBracket: "under2500",
                 priceText: "Under ₹2,500",
@@ -414,14 +396,32 @@
             {
                 brand: "OZiva",
                 title: "Organic Plant Protein Isolate (1kg)",
-                desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
+                desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion. Priced under ₹2,200.",
                 category: "plant",
                 priceBracket: "under2500",
                 priceText: "Under ₹2,500",
                 url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
             },
 
-            // --- 2500 TO 4000 ---
+            // --- ₹2,500 TO ₹4,000 REAL AMAZON PRICES ---
+            {
+                brand: "AS-IT-IS Nutrition",
+                title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
+                desc: "100% raw unflavored concentrate without artificial additives. Tested for purity & Labdoor certified.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?tag=pickmyprote03-21"
+            },
+            {
+                brand: "MuscleBlaze",
+                title: "Raw Whey Protein 80% Unflavored (1kg)",
+                desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
+            },
             {
                 brand: "Wellbeing Nutrition",
                 title: "100% Raw Whey Protein Concentrate with Probiotics",
@@ -459,7 +459,7 @@
                 url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
             },
 
-            // --- ABOVE 4000 ---
+            // --- ABOVE ₹4,000 PREMIUM ---
             {
                 brand: "Optimum Nutrition (ON)",
                 title: "Gold Standard 100% Whey - Alphonso Mango",
@@ -505,16 +505,18 @@
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
             document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
-            // STRICT FILTER 1: Try to match both category AND price bracket
+            // Filter ONLY items matching the selected price bracket
             var matches = CATALOG.filter(function(item) {
-                return item.priceBracket === priceBracket && item.category === diet;
+                return item.priceBracket === priceBracket;
             });
 
-            // STRICT FILTER 2: If no exact match, ONLY show items within that exact price bracket (Never cross price ranges)
-            if (matches.length === 0) {
-                matches = CATALOG.filter(function(item) {
-                    return item.priceBracket === priceBracket;
-                });
+            // If user filtered by specific category, try matching that first within the price bracket
+            var categoryMatches = matches.filter(function(item) {
+                return item.category === diet;
+            });
+
+            if (categoryMatches.length > 0) {
+                matches = categoryMatches;
             }
 
             var productsHtml = "";
