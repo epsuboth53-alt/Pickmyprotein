@@ -1,0 +1,59 @@
+/* ============================================================
+   PickMyProtein - THEME (colours and small style tweaks)
+   ------------------------------------------------------------
+   Change the five colours in the first block to restyle the
+   whole site. The file css/tailwind.css is the ready-made
+   layout styles - please do not edit that one.
+   ============================================================ */
+
+:root {
+  --brand: #ea6a10;       /* main orange: logo, buttons, highlights */
+  --brand-dark: #b34a07;  /* darker orange for small text and links (easier to read) */
+  --ink: #2a1a0f;         /* dark brown: text and dark cards */
+  --cream: #fff4e8;       /* page background */
+  --mint: #ffcf94;        /* soft apricot highlight (best-match card, tags) */
+
+  /* These four lines connect the colours above to the layout styles. Do not change. */
+  --color-tomato: var(--brand);
+  --color-ink: var(--ink);
+  --color-cream: var(--cream);
+  --color-lime: var(--mint);
+}
+
+/* ---------- Page ---------- */
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  background: linear-gradient(180deg, var(--cream) 0%, #fffaf4 45%, #ffeedc 100%) fixed !important;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------- Headings use the serif font ---------- */
+.font-display { font-family: "Fraunces", Georgia, "Times New Roman", serif !important; }
+h1.font-display { letter-spacing: -0.02em !important; line-height: 1.05 !important; }
+
+/* ---------- Softer borders and shadows ---------- */
+.border-ink { border-color: rgba(42, 26, 15, 0.45); }
+.shadow-\[5px_5px_0_0_var\(--color-ink\)\],
+.shadow-\[6px_6px_0_0_var\(--color-ink\)\] { box-shadow: 0 18px 40px -18px rgba(42, 26, 15, 0.35) !important; }
+.shadow-\[3px_3px_0_0_var\(--color-tomato\)\] { box-shadow: 0 8px 18px -8px rgba(234, 106, 16, 0.6) !important; }
+
+/* ---------- Keyboard focus ring ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+/* ---------- Home page top section: soft orange glows and tick chips ---------- */
+.hero { position: relative; isolation: isolate; }
+.hero::before, .hero::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; }
+.hero::before { right: -80px; top: -60px; width: 360px; height: 360px; background: radial-gradient(circle at 35% 35%, rgba(255, 190, 120, 0.95), rgba(255, 190, 120, 0) 70%); }
+.hero::after { left: -120px; bottom: -80px; width: 300px; height: 300px; background: radial-gradient(circle at 60% 40%, rgba(255, 160, 80, 0.4), rgba(255, 160, 80, 0) 70%); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; padding: 0; list-style: none; }
+.chips li { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(42, 26, 15, 0.18); border-radius: 999px; padding: 7px 14px; font-size: 14px; color: var(--ink); }
+.chips svg { width: 16px; height: 16px; color: var(--brand); flex: none; }
+
+/* ---------- Bright orange for fills, darker orange for small text ---------- */
+.text-tomato { color: var(--brand-dark); }
+h1 .text-tomato { color: var(--brand); }
+.bg-tomato.text-sm.text-white { color: var(--ink); }
