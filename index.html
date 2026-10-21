@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Protein - Personal Daily Target & Product Matcher</title>
+    <title>Pick My Protein</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -34,7 +34,6 @@
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
         }
-        .hidden { display: none !important; }
         .form-group { margin-bottom: 20px; text-align: left; }
         label { display: block; font-weight: 600; margin-bottom: 6px; color: #334155; }
         input, select {
@@ -107,14 +106,14 @@
     </div>
 
     <!-- STEP 1: WELCOME SCREEN -->
-    <div class="card" id="step-1">
+    <div class="card" id="step-1" style="display: block;">
         <h2 style="margin-bottom: 12px;">How much protein do you need, and which powder fits you?</h2>
         <p style="color: #64748b; margin-bottom: 24px;">Answer a few quick questions to get your calculated daily protein target, scoop intake, and matching top product recommendations.</p>
-        <button type="button" class="btn" onclick="goToStep(2)">Start Quick Quiz</button>
+        <button type="button" class="btn" id="start-btn">Start Quick Quiz</button>
     </div>
 
     <!-- STEP 2: CALCULATOR QUIZ -->
-    <div class="card hidden" id="step-2">
+    <div class="card" id="step-2" style="display: none;">
         <h2 style="margin-bottom: 20px;">Your Details</h2>
         
         <div class="form-group">
@@ -141,11 +140,11 @@
             </select>
         </div>
 
-        <button type="button" class="btn" onclick="calculateAndShowResults()">Find My Best Protein Match</button>
+        <button type="button" class="btn" id="calc-btn">Find My Best Protein Match</button>
     </div>
 
     <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
-    <div class="card hidden" id="step-3">
+    <div class="card" id="step-3" style="display: none;">
         <div class="results-header">
             <p style="font-size: 0.9rem; color: #475569; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Your Personalized Target</p>
             <h2 id="target-output">0g / day</h2>
@@ -155,7 +154,7 @@
         <h3 style="margin-bottom: 16px;">Top Recommendations For You</h3>
         <div id="product-list"></div>
 
-        <button type="button" class="btn" style="background-color: #64748b; margin-top: 16px;" onclick="goToStep(1)">Start Over</button>
+        <button type="button" class="btn" style="background-color: #64748b; margin-top: 16px;" id="restart-btn">Start Over</button>
     </div>
 
     <script>
@@ -173,7 +172,7 @@
                     brand: "MuscleBlaze",
                     title: "Raw Whey Protein 80% Unflavored (1kg)",
                     desc: "Labdoor USA certified clean unflavored raw whey with 24g protein and 5.2g BCAA per scoop.",
-                    url: "https://www.amazon.in/s?k=MuscleBlaze+Raw+Whey+Protein+ Concentrate+80%25+1kg&" + TAG
+                    url: "https://www.amazon.in/s?k=MuscleBlaze+Raw+Whey+Protein+Concentrate+80%25+1kg&" + TAG
                 }
             ],
             flavored: [
@@ -220,11 +219,54 @@
             ]
         };
 
-        function goToStep(stepNumber) {
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-3').classList.add('hidden');
+        document.getElementById('start-btn').addEventListener('click', function() {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            document.getElementById('step-3').style.display = 'none';
+        });
 
-            document.getElementById('step-' + stepNumber).classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        document.getElementById('calc-btn').addEventListener('click', function() {
+            const weight = parseFloat(document.getElementById('weight').value) || 70;
+            const goal = document.getElementById('goal').value;
+            const diet = document.getElementById('diet').value;
+
+            let multiplier = 1.4;
+            if (goal === 'muscle') multiplier = 2.0;
+            if (goal === 'fatloss') multiplier = 1.8;
+
+            const totalTarget = Math.round(weight * multiplier);
+            const foodProtein = Math.round(totalTarget * 0.6);
+            const supplementProtein = totalTarget - foodProtein;
+            const scoopsNeeded = (supplementProtein / 24).toFixed(1);
+
+            document.getElementById('target-output').innerText = totalTarget + "g protein / day";
+            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
+
+            const selectedProducts = PRODUCTS[diet] || PRODUCTS['unflavored'];
+            let productsHtml = "";
+
+            selectedProducts.forEach(item => {
+                productsHtml += `
+                    <div class="product-card">
+                        <span class="tag">${item.brand}</span>
+                        <h3>${item.title}</h3>
+                        <p style="color: #475569; font-size: 0.95rem; margin-bottom: 8px;">${item.desc}</p>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link">Buy Now on Amazon &rarr;</a>
+                    </div>
+                `;
+            });
+
+            document.getElementById('product-list').innerHTML = productsHtml;
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'block';
+        });
+
+        document.getElementById('restart-btn').addEventListener('click', function() {
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
