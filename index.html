@@ -27,7 +27,7 @@
             padding-bottom: 60px;
         }
 
-        /* LIGHT ORANGE HERO HEADER */
+        /* HERO HEADER */
         .hero {
             background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
             border-bottom: 1px solid #fed7aa;
@@ -67,7 +67,7 @@
             margin: 4px auto 0 auto;
         }
 
-        /* MAIN APP CONTAINER */
+        /* APP CONTAINER */
         .app-container {
             max-width: 620px;
             margin: 0 auto;
@@ -169,7 +169,7 @@
         }
         .results-box p { color: #c2410c; font-size: 0.95rem; font-weight: 600; }
 
-        /* PRODUCT CARDS WITH IMAGES */
+        /* PRODUCT CARDS */
         .product-card {
             border: 1px solid var(--border-color);
             padding: 20px;
@@ -184,8 +184,8 @@
         }
         .product-card:hover { border-color: #fdba74; }
         .product-img {
-            width: 90px;
-            height: 90px;
+            width: 85px;
+            height: 85px;
             object-fit: contain;
             border-radius: 10px;
             background: #f8fafc;
@@ -227,4 +227,251 @@
             font-weight: 700;
             text-decoration: none;
             font-size: 0.85rem;
-            box-shadow: 0
+            box-shadow: 0 3px 10px rgba(249, 115, 22, 0.25);
+            transition: all 0.2s ease;
+        }
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            transform: translateY(-1px);
+        }
+
+        .info-banner {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+        .info-banner h4 { color: #1e293b; margin-bottom: 4px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- HERO HEADER -->
+    <div class="hero">
+        <div class="logo-container">
+            <div class="logo-badge">P</div>
+            <h1 class="brand-title">Pick My Protein</h1>
+        </div>
+        <p>Smart daily target calculator & curated Amazon India product matcher.</p>
+    </div>
+
+    <div class="app-container">
+        <!-- STEP 1: WELCOME SCREEN -->
+        <div class="card" id="step-1" style="display: block;">
+            <div class="progress-bar">
+                <span>Step 1 of 3</span>
+                <span>Overview</span>
+            </div>
+
+            <h2 style="font-size: 1.35rem; margin-bottom: 8px; color: #0f172a;">Why Protein Tracking Works</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Getting the right daily protein intake accelerates muscle repair, curbs late-night cravings, and boosts workout performance.</p>
+            
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <span class="icon">🏋️</span>
+                    <div class="title">1.6 - 2.0g</div>
+                    <div class="desc">Per kg for active training</div>
+                </div>
+                <div class="fact-card">
+                    <span class="icon">🥤</span>
+                    <div class="title">24g Protein</div>
+                    <div class="desc">Average per scoop</div>
+                </div>
+                <div class="fact-card">
+                    <span class="icon">⚡</span>
+                    <div class="title">Post-Workout</div>
+                    <div class="desc">Take within 60 mins</div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-primary" id="start-btn">Start Daily Calculator &rarr;</button>
+
+            <div class="info-banner">
+                <h4>💡 Quick Buyer Tip</h4>
+                <p>If you want maximum protein per rupee without artificial sweeteners, choose <b>Unflavored Raw Whey</b>. For convenient mixing and taste, go with <b>Flavored Whey Concentrate</b>.</p>
+            </div>
+        </div>
+
+        <!-- STEP 2: CALCULATOR QUIZ -->
+        <div class="card" id="step-2" style="display: none;">
+            <div class="progress-bar">
+                <span>Step 2 of 3</span>
+                <span>Calculator Quiz</span>
+            </div>
+
+            <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: #0f172a;">Enter Your Details</h2>
+            
+            <div class="form-group">
+                <label for="weight">Body Weight (in kg)</label>
+                <input type="number" id="weight" value="70" placeholder="e.g. 70">
+            </div>
+
+            <div class="form-group">
+                <label for="goal">Fitness Goal</label>
+                <select id="goal">
+                    <option value="muscle">Muscle Growth & Strength</option>
+                    <option value="fatloss">Fat Loss & Definition</option>
+                    <option value="health">General Health & Maintenance</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="diet">Dietary Preference</label>
+                <select id="diet">
+                    <option value="unflavored">Unflavored Whey Concentrate (Best Value)</option>
+                    <option value="flavored">Flavored Whey Concentrate (Great Taste)</option>
+                    <option value="isolate">Whey Isolate (Low Lactose / Ultra Pure)</option>
+                    <option value="plant">Plant Protein (100% Vegan)</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-primary" id="calc-btn">Find My Best Protein Match ✨</button>
+        </div>
+
+        <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
+        <div class="card" id="step-3" style="display: none;">
+            <div class="progress-bar">
+                <span>Step 3 of 3</span>
+                <span>Your Matches</span>
+            </div>
+
+            <div class="results-box">
+                <p style="font-size: 0.8rem; color: #9a3412; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Recommended Daily Intake</p>
+                <h2 id="target-output">0g / day</h2>
+                <p id="target-summary"></p>
+            </div>
+
+            <h3 style="margin-bottom: 16px; font-size: 1.15rem; color: #0f172a;">Recommended Products For You</h3>
+            <div id="product-list"></div>
+
+            <button type="button" class="btn-primary" style="background: #64748b; margin-top: 16px; box-shadow: none;" id="restart-btn">&larr; Recalculate</button>
+        </div>
+    </div>
+
+    <script>
+        var PRODUCTS = {
+            unflavored: [
+                {
+                    brand: "AS-IT-IS Nutrition",
+                    title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
+                    desc: "100% raw unflavored concentrate without artificial additives. Maximum protein per rupee.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/61M51qL2o5L._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?tag=pickmyprote03-21"
+                },
+                {
+                    brand: "MuscleBlaze",
+                    title: "Raw Whey Protein 80% Unflavored (1kg)",
+                    desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/61Vd1E2s5fL._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?tag=pickmyprote03-21"
+                }
+            ],
+            flavored: [
+                {
+                    brand: "Optimum Nutrition (ON)",
+                    title: "Gold Standard 100% Whey - Alphonso Mango / Double Rich Chocolate",
+                    desc: "World standard whey protein with 24g premium protein blend per serving.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/71u968kS79L._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?tag=pickmyprote03-21"
+                },
+                {
+                    brand: "MuscleBlaze",
+                    title: "Biozyme Performance Whey PR - Rich Chocolate",
+                    desc: "Clinically tested digestive enzymes for 50% higher protein absorption.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/71q8iK87l+L._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?tag=pickmyprote03-21"
+                }
+            ],
+            isolate: [
+                {
+                    brand: "Isopure",
+                    title: "Zero Carb 100% Whey Protein Isolate Unflavored",
+                    desc: "100% pure whey isolate with zero carbs and lactose-free digestive profile.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/61u968kS79L._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?tag=pickmyprote03-21"
+                },
+                {
+                    brand: "AS-IT-IS Nutrition",
+                    title: "Soy Protein Isolate 90% (1kg)",
+                    desc: "Ultra-pure vegan soy protein isolate delivering 30g protein per serving.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/61M51qL2o5L._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?tag=pickmyprote03-21"
+                }
+            ],
+            plant: [
+                {
+                    brand: "Origin Nutrition",
+                    title: "Daily Plant Protein - Classic Unflavoured (1kg)",
+                    desc: "100% natural vegan pea and pumpkin seed protein with complete amino profile.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/71Y8K91m0sL._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
+                },
+                {
+                    brand: "OZiva",
+                    title: "Organic Plant Protein Isolate (1kg)",
+                    desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
+                    img: "https://images-na.ssl-images-amazon.com/images/I/71Y8K91m0sL._AC_SL1500_.jpg",
+                    url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
+                }
+            ]
+        };
+
+        document.getElementById('start-btn').onclick = function() {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            document.getElementById('step-3').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.getElementById('calc-btn').onclick = function() {
+            var weight = parseFloat(document.getElementById('weight').value) || 70;
+            var goal = document.getElementById('goal').value;
+            var diet = document.getElementById('diet').value;
+
+            var multiplier = 1.4;
+            if (goal === 'muscle') multiplier = 2.0;
+            if (goal === 'fatloss') multiplier = 1.8;
+
+            var totalTarget = Math.round(weight * multiplier);
+            var foodProtein = Math.round(totalTarget * 0.6);
+            var supplementProtein = totalTarget - foodProtein;
+            var scoopsNeeded = (supplementProtein / 24).toFixed(1);
+
+            document.getElementById('target-output').innerText = totalTarget + "g protein / day";
+            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
+
+            var selectedProducts = PRODUCTS[diet] || PRODUCTS['unflavored'];
+            var productsHtml = "";
+
+            for (var i = 0; i < selectedProducts.length; i++) {
+                var item = selectedProducts[i];
+                productsHtml += '<div class="product-card">' +
+                    '<img src="' + item.img + '" alt="' + item.brand + '" class="product-img" onerror="this.style.display=\'none\'">' +
+                    '<div class="product-info">' +
+                        '<span class="tag">' + item.brand + '</span>' +
+                        '<h3>' + item.title + '</h3>' +
+                        '<p>' + item.desc + '</p>' +
+                        '<a href="' + item.url + '" target="_blank" rel="noopener noreferrer" class="buy-btn">🛒 Buy on Amazon &rarr;</a>' +
+                    '</div>' +
+                '</div>';
+            }
+
+            document.getElementById('product-list').innerHTML = productsHtml;
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.getElementById('restart-btn').onclick = function() {
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
+</body>
+</html>
