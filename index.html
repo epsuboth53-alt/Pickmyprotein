@@ -374,7 +374,7 @@
 
     <script>
         var CATALOG = [
-            // UNDER 2500
+            // --- UNDER 2500 ---
             {
                 brand: "AS-IT-IS Nutrition",
                 title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
@@ -421,7 +421,7 @@
                 url: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?tag=pickmyprote03-21"
             },
 
-            // 2500 TO 4000
+            // --- 2500 TO 4000 ---
             {
                 brand: "Wellbeing Nutrition",
                 title: "100% Raw Whey Protein Concentrate with Probiotics",
@@ -459,7 +459,7 @@
                 url: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?tag=pickmyprote03-21"
             },
 
-            // ABOVE 4000
+            // --- ABOVE 4000 ---
             {
                 brand: "Optimum Nutrition (ON)",
                 title: "Gold Standard 100% Whey - Alphonso Mango",
@@ -505,12 +505,12 @@
             document.getElementById('target-output').innerText = totalTarget + "g protein / day";
             document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
 
-            // 1. STRICT FILTER: Must match BOTH the selected price range AND the selected diet category
+            // STRICT FILTER 1: Try to match both category AND price bracket
             var matches = CATALOG.filter(function(item) {
                 return item.priceBracket === priceBracket && item.category === diet;
             });
 
-            // 2. BACKUP FILTER: If no exact match for that specific diet in that price range, show ANY product in that price range
+            // STRICT FILTER 2: If no exact match, ONLY show items within that exact price bracket (Never cross price ranges)
             if (matches.length === 0) {
                 matches = CATALOG.filter(function(item) {
                     return item.priceBracket === priceBracket;
