@@ -88,15 +88,15 @@
         .buy-link {
             display: inline-block;
             margin-top: 12px;
-            background: #2563eb;
-            color: white;
+            background: #ff9900;
+            color: #111;
             padding: 10px 18px;
             border-radius: 6px;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             font-size: 0.95rem;
         }
-        .buy-link:hover { background: #1d4ed8; }
+        .buy-link:hover { background: #fa8900; }
     </style>
 </head>
 <body>
@@ -166,13 +166,13 @@
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
                     desc: "100% raw, unflavored concentrate without artificial additives or sweeteners. Highest protein yield per rupee.",
-                    url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Whey+Protein+Concentrate+80%25+1kg&" + TAG
+                    url: "https://www.amazon.in/dp/B0743B9D9Y?" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Raw Whey Protein 80% Unflavored (1kg)",
                     desc: "Labdoor USA certified clean unflavored raw whey with 24g protein and 5.2g BCAA per scoop.",
-                    url: "https://www.amazon.in/s?k=MuscleBlaze+Raw+Whey+Protein+Concentrate+80%25+1kg&" + TAG
+                    url: "https://www.amazon.in/dp/B072LXCV5K?" + TAG
                 }
             ],
             flavored: [
@@ -180,13 +180,13 @@
                     brand: "Optimum Nutrition (ON)",
                     title: "Gold Standard 100% Whey - Double Rich Chocolate",
                     desc: "The world's benchmark whey protein powder with 24g premium whey protein blend per serving.",
-                    url: "https://www.amazon.in/s?k=Optimum+Nutrition+Gold+Standard+100%25+Whey+Double+Rich+Chocolate&" + TAG
+                    url: "https://www.amazon.in/dp/B000QSNYGI?" + TAG
                 },
                 {
                     brand: "MuscleBlaze",
                     title: "Biozyme Performance Whey Protein - Rich Chocolate",
                     desc: "Enhanced absorption formula with clinically tested digestive enzymes for smooth digesting.",
-                    url: "https://www.amazon.in/s?k=MuscleBlaze+Biozyme+Performance+Whey+Protein+Rich+Chocolate&" + TAG
+                    url: "https://www.amazon.in/dp/B072LXCV5K?" + TAG
                 }
             ],
             isolate: [
@@ -194,13 +194,13 @@
                     brand: "AS-IT-IS Nutrition",
                     title: "Pure Whey Protein Isolate 90% Unflavored",
                     desc: "Ultra-filtered isolate delivering 27g pure protein per serving with minimal carbs and low lactose.",
-                    url: "https://www.amazon.in/s?k=AS-IT-IS+Nutrition+Pure+Whey+Protein+Isolate+90%25&" + TAG
+                    url: "https://www.amazon.in/dp/B0733CL1C1?" + TAG
                 },
                 {
                     brand: "Dymatize",
                     title: "ISO100 Hydrolyzed 100% Whey Isolate",
                     desc: "Fast-absorbing hydrolyzed whey isolate engineered for rapid post-workout recovery.",
-                    url: "https://www.amazon.in/s?k=Dymatize+ISO100+Hydrolyzed+100%25+Whey+Isolate&" + TAG
+                    url: "https://www.amazon.in/dp/B000GISTZ4?" + TAG
                 }
             ],
             plant: [
@@ -208,13 +208,13 @@
                     brand: "Fast&Up",
                     title: "Plant Protein Isolate (Pea & Brown Rice)",
                     desc: "100% vegan protein with 24g plant protein, complete amino profile, and zero added sugar.",
-                    url: "https://www.amazon.in/s?k=FastAndUp+Plant+Protein+Isolate&" + TAG
+                    url: "https://www.amazon.in/dp/B07R4A8VNS?" + TAG
                 },
                 {
                     brand: "Cosmix",
                     title: "Plant Protein Powder (Organic Pea & Rice Blend)",
                     desc: "Herbal-infused clean plant protein designed for easy gut digestion.",
-                    url: "https://www.amazon.in/s?k=Cosmix+Plant+Protein+Powder&" + TAG
+                    url: "https://www.amazon.in/dp/B07R4A8VNS?" + TAG
                 }
             ]
         };
@@ -251,7 +251,7 @@
                         <span class="tag">${item.brand}</span>
                         <h3>${item.title}</h3>
                         <p style="color: #475569; font-size: 0.95rem; margin-bottom: 8px;">${item.desc}</p>
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link">Buy Now on Amazon &rarr;</a>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-link">🛒 Buy Direct on Amazon &rarr;</a>
                     </div>
                 `;
             });
