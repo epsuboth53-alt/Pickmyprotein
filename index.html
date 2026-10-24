@@ -191,4 +191,245 @@
         .product-badge-box {
             width: 90px;
             height: 90px;
-            background: linear-gradient(13
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border: 2px solid #fed7aa;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            text-align: center;
+            padding: 6px;
+        }
+        .product-badge-box .p-icon { font-size: 1.8rem; }
+        .product-badge-box .p-text { font-size: 0.65rem; font-weight: 800; color: #9a3412; text-transform: uppercase; margin-top: 2px; }
+        
+        .product-info { flex-grow: 1; }
+        .tag-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+        
+        /* PROMINENT LARGE BRAND TAG */
+        .brand-tag {
+            display: inline-block;
+            background: #ffedd5;
+            color: #7c2d12;
+            font-size: 1.05rem;
+            font-weight: 900;
+            padding: 6px 14px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            border: 1.5px solid #fdba74;
+            box-shadow: 0 2px 6px rgba(249, 115, 22, 0.12);
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #ffedd5;
+            color: #9a3412;
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+        .price-tag {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 8px;
+        }
+        .match-badge {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 900;
+            padding: 5px 12px;
+            border-radius: 8px;
+            letter-spacing: 0.3px;
+        }
+        .top-match-tag {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 900;
+            padding: 5px 13px;
+            border-radius: 8px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .product-card h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+        }
+        .product-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+
+        /* SECTION HEADING */
+        .section-heading {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 28px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* AMAZON BUY BUTTON */
+        .buy-btn {
+            display: inline-block;
+            text-align: center;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.88rem;
+            box-shadow: 0 3px 10px rgba(249, 115, 22, 0.25);
+            transition: all 0.2s ease;
+        }
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            transform: translateY(-1px);
+        }
+
+        .info-banner {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+        .info-banner h4 { color: #1e293b; margin-bottom: 4px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- HERO HEADER -->
+    <div class="hero">
+        <div class="logo-container">
+            <div class="logo-badge">P</div>
+            <h1 class="brand-title">Pick My Protein</h1>
+        </div>
+        <p>Smart daily target calculator & curated Amazon India product matcher.</p>
+    </div>
+
+    <div class="app-container">
+        <!-- STEP 1: WELCOME SCREEN -->
+        <div class="card" id="step-1" style="display: block;">
+            <div class="progress-bar">
+                <span>Step 1 of 3</span>
+                <span>Overview</span>
+            </div>
+
+            <h2 style="font-size: 1.35rem; margin-bottom: 8px; color: #0f172a;">Why Protein Tracking Works</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Getting the right daily protein intake accelerates muscle repair, curbs late-night cravings, and boosts workout performance.</p>
+            
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <span class="icon">🏋️</span>
+                    <div class="title">1.6 - 2.0g</div>
+                    <div class="desc">Per kg for active training</div>
+                </div>
+                <div class="fact-card">
+                    <span class="icon">🥤</span>
+                    <div class="title">24g Protein</div>
+                    <div class="desc">Average per scoop</div>
+                </div>
+                <div class="fact-card">
+                    <span class="icon">⚡</span>
+                    <div class="title">Post-Workout</div>
+                    <div class="desc">Take within 60 mins</div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-primary" id="start-btn">Start Daily Calculator &rarr;</button>
+
+            <div class="info-banner">
+                <h4>💡 Quick Buyer Tip</h4>
+                <p>If you want maximum protein per rupee without artificial sweeteners, choose <b>Unflavored Raw Whey</b>. For convenient mixing and taste, go with <b>Flavored Whey Concentrate</b>.</p>
+            </div>
+        </div>
+
+        <!-- STEP 2: CALCULATOR QUIZ -->
+        <div class="card" id="step-2" style="display: none;">
+            <div class="progress-bar">
+                <span>Step 2 of 3</span>
+                <span>Calculator Quiz</span>
+            </div>
+
+            <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: #0f172a;">Enter Your Details</h2>
+            
+            <div class="form-group">
+                <label for="weight">Body Weight (in kg)</label>
+                <input type="number" id="weight" value="70" placeholder="e.g. 70">
+            </div>
+
+            <div class="form-group">
+                <label for="goal">Fitness Goal</label>
+                <select id="goal">
+                    <option value="muscle">Muscle Growth & Strength</option>
+                    <option value="fatloss">Fat Loss & Definition</option>
+                    <option value="health">General Health & Maintenance</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="diet">Dietary Preference</label>
+                <select id="diet">
+                    <option value="unflavored">Unflavored Whey Concentrate (Best Value)</option>
+                    <option value="flavored">Flavored Whey Concentrate (Great Taste)</option>
+                    <option value="isolate">Whey Isolate (Low Lactose / Ultra Pure)</option>
+                    <option value="plant">Plant Protein (100% Vegan)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Budget / Price Range</label>
+                <select id="price">
+                    <option value="under2500">Under ₹2,500 (Best Value & Budget Options)</option>
+                    <option value="2500to4000">₹2,500 - ₹4,000 (Mid-Range & Popular Picks)</option>
+                    <option value="above4000">Above ₹4,000 (Premium & Gold Standard)</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-primary" id="calc-btn">Find My Best Protein Match ✨</button>
+        </div>
+
+        <!-- STEP 3: RESULTS & RECOMMENDATIONS -->
+        <div class="card" id="step-3" style="display: none;">
+            <div class="progress-bar">
+                <span>Step 3 of 3</span>
+                <span>Your Matches</span>
+            </div>
+
+            <div class="results-box">
+                <p style="font-size: 0.8rem; color: #9a3412; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Recommended Daily Intake</p>
+                <h2 id="target-output">0g / day</h2>
+                <p id="target-summary"></p>
+            </div>
+
+            <h3 style="margin-bottom: 16px; font-size: 1.25rem; color: #0f172a; font-weight: 800;">🌟 Top Recommended Match</h3>
+            <div id="top-product"></div>
+
+            <div id="more-products-container">
+                <h3 class="section-heading" id="more-heading">🔍 Explore More Options</h3>
+                <div id="other-products-list"></div>
+            </div>
+
+            <button type="button" class="btn-primary" style="background: #64748b; margin-top: 20px; box-shadow: none;" id="restart-btn">&larr; Rec
