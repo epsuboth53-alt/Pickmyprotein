@@ -390,6 +390,7 @@
             <div class="form-group">
                 <label for="diet">Dietary Preference</label>
                 <select id="diet">
+                    <option value="" disabled selected hidden>-- Select dietary preference --</option>
                     <option value="unflavored">Unflavored Whey Concentrate (Best Value)</option>
                     <option value="flavored">Flavored Whey Concentrate (Great Taste)</option>
                     <option value="isolate">Whey Isolate (Low Lactose / Ultra Pure)</option>
@@ -400,6 +401,7 @@
             <div class="form-group">
                 <label for="price">Budget / Price Range</label>
                 <select id="price">
+                    <option value="" disabled selected hidden>-- Select price range --</option>
                     <option value="under2500">Under ₹2,500 (Best Value & Budget Options)</option>
                     <option value="2500to4000">₹2,500 - ₹4,000 (Mid-Range & Popular Picks)</option>
                     <option value="above4000">Above ₹4,000 (Premium & Gold Standard)</option>
@@ -604,6 +606,8 @@
             document.getElementById('calc-btn').onclick = function() {
                 var age = parseInt(document.getElementById('age').value);
                 var goalSelect = document.getElementById('goal').value;
+                var dietSelect = document.getElementById('diet').value;
+                var priceSelect = document.getElementById('price').value;
 
                 // Age validation check (Must be 20 or older)
                 if (isNaN(age) || age < 20) {
@@ -611,16 +615,21 @@
                     return;
                 }
 
-                // Goal selection check
+                // Field selection checks
                 if (!goalSelect) {
                     alert("Please select your fitness goal.");
                     return;
                 }
+                if (!dietSelect) {
+                    alert("Please select your dietary preference.");
+                    return;
+                }
+                if (!priceSelect) {
+                    alert("Please select your budget / price range.");
+                    return;
+                }
 
                 var weight = parseFloat(document.getElementById('weight').value) || 70;
-                var diet = document.getElementById('diet').value;
-                var priceBracket = document.getElementById('price').value;
-
                 var multiplier = 1.4;
                 if (goalSelect === 'muscle') multiplier = 2.0;
                 if (goalSelect === 'fatloss') multiplier = 1.8;
@@ -635,12 +644,12 @@
 
                 // Filter products by selected price bracket
                 var priceMatches = CATALOG.filter(function(item) {
-                    return item.priceBracket === priceBracket;
+                    return item.priceBracket === priceSelect;
                 });
 
                 // Try finding exact diet matches inside price bracket
                 var exactMatches = priceMatches.filter(function(item) {
-                    return item.category === diet;
+                    return item.category === dietSelect;
                 });
 
                 var displayList = exactMatches.length > 0 ? exactMatches : priceMatches;
@@ -671,7 +680,7 @@
                     return item.title !== topItem.title;
                 });
 
-                var priceTextLabel = priceBracket === 'under2500' ? 'Under ₹2,500' : (priceBracket === '2500to4000' ? '₹2,500 – ₹4,000' : 'Above ₹4,000');
+                var priceTextLabel = priceSelect === 'under2500' ? 'Under ₹2,500' : (priceSelect === '2500to4000' ? '₹2,500 – ₹4,000' : 'Above ₹4,000');
                 document.getElementById('more-heading').innerText = "🔍 Explore More Options (" + priceTextLabel + ")";
 
                 var otherHtml = "";
