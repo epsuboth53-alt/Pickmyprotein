@@ -206,30 +206,29 @@
         .product-badge-box .p-text { font-size: 0.65rem; font-weight: 800; color: #9a3412; text-transform: uppercase; margin-top: 2px; }
         
         .product-info { flex-grow: 1; }
-        .tag-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+        .tag-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
         
-        /* PROMINENT LARGE BRAND TAG */
+        /* BIGGER BOLDER BRAND TAG */
         .brand-tag {
             display: inline-block;
             background: #ffedd5;
             color: #7c2d12;
-            font-size: 1.05rem;
+            font-size: 0.85rem;
             font-weight: 900;
-            padding: 6px 14px;
-            border-radius: 10px;
+            padding: 5px 12px;
+            border-radius: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
-            border: 1.5px solid #fdba74;
-            box-shadow: 0 2px 6px rgba(249, 115, 22, 0.12);
+            letter-spacing: 0.5px;
+            border: 1px solid #fed7aa;
         }
         
         .tag {
             display: inline-block;
             background: #ffedd5;
             color: #9a3412;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 800;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 8px;
             text-transform: uppercase;
         }
@@ -237,31 +236,28 @@
             background: #dcfce7;
             color: #166534;
             border: 1px solid #bbf7d0;
-            font-size: 0.85rem;
-            font-weight: 800;
-            padding: 5px 12px;
-            border-radius: 8px;
         }
         .match-badge {
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             font-weight: 900;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 8px;
             letter-spacing: 0.3px;
         }
         .top-match-tag {
             background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             font-weight: 900;
-            padding: 5px 13px;
+            padding: 4px 11px;
             border-radius: 8px;
             letter-spacing: 0.3px;
             text-transform: uppercase;
         }
 
+        /* BOLDER PRODUCT TITLE */
         .product-card h3 {
             font-size: 1.35rem;
             font-weight: 800;
@@ -432,4 +428,270 @@
                 <div id="other-products-list"></div>
             </div>
 
-            <button type="button" class="btn-primary" style="background: #64748b; margin-top: 20px; box-shadow: none;" id="restart-btn">&larr; Rec
+            <button type="button" class="btn-primary" style="background: #64748b; margin-top: 20px; box-shadow: none;" id="restart-btn">&larr; Recalculate</button>
+        </div>
+    </div>
+
+    <script>
+        var CATALOG = [
+            // --- UNDER 2500 ---
+            {
+                brand: "OSOAA",
+                title: "Impact Whey Protein 1kg - Malai Kulfi",
+                desc: "Isolate & concentrate blend with 24g protein, 3g creatine and 5X digestive enzymes.",
+                category: "flavored",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 98,
+                url: "https://www.amazon.in/dp/B0DWN3P7JD?linkCode=ll2&tag=pickmyprote03-21&linkId=597fb49d7bdaa423b984b3d88df7f96d"
+            },
+            {
+                brand: "NAKPRO NUTRITION",
+                title: "Perform Whey Protein Concentrate (1kg)",
+                desc: "Budget-friendly performance whey concentrate with essential amino acids for daily muscle recovery.",
+                category: "unflavored",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 94,
+                url: "https://www.amazon.in/dp/B0BLZ751FC?linkCode=ll2&tag=pickmyprote03-21&linkId=f25229aa05d93d6a115cd7c8b25dca0d"
+            },
+            {
+                brand: "COSMIX",
+                title: "No-Nonsense Plant Protein - Chikamagalur Mocha (1kg)",
+                desc: "Plant-based pea & rice isolate with coffee flavor, clean and easy to digest.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 92,
+                url: "https://www.amazon.in/dp/B0DM1R17Y9?linkCode=ll2&tag=pickmyprote03-21&linkId=8e85e84db9d1cb09eab0a14d4ed14a4b"
+            },
+            {
+                brand: "TATA 1MG",
+                title: "Plant Protein – Cold Coffee (1kg)",
+                desc: "Plant-based protein powder with no added refined sugar and complete amino profile.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 90,
+                url: "https://www.amazon.in/dp/B0H3L8VDSR?linkCode=ll2&tag=pickmyprote03-21&linkId=d82f26de60ff54819fb8920d12fcc568"
+            },
+            {
+                brand: "THE WHOLE TRUTH",
+                title: "Pista Badaam Plant Protein Powder (1kg)",
+                desc: "Real pista & badam blend with 24g protein per scoop and 4.6g BCAA.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 88,
+                url: "https://www.amazon.in/dp/B0FF9N7FCP?linkCode=ll2&tag=pickmyprote03-21&linkId=9fb4c888e522dbbd93b63404c839c07a"
+            },
+            {
+                brand: "THE GOOD BUG",
+                title: "Pro Digestive Plant Protein - Chocolate (1kg)",
+                desc: "Fermented pea + yeast protein isolate with probiotics and fiber for zero bloat.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 86,
+                url: "https://www.amazon.in/dp/B0HK8W622F?linkCode=ll2&tag=pickmyprote03-21&linkId=f69ef55e6dc249872e6dc0b9066e41aa"
+            },
+            {
+                brand: "OZiva",
+                title: "Organic Plant Protein Isolate (1kg)",
+                desc: "Clean plant protein blend of organic pea, brown rice, and quinoa for easy digestion.",
+                category: "plant",
+                priceBracket: "under2500",
+                priceText: "Under ₹2,500",
+                matchScore: 85,
+                url: "https://www.amazon.in/dp/B09VGSVRXH?linkCode=ll2&tag=pickmyprote03-21&linkId=1ef372818766a7b47beed51b165d4018"
+            },
+
+            // --- 2500 TO 4000 ---
+            {
+                brand: "AS-IT-IS NUTRITION",
+                title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)",
+                desc: "100% raw unflavored concentrate without artificial additives. Labdoor certified.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                matchScore: 97,
+                url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?linkCode=ll2&tag=pickmyprote03-21&linkId=33a5562df5760f0e92efff36552681d4"
+            },
+            {
+                brand: "MUSCLEBLAZE",
+                title: "Raw Whey Protein 80% Unflavored (1kg)",
+                desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                matchScore: 95,
+                url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?linkCode=ll2&tag=pickmyprote03-21&linkId=047122cc03b79d184c8949803bb1b656"
+            },
+            {
+                brand: "WELLBEING NUTRITION",
+                title: "100% Raw Whey Protein Concentrate with Probiotics (1kg)",
+                desc: "27g protein with added natural digestive enzymes and 4B CFU probiotics.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                matchScore: 93,
+                url: "https://www.amazon.in/Wellbeing-Nutrition-Concentrate-Unflavoured-Probiotics/dp/B0DMNWWH5S?linkCode=ll2&tag=pickmyprote03-21&linkId=75d30cd491bf0df4c0d11475edaf4df1"
+            },
+            {
+                brand: "FOODSTRONG",
+                title: "Whey Protein Powder Unflavoured (Raw - 1kg)",
+                desc: "26g pure protein concentrate designed for optimal muscle recovery.",
+                category: "unflavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                matchScore: 91,
+                url: "https://www.amazon.in/dp/B0D4DZKX94?linkCode=ll2&tag=pickmyprote03-21&linkId=5eecdfa7d9787b59e6e16c0a9d3695c6"
+            },
+            {
+                brand: "TRUNATIV",
+                title: "Pro Blend Whey Protein - Mango (907g / 2lbs)",
+                desc: "Isolate & concentrate blend with 26g protein, 6g BCAA, and 12.52g EAA.",
+                category: "flavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                matchScore: 89,
+                url: "https://www.amazon.in/dp/B0DQ4XSMTQ?linkCode=ll2&tag=pickmyprote03-21&linkId=46d1fd9e0023a03d51e1cb80d770a062"
+            },
+            {
+                brand: "AVVATAR",
+                title: "Alpha Whey Protein - Belgian Chocolate (1kg)",
+                desc: "Fresh cow milk whey with 25g protein and naturally occurring BCAAs.",
+                category: "flavored",
+                priceBracket: "2500to4000",
+                priceText: "₹2,500 - ₹4,000",
+                matchScore: 87,
+                url: "https://www.amazon.in/dp/B0G3PC3NF6?linkCode=ll2&tag=pickmyprote03-21&linkId=ce8145f87d65d9334dc89edd273bd231"
+            },
+
+            // --- ABOVE 4000 ---
+            {
+                brand: "OPTIMUM NUTRITION (ON)",
+                title: "Gold Standard 100% Whey - Alphonso Mango",
+                desc: "World standard whey protein with 24g premium protein blend per serving.",
+                category: "flavored",
+                priceBracket: "above4000",
+                priceText: "Above ₹4,000",
+                matchScore: 99,
+                url: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?linkCode=ll2&tag=pickmyprote03-21&linkId=94c4eeb3c3d722ea89b07614e6111dcc"
+            },
+            {
+                brand: "ISOPURE",
+                title: "Zero Carb 100% Whey Protein Isolate Unflavored",
+                desc: "100% pure whey isolate with zero carbs and lactose-free digestive profile.",
+                category: "isolate",
+                priceBracket: "above4000",
+                priceText: "Above ₹4,000",
+                matchScore: 96,
+                url: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?linkCode=ll2&tag=pickmyprote03-21&linkId=9d4c440c7a033c0610e5e432fd77d9b0"
+            }
+        ];
+
+        document.getElementById('start-btn').onclick = function() {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            document.getElementById('step-3').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.getElementById('calc-btn').onclick = function() {
+            var weight = parseFloat(document.getElementById('weight').value) || 70;
+            var goal = document.getElementById('goal').value;
+            var diet = document.getElementById('diet').value;
+            var priceBracket = document.getElementById('price').value;
+
+            var multiplier = 1.4;
+            if (goal === 'muscle') multiplier = 2.0;
+            if (goal === 'fatloss') multiplier = 1.8;
+
+            var totalTarget = Math.round(weight * multiplier);
+            var foodProtein = Math.round(totalTarget * 0.6);
+            var supplementProtein = totalTarget - foodProtein;
+            var scoopsNeeded = (supplementProtein / 24).toFixed(1);
+
+            document.getElementById('target-output').innerText = totalTarget + "g protein / day";
+            document.getElementById('target-summary').innerText = "Aim for ~" + foodProtein + "g from whole foods + " + supplementProtein + "g (" + scoopsNeeded + " scoop/day) from protein powder.";
+
+            // Filter products by selected price bracket
+            var priceMatches = CATALOG.filter(function(item) {
+                return item.priceBracket === priceBracket;
+            });
+
+            // Try finding exact diet matches inside price bracket
+            var exactMatches = priceMatches.filter(function(item) {
+                return item.category === diet;
+            });
+
+            var displayList = exactMatches.length > 0 ? exactMatches : priceMatches;
+
+            // Render Top Product (Top Match)
+            var topItem = displayList[0];
+            var topHtml = '<div class="product-card top-match">' +
+                '<div class="product-badge-box">' +
+                    '<span class="p-icon">🥛</span>' +
+                    '<span class="p-text">100% Pure</span>' +
+                '</div>' +
+                '<div class="product-info">' +
+                    '<div class="tag-group">' +
+                        '<span class="top-match-tag">🔥 98% Match</span>' +
+                        '<span class="brand-tag">' + topItem.brand + '</span>' +
+                        '<span class="tag price-tag">' + topItem.priceText + '</span>' +
+                    '</div>' +
+                    '<h3>' + topItem.title + '</h3>' +
+                    '<p>' + topItem.desc + '</p>' +
+                    '<a href="' + topItem.url + '" target="_blank" rel="noopener noreferrer" class="buy-btn">🛒 Buy on Amazon &rarr;</a>' +
+                '</div>' +
+            '</div>';
+
+            document.getElementById('top-product').innerHTML = topHtml;
+
+            // Render Other Products in same price bracket
+            var otherProducts = priceMatches.filter(function(item) {
+                return item.title !== topItem.title;
+            });
+
+            var priceTextLabel = priceBracket === 'under2500' ? 'Under ₹2,500' : (priceBracket === '2500to4000' ? '₹2,500 – ₹4,000' : 'Above ₹4,000');
+            document.getElementById('more-heading').innerText = "🔍 Explore More Options (" + priceTextLabel + ")";
+
+            var otherHtml = "";
+            for (var i = 0; i < otherProducts.length; i++) {
+                var item = otherProducts[i];
+                otherHtml += '<div class="product-card">' +
+                    '<div class="product-badge-box">' +
+                        '<span class="p-icon">🥛</span>' +
+                        '<span class="p-text">100% Pure</span>' +
+                    '</div>' +
+                    '<div class="product-info">' +
+                        '<div class="tag-group">' +
+                            '<span class="match-badge">🎯 ' + item.matchScore + '% Match</span>' +
+                            '<span class="brand-tag">' + item.brand + '</span>' +
+                            '<span class="tag price-tag">' + item.priceText + '</span>' +
+                        '</div>' +
+                        '<h3>' + item.title + '</h3>' +
+                        '<p>' + item.desc + '</p>' +
+                        '<a href="' + item.url + '" target="_blank" rel="noopener noreferrer" class="buy-btn">🛒 Buy on Amazon &rarr;</a>' +
+                    '</div>' +
+                '</div>';
+            }
+
+            document.getElementById('other-products-list').innerHTML = otherHtml;
+
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.getElementById('restart-btn').onclick = function() {
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
+</body>
+</html>
