@@ -239,4 +239,27 @@
                 <span>Your Matches</span>
             </div>
             <div style="background: #fff7ed; border: 2px solid #fb923c; padding: 20px; border-radius: 16px; text-align: center; margin-bottom: 24px;">
-                <p style="font-
+                <p style="font-size: 0.8rem; color: #9a3412; font-weight: 800; text-transform: uppercase;">Recommended Daily Intake</p>
+                <h2 id="target-output" style="color: #9a3412; font-size: 2.2rem; margin: 4px 0;">0g / day</h2>
+                <p id="target-summary" style="color: #c2410c; font-size: 0.9rem; font-weight: 600;"></p>
+            </div>
+
+            <h3 style="font-size: 1.25rem; color: #0f172a; font-weight: 800; margin-bottom: 14px;">🌟 Top Recommended Match</h3>
+            <div id="top-product"></div>
+
+            <h3 style="font-size: 1.25rem; color: #0f172a; font-weight: 800; margin: 24px 0 14px 0;">🔍 Explore More Options</h3>
+            <div id="other-products"></div>
+
+            <button type="button" class="btn-primary" style="background: #64748b; margin-top: 20px;" onclick="showStep(1)">&larr; Recalculate</button>
+        </div>
+    </div>
+
+    <script>
+        var CATALOG = [
+            { brand: "MUSCLEBLAZE", title: "Biozyme Performance Whey (1kg) - Rich Milk Chocolate", desc: "US Patent-published Enhanced Absorption Formula delivering 25g protein per scoop.", category: "flavored", priceBracket: "2500to4000", priceText: "₹2,500 - ₹4,000", url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?linkCode=ll2&tag=pickmyprote03-21&linkId=047122cc03b79d184c8949803bb1b656" },
+            { brand: "MUSCLEBLAZE", title: "Raw Whey Protein 80% Unflavored (1kg)", desc: "Labdoor USA certified clean unflavored raw whey with 24g protein per scoop.", category: "unflavored", priceBracket: "2500to4000", priceText: "₹2,500 - ₹4,000", url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?linkCode=ll2&tag=pickmyprote03-21&linkId=047122cc03b79d184c8949803bb1b656" },
+            { brand: "MUSCLEBLAZE", title: "Biozyme Iso-Zero 100% Whey Isolate (1kg)", desc: "Low carb, lactose-free pure whey isolate with 27g high-purity protein per scoop.", category: "isolate", priceBracket: "above4000", priceText: "Above ₹4,000", url: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?linkCode=ll2&tag=pickmyprote03-21&linkId=047122cc03b79d184c8949803bb1b656" },
+            { brand: "OSOAA", title: "Impact Whey Protein 1kg - Malai Kulfi", desc: "Isolate & concentrate blend with 24g protein & digestive enzymes.", category: "flavored", priceBracket: "under2500", priceText: "Under ₹2,500", url: "https://www.amazon.in/dp/B0DWN3P7JD?linkCode=ll2&tag=pickmyprote03-21&linkId=597fb49d7bdaa423b984b3d88df7f96d" },
+            { brand: "NAKPRO NUTRITION", title: "Perform Whey Protein Concentrate (1kg)", desc: "Budget-friendly performance whey concentrate for daily muscle recovery.", category: "unflavored", priceBracket: "under2500", priceText: "Under ₹2,500", url: "https://www.amazon.in/dp/B0BLZ751FC?linkCode=ll2&tag=pickmyprote03-21&linkId=f25229aa05d93d6a115cd7c8b25dca0d" },
+            { brand: "AS-IT-IS NUTRITION", title: "Pure Whey Protein Concentrate 80% Unflavored (1kg)", desc: "100% raw unflavored concentrate. Labdoor certified.", category: "unflavored", priceBracket: "2500to4000", priceText: "₹2,500 - ₹4,000", url: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?linkCode=ll2&tag=pickmyprote03-21&linkId=33a5562df5760f0e92efff36552681d4" },
+            { brand: "OPTIMUM NUTRITION (ON)", title: "Gold Standard 100% Whey - Mango", desc: "World standard whey protein with 24g premium protein blend.", category: "flavored", priceBracket: "above4000", priceText: "Above ₹4,000", url: "
