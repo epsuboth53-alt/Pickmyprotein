@@ -9,7 +9,7 @@
             --primary-orange: #f97316;
             --primary-orange-dark: #ea580c;
             --orange-soft: #fff7ed;
-            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #475569;
         }
@@ -23,49 +23,49 @@
             background-size: cover;
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 60px;
             min-height: 100vh;
+            padding-bottom: 60px;
         }
 
         /* HERO HEADER */
         .hero {
-            background: linear-gradient(135deg, rgba(255, 247, 237, 0.95) 0%, rgba(255, 237, 213, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(255, 247, 237, 0.96) 0%, rgba(255, 237, 213, 0.96) 100%);
             border-bottom: 2px solid #fed7aa;
             text-align: center;
-            padding: 40px 20px 45px 20px;
+            padding: 35px 20px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         .logo-container {
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .logo-badge {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             color: white;
             font-weight: 900;
-            font-size: 1.7rem;
-            border-radius: 14px;
+            font-size: 1.6rem;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
         }
         .brand-title {
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             color: #9a3412;
         }
         .hero p {
             color: #c2410c;
-            font-size: 1rem;
-            font-weight: 500;
-            max-width: 520px;
-            margin: 4px auto 0 auto;
+            font-size: 0.95rem;
+            font-weight: 600;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         /* APP CONTAINER */
@@ -73,14 +73,15 @@
             max-width: 620px;
             margin: 0 auto;
             padding: 0 16px;
+            position: relative;
+            z-index: 10;
         }
         .card {
             background: var(--card-bg);
             padding: 32px 26px;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border: 2.5px solid #fb923c;
-            backdrop-filter: blur(10px);
         }
 
         /* PROGRESS TRACKER */
@@ -98,7 +99,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* PROTEIN AWARENESS GRID */
+        /* FACTS GRID */
         .facts-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -113,39 +114,3 @@
             text-align: center;
         }
         .fact-card .icon { font-size: 1.4rem; margin-bottom: 4px; display: block; }
-        .fact-card .title { font-size: 0.8rem; font-weight: 800; color: #9a3412; text-transform: uppercase; }
-        .fact-card .desc { font-size: 0.75rem; color: #c2410c; margin-top: 2px; }
-
-        /* BRIGHT & ATTRACTIVE ORANGE FORM ELEMENTS */
-        .form-group { margin-bottom: 22px; text-align: left; }
-        label { display: block; font-weight: 700; margin-bottom: 8px; color: #9a3412; font-size: 0.95rem; }
-        
-        input, select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2.5px solid #fb923c;
-            border-radius: 12px;
-            font-size: 1rem;
-            background-color: #fffaf5;
-            color: var(--text-main);
-            font-weight: 600;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 6px rgba(249, 115, 22, 0.08);
-        }
-        
-        input:hover, select:hover {
-            border-color: #f97316;
-            background-color: #ffffff;
-            box-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #ea580c;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 5px rgba(249, 115, 22, 0.25);
-        }
-
-        /* BUTTONS */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-
