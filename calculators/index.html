@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best Protein Guides in India (2026) | Pick My Protein</title>
+    <title>Protein & Cost-Per-Gram Calculators | Pick My Protein</title>
     <style>
         :root { --primary: #f36c21; --bg-dark: #0f172a; }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-dark); color: #fff; margin: 0; line-height: 1.6; }
         header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; }
         nav a { color: #cbd5e1; text-decoration: none; margin-left: 1.5rem; }
-        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-        .list-item { background: #1e293b; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: var(--primary); color: #fff; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem; }
+        h1, h2 { margin-top: 0; }
+        label { display: block; margin: 1rem 0 0.4rem; color: #cbd5e1; font-size: 0.95rem; }
+        input, select { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 1rem; box-sizing: border-box; }
+        button { background: var(--primary); color: #fff; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 1.25rem; width: 100%; }
+        button:hover { opacity: 0.92; }
+        .result { margin-top: 1.25rem; padding: 1rem; background: #0f172a; border-left: 4px solid var(--primary); border-radius: 6px; display: none; }
+        .rec-link { display: inline-block; margin-top: 0.75rem; color: var(--primary); font-weight: 600; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -19,40 +25,88 @@
     <header>
         <a href="/" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 1.2rem;">pickmyprotein.com</a>
         <nav>
-            <a href="/calculators/">Calculators</a>
+            <a href="/calculators/" style="color: #f36c21;">Calculators</a>
             <a href="/compare/">Compare</a>
-            <a href="/best-protein/" style="color: #f36c21;">Best Guides</a>
+            <a href="/best-protein/">Best Guides</a>
         </nav>
     </header>
 
     <div class="container">
-        <h1>Best Protein Buying Guides (Ranked by Value & Purity)</h1>
-        <p style="color: #94a3b8;">Curated rankings filtered by budget, lab-tested accuracy, and digestibility.</p>
+        <h1>Protein Calculators</h1>
 
-        <div class="list-item">
-            <div>
-                <h3 style="margin: 0 0 0.3rem;">Best Whey Protein Under ₹1,500</h3>
-                <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Top budget raw and flavored whey options with verified protein content.</p>
-            </div>
-            <a href="/best-protein/under-1500.html" class="btn">Read Guide</a>
+        <!-- Tool 1: Daily Protein Intake Calculator -->
+        <div class="card">
+            <h2>1. Daily Protein Target Calculator</h2>
+            <label for="weight">Your Body Weight (kg)</label>
+            <input type="number" id="weight" placeholder="e.g., 70" min="20" max="250">
+
+            <label for="goal">Fitness Goal</label>
+            <select id="goal">
+                <option value="1.2">General Health & Fitness (1.2g / kg)</option>
+                <option value="1.6" selected>Muscle Gain / Hypertrophy (1.6g / kg)</option>
+                <option value="2.0">Fat Loss / Muscle Retention (2.0g / kg)</option>
+            </select>
+
+            <button type="button" onclick="calcDaily()">Calculate Daily Target</button>
+            <div id="dailyResult" class="result"></div>
         </div>
 
-        <div class="list-item">
-            <div>
-                <h3 style="margin: 0 0 0.3rem;">Best Whey Protein Under ₹2,000</h3>
-                <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Highest protein-per-scoop value picks for daily muscle recovery.</p>
-            </div>
-            <a href="/best-protein/under-2000.html" class="btn">Read Guide</a>
-        </div>
+        <!-- Tool 2: True Cost Per Gram Calculator -->
+        <div class="card">
+            <h2>2. True Cost-Per-Gram Calculator</h2>
+            <label for="price">Tub/Pack Price (₹)</label>
+            <input type="number" id="price" placeholder="e.g., 2199" min="1">
 
-        <div class="list-item">
-            <div>
-                <h3 style="margin: 0 0 0.3rem;">Best Protein for Beginners (Zero Bloating)</h3>
-                <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Easy-to-digest whey and plant blends for first-time buyers.</p>
-            </div>
-            <a href="/best-protein/beginners.html" class="btn">Read Guide</a>
+            <label for="servings">Total Scoops / Servings in Pack</label>
+            <input type="number" id="servings" placeholder="e.g., 30" min="1">
+
+            <label for="proteinPerScoop">Protein Per Scoop (grams)</label>
+            <input type="number" id="proteinPerScoop" placeholder="e.g., 24" min="1">
+
+            <button type="button" onclick="calcCost()">Calculate Cost Per Gram</button>
+            <div id="costResult" class="result"></div>
         </div>
     </div>
+
+    <script>
+        function calcDaily() {
+            const w = parseFloat(document.getElementById('weight').value);
+            const g = parseFloat(document.getElementById('goal').value);
+            if (!w || w <= 0) {
+                alert('Please enter a valid body weight in kg.');
+                return;
+            }
+            const target = Math.round(w * g);
+            const scoopsNeeded = (target / 24).toFixed(1);
+            const res = document.getElementById('dailyResult');
+            res.style.display = 'block';
+            res.innerHTML = `
+                <strong>Your Daily Target:</strong> ${target}g of protein per day.<br>
+                <span style="color:#94a3b8; font-size:0.9rem;">1 scoop of standard whey (~24g) covers ${Math.round((24 / target) * 100)}% of your daily need (${scoopsNeeded} scoops total if taken purely via whey).</span><br>
+                <a href="/best-protein/" class="rec-link">View Best Proteins For Your Target &rarr;</a>
+            `;
+        }
+
+        function calcCost() {
+            const p = parseFloat(document.getElementById('price').value);
+            const s = parseFloat(document.getElementById('servings').value);
+            const g = parseFloat(document.getElementById('proteinPerScoop').value);
+            if (!p || !s || !g || p <= 0 || s <= 0 || g <= 0) {
+                alert('Please enter valid numbers for price, servings, and protein per scoop.');
+                return;
+            }
+            const totalProtein = s * g;
+            const costPerGram = (p / totalProtein).toFixed(2);
+            const verdict = costPerGram <= 2.8 ? 'Great value for money!' : 'Slightly pricey per gram compared to budget concentrates.';
+            const res = document.getElementById('costResult');
+            res.style.display = 'block';
+            res.innerHTML = `
+                <strong>Cost Per Gram of Pure Protein:</strong> ₹${costPerGram} / gram<br>
+                <span style="color:#94a3b8; font-size:0.9rem;">Total pure protein in pack: ${totalProtein}g. ${verdict}</span><br>
+                <a href="/compare/" class="rec-link">Compare Top Value Brands &rarr;</a>
+            `;
+        }
+    </script>
 
 </body>
 </html>
