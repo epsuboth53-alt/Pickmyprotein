@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Protein Powders in India | Pick My Protein</title>
+    <title>Compare Protein Powders in India (Interactive Builder) | Pick My Protein</title>
     <style>
-        :root { --primary: #f36c21; --bg-dark: #0f172a; }
+        :root { --primary: #f36c21; --bg-dark: #0f172a; --card-bg: #1e293b; --border: #334155; }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-dark); color: #fff; margin: 0; line-height: 1.6; }
-        header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; }
+        header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         nav a { color: #cbd5e1; text-decoration: none; margin-left: 1.5rem; }
-        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-        .card { background: #1e293b; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; text-decoration: none; color: #fff; display: block; }
+        .container { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+        .builder-box { background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2.5rem; }
+        .select-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; margin-top: 1rem; }
+        .slot-card { background: var(--bg-dark); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--border); }
+        label { display: block; font-size: 0.85rem; color: #cbd5e1; margin: 0.6rem 0 0.25rem; }
+        select, input { width: 100%; padding: 0.65rem; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); color: #fff; font-size: 0.95rem; box-sizing: border-box; }
+        .custom-fields { display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
+        button { background: var(--primary); color: #fff; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 1.5rem; width: 100%; }
+        button:hover { opacity: 0.92; }
+        .table-wrap { overflow-x: auto; margin-top: 1.5rem; display: none; }
+        table { width: 100%; border-collapse: collapse; background: var(--bg-dark); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 0.9rem; border: 1px solid var(--border); text-align: left; font-size: 0.95rem; }
+        th { background: #0b1120; color: #cbd5e1; width: 25%; }
+        .winner-badge { background: rgba(52, 211, 153, 0.15); color: #34d399; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 0.3rem; }
+        .btn-buy { display: inline-block; background: var(--primary); color: #fff; padding: 0.45rem 0.85rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.25rem; }
+        .card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); text-decoration: none; color: #fff; display: block; }
         .card:hover { border-color: var(--primary); }
         .tag { background: rgba(243, 108, 33, 0.15); color: var(--primary); padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
     </style>
@@ -28,29 +42,47 @@
     </header>
 
     <div class="container">
-        <h1>Head-to-Head Protein Comparisons</h1>
-        <p style="color: #94a3b8;">Side-by-side breakdowns of protein per scoop, cost per gram, and lab-test purity.</p>
+        <h1>Build Your Custom Protein Comparison</h1>
+        <p style="color: #94a3b8;">Select up to 3 proteins from our database—or choose <strong>"+ Add Custom Product"</strong> to enter any tub's price and nutrition label to compare true cost per gram.</p>
 
-        <div class="grid">
-            <a href="/compare/muscleblaze-vs-asitis.html" class="card">
-                <span class="tag">TOP FACE-OFF</span>
-                <h3>MuscleBlaze vs AS-IT-IS</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Enzyme-enhanced clean concentrate vs pure unflavored raw whey value.</p>
-            </a>
+        <div class="builder-box">
+            <div class="select-grid">
+                <!-- Product Slot 1 -->
+                <div class="slot-card">
+                    <strong style="color: var(--primary);">Product 1</strong>
+                    <label for="select1">Choose Protein or Custom</label>
+                    <select id="select1" onchange="toggleCustom(1)">
+                        <option value="nakpro" selected>Nakpro Gold Whey Concentrate (1kg)</option>
+                        <option value="asitis">AS-IT-IS Raw Whey 80% (1kg)</option>
+                        <option value="mb_raw">MuscleBlaze Raw Whey with Enzymes (1kg)</option>
+                        <option value="avvatar">Avvatar Whey Protein (1kg)</option>
+                        <option value="on_gold">ON Gold Standard 100% Whey</option>
+                        <option value="isopure">Isopure Zero Carb Whey Isolate (1kg)</option>
+                        <option value="cosmix">Cosmix No-Nonsense Plant Protein (1kg)</option>
+                        <option value="wellbeing">Wellbeing Nutrition Raw Whey + Probiotics</option>
+                        <option value="custom">+ Add Custom Product</option>
+                    </select>
+                    <div id="custom1" class="custom-fields">
+                        <label>Product Name</label>
+                        <input type="text" id="name1" placeholder="e.g., MyProtein Impact Whey">
+                        <label>Pack Price (₹)</label>
+                        <input type="number" id="price1" placeholder="e.g., 2400">
+                        <label>Total Scoops in Pack</label>
+                        <input type="number" id="scoops1" placeholder="e.g., 30">
+                        <label>Protein Per Scoop (g)</label>
+                        <input type="number" id="prot1" placeholder="e.g., 21">
+                    </div>
+                </div>
 
-            <a href="/compare/nakpro-vs-muscleblaze.html" class="card">
-                <span class="tag">BUDGET BATTLE</span>
-                <h3>Nakpro Gold vs MuscleBlaze</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Which budget option delivers higher pure protein per rupee?</p>
-            </a>
-
-            <a href="/compare/avvatar-vs-on-gold-standard.html" class="card">
-                <span class="tag">PREMIUM</span>
-                <h3>Avvatar vs ON Gold Standard</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">100% fresh Indian cow milk whey vs global imported gold standard.</p>
-            </a>
-        </div>
-    </div>
-
-</body>
-</html>
+                <!-- Product Slot 2 -->
+                <div class="slot-card">
+                    <strong style="color: var(--primary);">Product 2</strong>
+                    <label for="select2">Choose Protein or Custom</label>
+                    <select id="select2" onchange="toggleCustom(2)">
+                        <option value="nakpro">Nakpro Gold Whey Concentrate (1kg)</option>
+                        <option value="asitis" selected>AS-IT-IS Raw Whey 80% (1kg)</option>
+                        <option value="mb_raw">MuscleBlaze Raw Whey with Enzymes (1kg)</option>
+                        <option value="avvatar">Avvatar Whey Protein (1kg)</option>
+                        <option value="on_gold">ON Gold Standard 100% Whey</option>
+                        <option value="isopure">Isopure Zero Carb Whey Isolate (1kg)</option>
+                        <option value="cosmix">Cosmix No-Nonsense Plant Protein (1kg)</
