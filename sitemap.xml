@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://pickmyprotein.com/</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/about</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/contact</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/privacy</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/disclosure</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guides</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-choose-vegan-protein-powder</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-how-much-protein-per-day</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-how-to-read-protein-label</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-price-per-gram-of-protein</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-protein-powder-for-beginners</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-protein-powder-for-lactose-intolerance</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-protein-powder-testing-and-labels</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-soy-protein-for-muscle</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-whey-concentrate-vs-isolate</loc><lastmod>2026-10-10</lastmod></url>
-<url><loc>https://pickmyprotein.com/guide-whey-vs-plant-protein</loc><lastmod>2026-10-10</lastmod></url>
+  <url>
+    <loc>https://pickmyprotein.com/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/calculators/</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/compare/</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/compare/muscleblaze-vs-asitis.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/compare/nakpro-vs-muscleblaze.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/compare/avvatar-vs-on-gold-standard.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/best-protein/</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/best-protein/under-1500.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/best-protein/under-2000.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pickmyprotein.com/best-protein/beginners.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
