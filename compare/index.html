@@ -22,7 +22,7 @@
         .btn-mini { background: #334155; color: #fff; border: 1px solid #475569; padding: 0.45rem 0.65rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; flex: 1; text-align: center; font-weight: 600; }
         .btn-mini:hover { border-color: var(--primary); color: var(--primary); }
         .status-msg { font-size: 0.78rem; color: #34d399; margin-top: 0.35rem; min-height: 1.1rem; }
-        .btn-main { background: var(--primary); color: #fff; border: none; padding: 0.95rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; margin-top: 1.5rem; width: 100%; }
+        .btn-main { background: var(--primary); color: #fff; border: none; padding: 0.95rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; margin-top: 1.5rem; width: 100%; box-shadow: 0 4px 12px rgba(243, 108, 33, 0.3); }
         .btn-main:hover { opacity: 0.92; }
         .table-wrap { overflow-x: auto; margin-top: 1.5rem; display: none; }
         table { width: 100%; border-collapse: collapse; background: var(--bg-dark); border-radius: 8px; overflow: hidden; }
@@ -229,7 +229,8 @@
                 </div>
             </div>
 
-            <button type="button" class="btn-main" onclick="runComparison()">⚡ Compare Selected Proteins Side-by-Side</button>
+            <!-- Connected to execute compareProducts() -->
+            <button type="button" class="btn-main" onclick="compareProducts()">⚡ Compare Selected Proteins Side-by-Side</button>
 
             <div id="resultWrap" class="table-wrap">
                 <table id="comparisonTable"></table>
@@ -279,13 +280,4 @@
             avvatar_whey: { name: "Avvatar Whey Protein (1kg)", type: "Fresh Cow Milk Whey Blend", price: 2999, scoops: 29, protein: 27, highlight: "100% Fresh Indian Cow Milk • Rich Flavours", link: "https://www.amazon.in/gp/aw/d/B09CKM57HL?linkCode=ll2&tag=pickmyprote03-21&linkId=ccc44afae8a71d4248f2a7356a06e5b3&ref_=as_li_ss_tl" },
             the_whole_truth: { name: "The Whole Truth Unflavoured Whey (1kg)", type: "100% Clean Whey Concentrate", price: 3199, scoops: 33, protein: 24, highlight: "Zero Gums, Lecithin, or Artificial Flavours", link: "https://www.amazon.in/s?k=The+Whole+Truth+Whey+Protein+1kg&tag=pickmyprote03-21" },
             on_gold: { name: "ON Gold Standard 100% Whey (907g)", type: "Whey Isolate Primary Blend", price: 3699, scoops: 29, protein: 24, highlight: "Global Benchmark • Informed Choice Certified", link: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?linkCode=ll2&tag=pickmyprote03-21&linkId=94c4eeb3c3d722ea89b07614e6111dcc&ref_=as_li_ss_tl" },
-            mb_biozyme_pr: { name: "MuscleBlaze Biozyme Whey PR (1kg)", type: "High-Protein Whey + 3g Creatine", price: 3299, scoops: 25, protein: 30, highlight: "30g Protein + 3g Creatine + AstraGin • Trustified", link: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?linkCode=ll2&tag=pickmyprote03-21&linkId=b0eba3a26c2b19e6d2bf0e02b1897656&ref_=as_li_ss_tl" },
-            isopure_zero: { name: "Isopure Zero Carb Whey Isolate (1kg)", type: "100% Whey Protein Isolate", price: 4999, scoops: 32, protein: 25, highlight: "Zero Carbs • Lactose-Free Pure Isolate", link: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?linkCode=ll2&tag=pickmyprote03-21&linkId=9d4c440c7a033c0610e5e432fd77d9b0&ref_=as_li_ss_tl" },
-            nakpro_isolate: { name: "Nakpro Platinum 100% Whey Isolate (1kg)", type: "100% Whey Protein Isolate", price: 2799, scoops: 30, protein: 28, highlight: "Most Affordable Pure Whey Isolate in India", link: "https://www.amazon.in/s?k=Nakpro+Platinum+Whey+Protein+Isolate+1kg&tag=pickmyprote03-21" },
-            cosmix_plant: { name: "Cosmix No-Nonsense Plant Protein (1kg)", type: "Pea & Brown Rice Isolate", price: 2499, scoops: 28, protein: 24, highlight: "Zero Gums or Preservatives • Gut-Friendly Vegan", link: "https://www.amazon.in/No-Nonsense-Protein-Indonesian-Isolate-Essential/dp/B0DM1X4FLG?linkCode=ll2&tag=pickmyprote03-21&linkId=711ee4a47bb186fd27345b6cd0cca48e&ref_=as_li_ss_tl" },
-            truebasics_plant: { name: "TrueBasics Clean Plant Protein (1kg)", type: "Brown Rice & Pea Protein", price: 2199, scoops: 28, protein: 24, highlight: "Tested for Heavy Metals & Pesticides • No Lactose", link: "https://www.amazon.in/TrueBasics-Clean-Protein-Powder-Chocolate/dp/B0FMRVH8QB?linkCode=ll2&tag=pickmyprote03-21&linkId=fd149a124b7ebbea605565d8f1576046&ref_=as_li_ss_tl" },
-            oziva_plant: { name: "OZiva Organic Plant Protein (1kg)", type: "Pea, Brown Rice & Quinoa", price: 2599, scoops: 27, protein: 30, highlight: "30g Complete Plant Protein • Zero Added Sugar", link: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?linkCode=ll2&tag=pickmyprote03-21&linkId=28a37625abbc78ac673b524be37e077e&ref_=as_li_ss_tl" },
-            origin_plant: { name: "Origin Nutrition Daily Plant Protein (1kg)", type: "European Golden Pea & Pumpkin Seed", price: 2699, scoops: 30, protein: 25, highlight: "Informed Choice Certified • Smooth Texture", link: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?linkCode=ll2&tag=pickmyprote03-21&linkId=e357994c9e8845eb80ea088e44396445&ref_=as_li_ss_tl" },
-            nutrabay_pea: { name: "Nutrabay Gold Hydrolyzed Pea Protein (1kg)", type: "Hydrolyzed Pea Protein Isolate", price: 1699, scoops: 28, protein: 25, highlight: "Trustified Certified • Budget Vegan Option", link: "https://www.amazon.in/NUTRABAY-Gold-100-Protein-Powder/dp/B0G44ZRYRX?linkCode=ll2&tag=pickmyprote03-21&linkId=c44e8de84fba0ec23c3e7008713f1bdc&ref_=as_li_ss_tl" },
-            tata_egg: { name: "Tata 1mg Egg White Protein (1kg)", type: "Dairy-Free Egg Albumin Protein", price: 2299, scoops: 30, protein: 24, highlight: "Zero Lactose • High Bioavailability Without Dairy", link: "https://www.amazon.in/White-Protein-Powder-BCAAs-Chocolate/dp/B0HFKFJ637?linkCode=ll2&tag=pickmyprote03-21&linkId=e2a92537f09e93de4455c2ed60cb615f&ref_=as_li_ss_tl" },
-            asitis_soy: { name: "AS-IT-IS Soy Protein Isolate (1kg)", type: "90% Soy Protein Isolate", price: 1199, scoops: 30, protein: 30, highlight: "Lowest Cost-Per-Gram Protein • 30g/scoop", link: "
+            mb_biozyme_pr: { name: "MuscleBlaze Biozyme Whey PR (1kg)", type: "High-Protein Whey + 3g Creatine", price: 3299, scoops: 25, protein: 30, highlight: "30g Protein + 3g Creatine + AstraGin • Trustified", link: "
