@@ -1,436 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Protein Powders in India | Pick My Protein</title>
-    <style>
-        :root { --primary: #f36c21; --bg-dark: #0f172a; --card-bg: #1e293b; --border: #334155; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-dark); color: #fff; margin: 0; line-height: 1.6; }
-        header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        nav a { color: #cbd5e1; text-decoration: none; margin-left: 1.5rem; }
-        .container { max-width: 980px; margin: 2rem auto; padding: 0 1rem; }
-        .builder-box { background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2.5rem; }
-        .select-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1rem; }
-        .slot-card { background: var(--bg-dark); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--border); }
-        label { display: block; font-size: 0.85rem; color: #cbd5e1; margin: 0.6rem 0 0.25rem; }
-        select, input { width: 100%; padding: 0.65rem; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); color: #fff; font-size: 0.92rem; box-sizing: border-box; }
-        optgroup { background: #0f172a; color: #f36c21; font-weight: 700; }
-        option { background: #1e293b; color: #fff; font-weight: 400; }
-        .custom-fields { display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
-        .mini-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
-        .btn-mini { background: #334155; color: #fff; border: 1px solid #475569; padding: 0.45rem 0.65rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; flex: 1; text-align: center; font-weight: 600; }
-        .btn-mini:hover { border-color: var(--primary); color: var(--primary); }
-        .status-msg { font-size: 0.78rem; color: #34d399; margin-top: 0.35rem; min-height: 1.1rem; }
-        .btn-main { background: var(--primary); color: #fff; border: none; padding: 0.95rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; margin-top: 1.5rem; width: 100%; box-shadow: 0 4px 12px rgba(243, 108, 33, 0.3); }
-        .btn-main:hover { opacity: 0.92; }
-        .table-wrap { overflow-x: auto; margin-top: 1.5rem; display: none; }
-        table { width: 100%; border-collapse: collapse; background: var(--bg-dark); border-radius: 8px; overflow: hidden; }
-        th, td { padding: 0.9rem; border: 1px solid var(--border); text-align: left; font-size: 0.95rem; }
-        th { background: #0b1120; color: #cbd5e1; width: 22%; }
-        .winner-badge { background: rgba(52, 211, 153, 0.15); color: #34d399; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 0.3rem; }
-        .btn-buy { display: inline-block; background: var(--primary); color: #fff; padding: 0.45rem 0.85rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.25rem; }
-        .card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); text-decoration: none; color: #fff; display: block; }
-        .card:hover { border-color: var(--primary); }
-        .tag { background: rgba(243, 108, 33, 0.15); color: var(--primary); padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <a href="/" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 1.2rem;">pickmyprotein.com</a>
-        <nav>
-            <a href="/calculators/">Calculators</a>
-            <a href="/compare/" style="color: #f36c21;">Compare</a>
-            <a href="/best-protein/">Best Guides</a>
-        </nav>
-    </header>
-
-    <div class="container">
-        <h1>Build Your Custom Protein Comparison</h1>
-        <p style="color: #94a3b8;">Select up to 3 supplements from our 24-product database—or choose <strong>"+ Add Custom Product"</strong> to look up any brand online.</p>
-
-        <div class="builder-box">
-            <div class="select-grid">
-                <!-- Slot 1 -->
-                <div class="slot-card">
-                    <strong style="color: var(--primary);">Product 1</strong>
-                    <label for="select1">Choose Protein or Custom</label>
-                    <select id="select1" onchange="toggleCustom(1)">
-                        <optgroup label="Whey Concentrates">
-                            <option value="nakpro_gold">Nakpro Gold Whey Concentrate (1kg)</option>
-                            <option value="asitis_raw">AS-IT-IS Raw Whey 80% (1kg)</option>
-                            <option value="asitis_one_780">AS-IT-IS ONE Whey Concentrate (780g)</option>
-                            <option value="asitis_atom">AS-IT-IS ATOM Whey Chocolate (1kg)</option>
-                            <option value="mb_raw_white">MuscleBlaze 100% Clean Raw Whey (1kg)</option>
-                            <option value="mb_raw_enzymes" selected>MuscleBlaze Raw Whey with Enzymes (1kg)</option>
-                            <option value="wellbeing_whey">Wellbeing Nutrition Raw Whey + Probiotics</option>
-                            <option value="yogabar_pro">Yogabar Pro Clean Whey Concentrate (1kg)</option>
-                            <option value="denzour_raw">Denzour Denz-Raw Whey 80% (1kg)</option>
-                            <option value="denzour_lean">Denzour Denz-Lean Whey (1kg)</option>
-                            <option value="avvatar_whey">Avvatar Whey Protein (1kg)</option>
-                            <option value="the_whole_truth">The Whole Truth Unflavoured Whey (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Whey Isolates & Blends">
-                            <option value="on_gold">ON Gold Standard 100% Whey (907g)</option>
-                            <option value="mb_biozyme_pr">MuscleBlaze Biozyme Whey PR (1kg)</option>
-                            <option value="isopure_zero">Isopure Zero Carb Whey Isolate (1kg)</option>
-                            <option value="nakpro_isolate">Nakpro Platinum 100% Whey Isolate (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Plant & Vegan Proteins">
-                            <option value="cosmix_plant">Cosmix No-Nonsense Plant Protein (1kg)</option>
-                            <option value="truebasics_plant">TrueBasics Clean Plant Protein (1kg)</option>
-                            <option value="oziva_plant">OZiva Organic Plant Protein (1kg)</option>
-                            <option value="origin_plant">Origin Nutrition Daily Plant Protein (1kg)</option>
-                            <option value="nutrabay_pea">Nutrabay Gold Hydrolyzed Pea Protein (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Egg & Soy Proteins">
-                            <option value="tata_egg">Tata 1mg Egg White Protein (1kg)</option>
-                            <option value="asitis_soy">AS-IT-IS Soy Protein Isolate (1kg)</option>
-                            <option value="pure_nutrition_soy">Pure Nutrition Soy Protein Isolate (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Custom Entry">
-                            <option value="custom">+ Add Custom Product (Fetch Online)</option>
-                        </optgroup>
-                    </select>
-                    <div id="custom1" class="custom-fields">
-                        <label>Brand / Product Name</label>
-                        <input type="text" id="name1" placeholder="e.g., MyProtein Impact Whey">
-                        <div class="mini-actions">
-                            <button type="button" class="btn-mini" onclick="fetchOnlineNutrition(1)">🌐 Fetch Nutrition</button>
-                            <button type="button" class="btn-mini" onclick="openAmazonSearch(1)">🛒 Check Price</button>
-                        </div>
-                        <div id="status1" class="status-msg"></div>
-                        <label>Pack Price (₹)</label>
-                        <input type="number" id="price1" placeholder="e.g., 2499">
-                        <label>Total Scoops in Pack</label>
-                        <input type="number" id="scoops1" value="30">
-                        <label>Protein Per Scoop (g)</label>
-                        <input type="number" id="prot1" placeholder="e.g., 24">
-                    </div>
-                </div>
-
-                <!-- Slot 2 -->
-                <div class="slot-card">
-                    <strong style="color: var(--primary);">Product 2</strong>
-                    <label for="select2">Choose Protein or Custom</label>
-                    <select id="select2" onchange="toggleCustom(2)">
-                        <optgroup label="Whey Concentrates">
-                            <option value="nakpro_gold">Nakpro Gold Whey Concentrate (1kg)</option>
-                            <option value="asitis_raw" selected>AS-IT-IS Raw Whey 80% (1kg)</option>
-                            <option value="asitis_one_780">AS-IT-IS ONE Whey Concentrate (780g)</option>
-                            <option value="asitis_atom">AS-IT-IS ATOM Whey Chocolate (1kg)</option>
-                            <option value="mb_raw_white">MuscleBlaze 100% Clean Raw Whey (1kg)</option>
-                            <option value="mb_raw_enzymes">MuscleBlaze Raw Whey with Enzymes (1kg)</option>
-                            <option value="wellbeing_whey">Wellbeing Nutrition Raw Whey + Probiotics</option>
-                            <option value="yogabar_pro">Yogabar Pro Clean Whey Concentrate (1kg)</option>
-                            <option value="denzour_raw">Denzour Denz-Raw Whey 80% (1kg)</option>
-                            <option value="denzour_lean">Denzour Denz-Lean Whey (1kg)</option>
-                            <option value="avvatar_whey">Avvatar Whey Protein (1kg)</option>
-                            <option value="the_whole_truth">The Whole Truth Unflavoured Whey (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Whey Isolates & Blends">
-                            <option value="on_gold">ON Gold Standard 100% Whey (907g)</option>
-                            <option value="mb_biozyme_pr">MuscleBlaze Biozyme Whey PR (1kg)</option>
-                            <option value="isopure_zero">Isopure Zero Carb Whey Isolate (1kg)</option>
-                            <option value="nakpro_isolate">Nakpro Platinum 100% Whey Isolate (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Plant & Vegan Proteins">
-                            <option value="cosmix_plant">Cosmix No-Nonsense Plant Protein (1kg)</option>
-                            <option value="truebasics_plant">TrueBasics Clean Plant Protein (1kg)</option>
-                            <option value="oziva_plant">OZiva Organic Plant Protein (1kg)</option>
-                            <option value="origin_plant">Origin Nutrition Daily Plant Protein (1kg)</option>
-                            <option value="nutrabay_pea">Nutrabay Gold Hydrolyzed Pea Protein (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Egg & Soy Proteins">
-                            <option value="tata_egg">Tata 1mg Egg White Protein (1kg)</option>
-                            <option value="asitis_soy">AS-IT-IS Soy Protein Isolate (1kg)</option>
-                            <option value="pure_nutrition_soy">Pure Nutrition Soy Protein Isolate (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Custom Entry">
-                            <option value="custom">+ Add Custom Product (Fetch Online)</option>
-                        </optgroup>
-                    </select>
-                    <div id="custom2" class="custom-fields">
-                        <label>Brand / Product Name</label>
-                        <input type="text" id="name2" placeholder="e.g., GNC Pro Performance">
-                        <div class="mini-actions">
-                            <button type="button" class="btn-mini" onclick="fetchOnlineNutrition(2)">🌐 Fetch Nutrition</button>
-                            <button type="button" class="btn-mini" onclick="openAmazonSearch(2)">🛒 Check Price</button>
-                        </div>
-                        <div id="status2" class="status-msg"></div>
-                        <label>Pack Price (₹)</label>
-                        <input type="number" id="price2" placeholder="e.g., 2299">
-                        <label>Total Scoops in Pack</label>
-                        <input type="number" id="scoops2" value="30">
-                        <label>Protein Per Scoop (g)</label>
-                        <input type="number" id="prot2" placeholder="e.g., 24">
-                    </div>
-                </div>
-
-                <!-- Slot 3 -->
-                <div class="slot-card">
-                    <strong style="color: #94a3b8;">Product 3 (Optional)</strong>
-                    <label for="select3">Choose Protein or Custom</label>
-                    <select id="select3" onchange="toggleCustom(3)">
-                        <option value="none" selected>-- None (Compare 2) --</option>
-                        <optgroup label="Whey Concentrates">
-                            <option value="nakpro_gold">Nakpro Gold Whey Concentrate (1kg)</option>
-                            <option value="asitis_raw">AS-IT-IS Raw Whey 80% (1kg)</option>
-                            <option value="asitis_one_780">AS-IT-IS ONE Whey Concentrate (780g)</option>
-                            <option value="asitis_atom">AS-IT-IS ATOM Whey Chocolate (1kg)</option>
-                            <option value="mb_raw_white">MuscleBlaze 100% Clean Raw Whey (1kg)</option>
-                            <option value="mb_raw_enzymes">MuscleBlaze Raw Whey with Enzymes (1kg)</option>
-                            <option value="wellbeing_whey">Wellbeing Nutrition Raw Whey + Probiotics</option>
-                            <option value="yogabar_pro">Yogabar Pro Clean Whey Concentrate (1kg)</option>
-                            <option value="denzour_raw">Denzour Denz-Raw Whey 80% (1kg)</option>
-                            <option value="denzour_lean">Denzour Denz-Lean Whey (1kg)</option>
-                            <option value="avvatar_whey">Avvatar Whey Protein (1kg)</option>
-                            <option value="the_whole_truth">The Whole Truth Unflavoured Whey (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Whey Isolates & Blends">
-                            <option value="on_gold">ON Gold Standard 100% Whey (907g)</option>
-                            <option value="mb_biozyme_pr">MuscleBlaze Biozyme Whey PR (1kg)</option>
-                            <option value="isopure_zero">Isopure Zero Carb Whey Isolate (1kg)</option>
-                            <option value="nakpro_isolate">Nakpro Platinum 100% Whey Isolate (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Plant & Vegan Proteins">
-                            <option value="cosmix_plant">Cosmix No-Nonsense Plant Protein (1kg)</option>
-                            <option value="truebasics_plant">TrueBasics Clean Plant Protein (1kg)</option>
-                            <option value="oziva_plant">OZiva Organic Plant Protein (1kg)</option>
-                            <option value="origin_plant">Origin Nutrition Daily Plant Protein (1kg)</option>
-                            <option value="nutrabay_pea">Nutrabay Gold Hydrolyzed Pea Protein (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Egg & Soy Proteins">
-                            <option value="tata_egg">Tata 1mg Egg White Protein (1kg)</option>
-                            <option value="asitis_soy">AS-IT-IS Soy Protein Isolate (1kg)</option>
-                            <option value="pure_nutrition_soy">Pure Nutrition Soy Protein Isolate (1kg)</option>
-                        </optgroup>
-                        <optgroup label="Custom Entry">
-                            <option value="custom">+ Add Custom Product (Fetch Online)</option>
-                        </optgroup>
-                    </select>
-                    <div id="custom3" class="custom-fields">
-                        <label>Brand / Product Name</label>
-                        <input type="text" id="name3" placeholder="e.g., Nutrabay Pure Whey">
-                        <div class="mini-actions">
-                            <button type="button" class="btn-mini" onclick="fetchOnlineNutrition(3)">🌐 Fetch Nutrition</button>
-                            <button type="button" class="btn-mini" onclick="openAmazonSearch(3)">🛒 Check Price</button>
-                        </div>
-                        <div id="status3" class="status-msg"></div>
-                        <label>Pack Price (₹)</label>
-                        <input type="number" id="price3" placeholder="e.g., 1999">
-                        <label>Total Scoops in Pack</label>
-                        <input type="number" id="scoops3" value="30">
-                        <label>Protein Per Scoop (g)</label>
-                        <input type="number" id="prot3" placeholder="e.g., 24">
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="btn-main" onclick="compareProducts()">⚡ Compare Selected Proteins Side-by-Side</button>
-
-            <div id="resultWrap" class="table-wrap">
-                <table id="comparisonTable"></table>
-            </div>
-        </div>
-
-        <h2>Popular Pre-Built Face-Offs</h2>
-        <div class="grid">
-            <a href="/compare/muscleblaze-vs-asitis.html" class="card">
-                <span class="tag">TOP FACE-OFF</span>
-                <h3>MuscleBlaze vs AS-IT-IS</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Enzyme-enhanced clean concentrate vs pure unflavored raw whey value.</p>
-            </a>
-
-            <a href="/compare/nakpro-vs-muscleblaze.html" class="card">
-                <span class="tag">BUDGET BATTLE</span>
-                <h3>Nakpro Gold vs MuscleBlaze</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Which budget option delivers higher pure protein per rupee?</p>
-            </a>
-
-            <a href="/compare/avvatar-vs-on-gold-standard.html" class="card">
-                <span class="tag">PREMIUM</span>
-                <h3>Avvatar vs ON Gold Standard</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">100% fresh Indian cow milk whey vs global imported gold standard.</p>
-            </a>
-        </div>
-    </div>
-
-    <footer style="text-align:center; padding:1.5rem; color:#64748b; font-size:0.85rem;">
-        As an Amazon Associate, Pick My Protein earns from qualifying purchases. <a href="/disclosure.html" style="color:#f36c21;">Disclosure</a>
-    </footer>
-
-    <script>
-        const AFFILIATE_TAG = "pickmyprote03-21";
-
-        const presetProteins = {
-            nakpro_gold: { name: "Nakpro Gold Whey Concentrate (1kg)", type: "Whey Concentrate", price: 2199, scoops: 30, protein: 28, highlight: "Trustified Certified • 28g protein/serve", link: "https://www.amazon.in/NAKPRO-GOLD-Protein-Concentrate-Unflavored/dp/B07M7YZ57R?linkCode=ll2&tag=pickmyprote03-21&linkId=3e7d5870f2a4a05b0ea51b89320722f4&ref_=as_li_ss_tl" },
-            asitis_raw: { name: "AS-IT-IS Raw Whey 80% (1kg)", type: "Raw Whey Concentrate", price: 2699, scoops: 33, protein: 24, highlight: "Labdoor Certified • Single Ingredient Unflavoured", link: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?linkCode=ll2&tag=pickmyprote03-21&linkId=33a5562df5760f0e92efff36552681d4&ref_=as_li_ss_tl" },
-            asitis_one_780: { name: "AS-IT-IS ONE Whey Concentrate (780g)", type: "Raw Whey Concentrate", price: 2199, scoops: 22, protein: 28, highlight: "Trustified & Labdoor Tested • 13.2g EAA", link: "https://www.amazon.in/Whey-Protein-Concentrate-Sunday-Workout/dp/B09HKFSSPY?linkCode=ll2&tag=pickmyprote03-21&linkId=13cb6f07638b518317fc1adac91e8a88&ref_=as_li_ss_tl" },
-            asitis_atom: { name: "AS-IT-IS ATOM Whey Chocolate (1kg)", type: "Flavoured Whey Concentrate + Enzymes", price: 2499, scoops: 28, protein: 27, highlight: "27g Protein • Digestive Enzymes • Great Taste", link: "https://www.amazon.in/Nutrition-Concentrate-Chocolate-Certified-absorption/dp/B09DKFPQ91?linkCode=ll2&tag=pickmyprote03-21&linkId=12c480afcf104dc2ba493b6cb4d86666&ref_=as_li_ss_tl" },
-            mb_raw_white: { name: "MuscleBlaze 100% Clean Raw Whey (1kg)", type: "Raw Whey Concentrate", price: 2399, scoops: 33, protein: 24, highlight: "Lab-Tested Purity • Unflavoured Raw", link: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?linkCode=ll2&tag=pickmyprote03-21&linkId=047122cc03b79d184c8949803bb1b656&ref_=as_li_ss_tl" },
-            mb_raw_enzymes: { name: "MuscleBlaze Raw Whey with Enzymes (1kg)", type: "Whey Concentrate + Digestive Enzymes", price: 2549, scoops: 33, protein: 24, highlight: "Added Digestive Enzymes • Zero Bloating", link: "https://www.amazon.in/MuscleBlaze-Protein-Concentrate-Unflavoured-Digestive/dp/B0BPH457FG?linkCode=ll2&tag=pickmyprote03-21&linkId=83f8b340db146134b771c0c41b2fde38&ref_=as_li_ss_tl" },
-            wellbeing_whey: { name: "Wellbeing Nutrition Raw Whey + Probiotics", type: "Whey Concentrate + 4B CFU Probiotics", price: 3499, scoops: 28, protein: 27, highlight: "4 Billion CFU Probiotics • Clean Grass-Fed", link: "https://www.amazon.in/Wellbeing-Nutrition-Concentrate-Unflavoured-Probiotics/dp/B0DMNWWH5S?linkCode=ll2&tag=pickmyprote03-21&linkId=75d30cd491bf0df4c0d11475edaf4df1&ref_=as_li_ss_tl" },
-            yogabar_pro: { name: "Yogabar Pro Clean Whey Concentrate (1kg)", type: "Whey Concentrate + Pro-Absorb Blend", price: 2799, scoops: 28, protein: 25, highlight: "Clinically Tested Pro-Absorb • Zero Artificial Additives", link: "https://www.amazon.in/Yogabar-Concentrate-Unflavoured-Clinically-Pro-Absorb/dp/B0DV5D8355?linkCode=ll2&tag=pickmyprote03-21&linkId=8a73295a10fb681f30da31e7ebb3f550&ref_=as_li_ss_tl" },
-            denzour_raw: { name: "Denzour Denz-Raw Whey 80% (1kg)", type: "Imported Raw Whey Concentrate", price: 1999, scoops: 30, protein: 27, highlight: "Budget Raw 80% • 5.9g BCAA • Unflavoured", link: "https://www.amazon.in/DENZOUR-NUTRITION-Denz-Raw-Digesting-Unflavoured/dp/B0C9JWXLH4?linkCode=ll2&tag=pickmyprote03-21&linkId=0490dfb6e9daf71d85b8f52abc4ec656&ref_=as_li_ss_tl" },
-            denzour_lean: { name: "Denzour Denz-Lean Whey (1kg)", type: "Lean Gaining Whey Blend", price: 2199, scoops: 28, protein: 22, highlight: "Clinically Tested Formula • Lean Recovery", link: "https://www.amazon.in/DENZOUR-NUTRITION-Clinically-Performance-Unforgettable/dp/B0CD2LHFNT?linkCode=ll2&tag=pickmyprote03-21&linkId=7b3307d69422c10a69ffd43057d38ef9&ref_=as_li_ss_tl" },
-            avvatar_whey: { name: "Avvatar Whey Protein (1kg)", type: "Fresh Cow Milk Whey Blend", price: 2999, scoops: 29, protein: 27, highlight: "100% Fresh Indian Cow Milk • Rich Flavours", link: "https://www.amazon.in/gp/aw/d/B09CKM57HL?linkCode=ll2&tag=pickmyprote03-21&linkId=ccc44afae8a71d4248f2a7356a06e5b3&ref_=as_li_ss_tl" },
-            the_whole_truth: { name: "The Whole Truth Unflavoured Whey (1kg)", type: "100% Clean Whey Concentrate", price: 3199, scoops: 33, protein: 24, highlight: "Zero Gums, Lecithin, or Artificial Flavours", link: "https://www.amazon.in/s?k=The+Whole+Truth+Whey+Protein+1kg&tag=pickmyprote03-21" },
-            on_gold: { name: "ON Gold Standard 100% Whey (907g)", type: "Whey Isolate Primary Blend", price: 3699, scoops: 29, protein: 24, highlight: "Global Benchmark • Informed Choice Certified", link: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?linkCode=ll2&tag=pickmyprote03-21&linkId=94c4eeb3c3d722ea89b07614e6111dcc&ref_=as_li_ss_tl" },
-            mb_biozyme_pr: { name: "MuscleBlaze Biozyme Whey PR (1kg)", type: "High-Protein Whey + 3g Creatine", price: 3299, scoops: 25, protein: 30, highlight: "30g Protein + 3g Creatine + AstraGin • Trustified", link: "https://www.amazon.in/gp/aw/d/B0D6R1GKH3?linkCode=ll2&tag=pickmyprote03-21&linkId=b0eba3a26c2b19e6d2bf0e02b1897656&ref_=as_li_ss_tl" },
-            isopure_zero: { name: "Isopure Zero Carb Whey Isolate (1kg)", type: "100% Whey Protein Isolate", price: 4999, scoops: 32, protein: 25, highlight: "Zero Carbs • Lactose-Free Pure Isolate", link: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?linkCode=ll2&tag=pickmyprote03-21&linkId=9d4c440c7a033c0610e5e432fd77d9b0&ref_=as_li_ss_tl" },
-            nakpro_isolate: { name: "Nakpro Platinum 100% Whey Isolate (1kg)", type: "100% Whey Protein Isolate", price: 2799, scoops: 30, protein: 28, highlight: "Most Affordable Pure Whey Isolate in India", link: "https://www.amazon.in/s?k=Nakpro+Platinum+Whey+Protein+Isolate+1kg&tag=pickmyprote03-21" },
-            cosmix_plant: { name: "Cosmix No-Nonsense Plant Protein (1kg)", type: "Pea & Brown Rice Isolate", price: 2499, scoops: 28, protein: 24, highlight: "Zero Gums or Preservatives • Gut-Friendly Vegan", link: "https://www.amazon.in/No-Nonsense-Protein-Indonesian-Isolate-Essential/dp/B0DM1X4FLG?linkCode=ll2&tag=pickmyprote03-21&linkId=711ee4a47bb186fd27345b6cd0cca48e&ref_=as_li_ss_tl" },
-            truebasics_plant: { name: "TrueBasics Clean Plant Protein (1kg)", type: "Brown Rice & Pea Protein", price: 2199, scoops: 28, protein: 24, highlight: "Tested for Heavy Metals & Pesticides • No Lactose", link: "https://www.amazon.in/TrueBasics-Clean-Protein-Powder-Chocolate/dp/B0FMRVH8QB?linkCode=ll2&tag=pickmyprote03-21&linkId=fd149a124b7ebbea605565d8f1576046&ref_=as_li_ss_tl" },
-            oziva_plant: { name: "OZiva Organic Plant Protein (1kg)", type: "Pea, Brown Rice & Quinoa", price: 2599, scoops: 27, protein: 30, highlight: "30g Complete Plant Protein • Zero Added Sugar", link: "https://www.amazon.in/OZiva-Organic-Protein-Unflavored-Isolate/dp/B09VGSVRXH?linkCode=ll2&tag=pickmyprote03-21&linkId=28a37625abbc78ac673b524be37e077e&ref_=as_li_ss_tl" },
-            origin_plant: { name: "Origin Nutrition Daily Plant Protein (1kg)", type: "European Golden Pea & Pumpkin Seed", price: 2699, scoops: 30, protein: 25, highlight: "Informed Choice Certified • Smooth Texture", link: "https://www.amazon.in/Origin-Nutrition-Natural-Protein-Unflavoured/dp/B08X1T9THR?linkCode=ll2&tag=pickmyprote03-21&linkId=e357994c9e8845eb80ea088e44396445&ref_=as_li_ss_tl" },
-            nutrabay_pea: { name: "Nutrabay Gold Hydrolyzed Pea Protein (1kg)", type: "Hydrolyzed Pea Protein Isolate", price: 1699, scoops: 28, protein: 25, highlight: "Trustified Certified • Budget Vegan Option", link: "https://www.amazon.in/NUTRABAY-Gold-100-Protein-Powder/dp/B0G44ZRYRX?linkCode=ll2&tag=pickmyprote03-21&linkId=c44e8de84fba0ec23c3e7008713f1bdc&ref_=as_li_ss_tl" },
-            tata_egg: { name: "Tata 1mg Egg White Protein (1kg)", type: "Dairy-Free Egg Albumin Protein", price: 2299, scoops: 30, protein: 24, highlight: "Zero Lactose • High Bioavailability Without Dairy", link: "https://www.amazon.in/White-Protein-Powder-BCAAs-Chocolate/dp/B0HFKFJ637?linkCode=ll2&tag=pickmyprote03-21&linkId=e2a92537f09e93de4455c2ed60cb615f&ref_=as_li_ss_tl" },
-            asitis_soy: { name: "AS-IT-IS Soy Protein Isolate (1kg)", type: "90% Soy Protein Isolate", price: 1199, scoops: 30, protein: 30, highlight: "Lowest Cost-Per-Gram Protein • 30g/scoop", link: "https://www.amazon.in/Nutrition-Protein-Isolate-Supplementation-Vegan/dp/B07ZM7CW2Z?linkCode=ll2&tag=pickmyprote03-21&linkId=008d21a681897ef9fc062bff7ba2794e&ref_=as_li_ss_tl" },
-            pure_nutrition_soy: { name: "Pure Nutrition Soy Protein Isolate (1kg)", type: "Non-GMO Soy Protein Isolate", price: 1299, scoops: 33, protein: 27, highlight: "Non-GMO • Zero Added Sugar • Lactose-Free", link: "https://www.amazon.in/Pure-Nutrition-Protein-Isolate-Powder/dp/B0DKTNQRWH?linkCode=ll2&tag=pickmyprote03-21&linkId=849b06f3d03abde14ba13fbaf95b7b74&ref_=as_li_ss_tl" }
-        };
-
-        function toggleCustom(slot) {
-            const val = document.getElementById('select' + slot).value;
-            document.getElementById('custom' + slot).style.display = (val === 'custom') ? 'block' : 'none';
-        }
-
-        async function fetchOnlineNutrition(slot) {
-            const query = document.getElementById('name' + slot).value.trim();
-            const statusEl = document.getElementById('status' + slot);
-            if (!query) {
-                alert("Enter a brand or product name first (e.g., MyProtein Whey).");
-                return;
-            }
-            statusEl.style.color = "#94a3b8";
-            statusEl.textContent = "Searching nutrition database...";
-
-            try {
-                const url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=" + encodeURIComponent(query) + "&search_simple=1&action=process&json=1&page_size=5";
-                const res = await fetch(url);
-                const data = await res.json();
-
-                if (data.products && data.products.length > 0) {
-                    const match = data.products.find(function(p) { return p.nutriments && p.nutriments.proteins_100g; }) || data.products[0];
-                    const prot100g = match.nutriments ? match.nutriments.proteins_100g : null;
-                    if (prot100g) {
-                        const perScoop = Math.round((prot100g / 100) * 32);
-                        document.getElementById('prot' + slot).value = perScoop;
-                        if (match.product_name) {
-                            document.getElementById('name' + slot).value = match.product_name;
-                        }
-                        statusEl.style.color = "#34d399";
-                        statusEl.textContent = "✓ Found (" + Math.round(prot100g) + "g/100g → ~" + perScoop + "g/scoop). Enter price below!";
-                        return;
-                    }
-                }
-                statusEl.style.color = "#f36c21";
-                statusEl.textContent = "Not found in open database—enter label grams manually.";
-            } catch (err) {
-                statusEl.style.color = "#f36c21";
-                statusEl.textContent = "Lookup unavailable—enter label grams manually.";
-            }
-        }
-
-        function openAmazonSearch(slot) {
-            const query = document.getElementById('name' + slot).value.trim() || "whey protein 1kg";
-            window.open("https://www.amazon.in/s?k=" + encodeURIComponent(query) + "&tag=" + AFFILIATE_TAG, "_blank");
-        }
-
-        function getSlotData(slot) {
-            const val = document.getElementById('select' + slot).value;
-            if (val === 'none') return null;
-
-            if (val === 'custom') {
-                const name = document.getElementById('name' + slot).value.trim() || ("Custom Product " + slot);
-                const price = parseFloat(document.getElementById('price' + slot).value);
-                const scoops = parseFloat(document.getElementById('scoops' + slot).value);
-                const protein = parseFloat(document.getElementById('prot' + slot).value);
-
-                if (!price || !scoops || !protein || price <= 0 || scoops <= 0 || protein <= 0) {
-                    alert("Please enter valid price, scoops, and protein per scoop for Product " + slot + ".");
-                    return 'ERROR';
-                }
-                const totalProt = scoops * protein;
-                return {
-                    name: name,
-                    type: "Custom / Internet Lookup",
-                    price: price,
-                    scoops: scoops,
-                    protein: protein,
-                    totalProt: totalProt,
-                    costPerGram: price / totalProt,
-                    highlight: "Custom label comparison",
-                    link: "https://www.amazon.in/s?k=" + encodeURIComponent(name) + "&tag=" + AFFILIATE_TAG
-                };
-            }
-
-            const p = presetProteins[val];
-            const totalProt = p.scoops * p.protein;
-            return {
-                name: p.name,
-                type: p.type,
-                price: p.price,
-                scoops: p.scoops,
-                protein: p.protein,
-                highlight: p.highlight,
-                link: p.link,
-                totalProt: totalProt,
-                costPerGram: p.price / totalProt
-            };
-        }
-
-        function compareProducts() {
-            const items = [];
-            for (let i = 1; i <= 3; i++) {
-                const data = getSlotData(i);
-                if (data === 'ERROR') return;
-                if (data) items.push(data);
-            }
-
-            if (items.length < 2) {
-                alert('Please select at least 2 products to compare.');
-                return;
-            }
-
-            const minCost = Math.min.apply(null, items.map(function(x) { return x.costPerGram; }));
-
-            let headerCols = "";
-            let typeCols = "";
-            let priceCols = "";
-            let scoopCols = "";
-            let totalCols = "";
-            let cpgCols = "";
-            let keyCols = "";
-            let actionCols = "";
-
-            items.forEach(function(item) {
-                const isWinner = Math.abs(item.costPerGram - minCost) < 0.01;
-                headerCols += '<td>' + (isWinner ? '<span class="winner-badge">BEST VALUE WINNER</span><br>' : '') + '<strong style="font-size:1.05rem; color:#fff;">' + item.name + '</strong></td>';
-                typeCols += '<td>' + item.type + '</td>';
-                priceCols += '<td>₹' + item.price.toLocaleString('en-IN') + '</td>';
-                scoopCols += '<td><strong>' + item.protein + 'g</strong> (' + item.scoops + ' scoops/pack)</td>';
-                totalCols += '<td>' + item.totalProt + 'g pure protein</td>';
-                cpgCols += '<td style="color:' + (isWinner ? '#34d399' : '#fff') + '; font-weight:bold;">₹' + item.costPerGram.toFixed(2) + ' / gram</td>';
-                keyCols += '<td style="color:#94a3b8; font-size:0.85rem;">' + item.highlight + '</td>';
-                actionCols += '<td><a href="' + item.link + '" target="_blank" rel="nofollow sponsored" class="btn-buy">Check Amazon Price &rarr;</a></td>';
-            });
-
-            document.getElementById('comparisonTable').innerHTML =
-                '<tr><th>Product</th>' + headerCols + '</tr>' +
-                '<tr><th>Category / Type</th>' + typeCols + '</tr>' +
-                '<tr><th>Est. Pack Price</th>' + priceCols + '</tr>' +
-                '<tr><th>Protein Per Scoop</th>' + scoopCols + '</tr>' +
-                '<tr><th>Total Protein in Pack</th>' + totalCols + '</tr>' +
-                '<tr><th>Cost Per Gram Protein</th>' + cpgCols + '</tr>' +
-                '<tr><th>Key Standout</th>' + keyCols + '</tr>' +
-                '<tr><th>Buy Link</th>' + actionCols + '</tr>';
-
-            document.getElementById('resultWrap').style.display = 'block';
-        }
-    </script>
-
-</body>
-</html>
+[
+  {
+    "product": "MuscleBlaze Raw Whey with Enzymes (1kg)",
+    "mrp": 2099,
+    "totalProtein": 792,
+    "costPerGramMRP": 2.65
+  },
+  {
+    "product": "AS-IT-IS Raw Whey 80% (1kg)",
+    "mrp": 4190,
+    "totalProtein": 792,
+    "costPerGramMRP": 5.29
+  },
+  {
+    "product": "Avvatar Whey Protein (1kg)",
+    "mrp": 5849,
+    "totalProtein": 783,
+    "costPerGramMRP": 7.47
+  },
+  {
+    "product": "Nakpro Gold Whey Protein Concentrate (1kg)",
+    "mrp": 4600,
+    "totalProtein": 728,
+    "costPerGramMRP": 6.32
+  },
+  {
+    "product": "Wellbeing Nutrition 100% Raw Whey Concentrate (1kg)",
+    "mrp": 4999,
+    "totalProtein": 760,
+    "costPerGramMRP": 6.58
+  },
+  {
+    "product": "Yogabar Pro Clean Whey Concentrate (1kg)",
+    "mrp": 2999,
+    "totalProtein": 771,
+    "costPerGramMRP": 3.89
+  },
+  {
+    "product": "The Whole Truth Unflavoured Whey Concentrate (1kg)",
+    "mrp": 4499,
+    "totalProtein": 751,
+    "costPerGramMRP": 5.99
+  },
+  {
+    "product": "MuscleBlaze Biozyme Whey PR (1kg)",
+    "mrp": 3999,
+    "totalProtein": 660,
+    "costPerGramMRP": 6.06
+  },
+  {
+    "product": "ON Gold Standard 100% Whey (907g)",
+    "mrp": 6319,
+    "totalProtein": 696,
+    "costPerGramMRP": 9.08
+  },
+  {
+    "product": "Nakpro Platinum 100% Whey Isolate (1kg)",
+    "mrp": 7000,
+    "totalProtein": 820,
+    "costPerGramMRP": 8.54
+  },
+  {
+    "product": "Isopure Zero Carb Whey Isolate (1kg)",
+    "mrp": 10399,
+    "totalProtein": 875,
+    "costPerGramMRP": 11.88
+  },
+  {
+    "product": "Cosmix No-Nonsense Plant Protein (1kg)",
+    "mrp": 2492,
+    "totalProtein": 624,
+    "costPerGramMRP": 3.99
+  },
+  {
+    "product": "TrueBasics Clean Plant Protein (1kg)",
+    "mrp": 2999,
+    "totalProtein": 672,
+    "costPerGramMRP": 4.46
+  },
+  {
+    "product": "OZiva Organic Plant Protein (1kg)",
+    "mrp": 2499,
+    "totalProtein": 840,
+    "costPerGramMRP": 2.98
+  },
+  {
+    "product": "Origin Nutrition Daily Plant Protein (975g/1kg)",
+    "mrp": 2499,
+    "totalProtein": 750,
+    "costPerGramMRP": 3.33
+  },
+  {
+    "product": "Nutrabay Gold Hydrolyzed Pea Protein (1kg)",
+    "mrp": 1799,
+    "totalProtein": 714,
+    "costPerGramMRP": 2.52
+  },
+  {
+    "product": "Tata 1mg Egg White Protein (1kg)",
+    "mrp": 2995,
+    "totalProtein": 672,
+    "costPerGramMRP": 4.46
+  },
+  {
+    "product": "AS-IT-IS Soy Protein Isolate (1kg)",
+    "mrp": 1285,
+    "totalProtein": 850,
+    "costPerGramMRP": 1.51
+  }
+]
