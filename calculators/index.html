@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protein & Cost-Per-Gram Calculators | Pick My Protein</title>
+    <title>Protein Intake, Budget Matcher & Cost Calculator | Pick My Protein</title>
     <style>
-        :root { --primary: #f36c21; --bg-dark: #0f172a; }
+        :root { --primary: #f36c21; --bg-dark: #0f172a; --card-bg: #1e293b; --border: #334155; }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-dark); color: #fff; margin: 0; line-height: 1.6; }
-        header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; }
+        header { padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         nav a { color: #cbd5e1; text-decoration: none; margin-left: 1.5rem; }
-        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 2rem; }
-        h1, h2 { margin-top: 0; }
-        label { display: block; margin: 1rem 0 0.4rem; color: #cbd5e1; font-size: 0.95rem; }
-        input, select { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 1rem; box-sizing: border-box; }
-        button { background: var(--primary); color: #fff; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 1.25rem; width: 100%; }
+        .container { max-width: 820px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; }
+        h1, h2, h3 { margin-top: 0; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+        label { display: block; margin: 1rem 0 0.4rem; color: #cbd5e1; font-size: 0.95rem; font-weight: 500; }
+        input, select { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-dark); color: #fff; font-size: 1rem; box-sizing: border-box; }
+        button { background: var(--primary); color: #fff; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 1.5rem; width: 100%; }
         button:hover { opacity: 0.92; }
-        .result { margin-top: 1.25rem; padding: 1rem; background: #0f172a; border-left: 4px solid var(--primary); border-radius: 6px; display: none; }
-        .rec-link { display: inline-block; margin-top: 0.75rem; color: var(--primary); font-weight: 600; text-decoration: none; }
+        .result { margin-top: 1.5rem; padding: 1.25rem; background: var(--bg-dark); border-left: 4px solid var(--primary); border-radius: 8px; display: none; }
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+        @media (max-width: 600px) { .match-grid { grid-template-columns: 1fr; } }
+        .match-card { background: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
+        .match-card h4 { margin: 0 0 0.35rem; color: #fff; font-size: 1rem; }
+        .match-card p { margin: 0 0 0.75rem; color: #94a3b8; font-size: 0.85rem; }
+        .badge { display: inline-block; background: rgba(243, 108, 33, 0.18); color: var(--primary); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .btn-amazon { display: inline-block; background: var(--primary); color: #fff; padding: 0.5rem 0.9rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -32,30 +40,52 @@
     </header>
 
     <div class="container">
-        <h1>Protein Calculators</h1>
+        <h1>Smart Protein & Budget Calculator</h1>
 
-        <!-- Tool 1: Daily Protein Intake Calculator -->
+        <!-- Tool 1: Weight + Age + Budget Protein Matcher -->
         <div class="card">
-            <h2>1. Daily Protein Target Calculator</h2>
-            <label for="weight">Your Body Weight (kg)</label>
-            <input type="number" id="weight" placeholder="e.g., 70" min="20" max="250">
+            <h2>1. Daily Protein & Budget Matcher</h2>
+            <p style="color: #94a3b8; margin-bottom: 0.5rem;">Enter your weight, age, goal, and budget to get your exact daily protein target and matching supplements.</p>
 
-            <label for="goal">Fitness Goal</label>
-            <select id="goal">
-                <option value="1.2">General Health & Fitness (1.2g / kg)</option>
-                <option value="1.6" selected>Muscle Gain / Hypertrophy (1.6g / kg)</option>
-                <option value="2.0">Fat Loss / Muscle Retention (2.0g / kg)</option>
-            </select>
+            <div class="grid-2">
+                <div>
+                    <label for="weight">Your Body Weight (kg)</label>
+                    <input type="number" id="weight" placeholder="e.g., 70" min="25" max="250">
+                </div>
+                <div>
+                    <label for="age">Your Age (years)</label>
+                    <input type="number" id="age" placeholder="e.g., 28" min="14" max="100">
+                </div>
+            </div>
 
-            <button type="button" onclick="calcDaily()">Calculate Daily Target</button>
-            <div id="dailyResult" class="result"></div>
+            <div class="grid-2">
+                <div>
+                    <label for="goal">Fitness Goal</label>
+                    <select id="goal">
+                        <option value="1.0">General Health & Maintenance</option>
+                        <option value="1.6" selected>Muscle Gain / Hypertrophy</option>
+                        <option value="2.0">Fat Loss / Lean Cut</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="budget">Monthly Protein Budget (1 kg Pack)</label>
+                    <select id="budget">
+                        <option value="under2500">Under ₹2,500 (Value & Budget)</option>
+                        <option value="2500to4000" selected>₹2,500 – ₹4,000 (Mid-Range & Clean)</option>
+                        <option value="above4000">Above ₹4,000 (Premium & Isolate)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" onclick="calcSmartMatch()">Calculate Target & Match Proteins</button>
+            <div id="smartResult" class="result"></div>
         </div>
 
         <!-- Tool 2: True Cost Per Gram Calculator -->
         <div class="card">
             <h2>2. True Cost-Per-Gram Calculator</h2>
             <label for="price">Tub/Pack Price (₹)</label>
-            <input type="number" id="price" placeholder="e.g., 2199" min="1">
+            <input type="number" id="price" placeholder="e.g., 2499" min="1">
 
             <label for="servings">Total Scoops / Servings in Pack</label>
             <input type="number" id="servings" placeholder="e.g., 30" min="1">
@@ -68,22 +98,108 @@
         </div>
     </div>
 
+    <footer style="text-align:center; padding:1.5rem; color:#64748b; font-size:0.85rem;">
+        As an Amazon Associate, Pick My Protein earns from qualifying purchases. <a href="/disclosure.html" style="color:#f36c21;">Disclosure</a>
+    </footer>
+
     <script>
-        function calcDaily() {
+        const productCatalog = {
+            under2500: [
+                {
+                    badge: "BEST BUDGET VALUE",
+                    name: "Nakpro Gold 100% Whey Concentrate (1kg)",
+                    desc: "28g protein per scoop • Trustified lab-tested purity • Unflavoured.",
+                    link: "https://www.amazon.in/NAKPRO-GOLD-Protein-Concentrate-Unflavored/dp/B07M7YZ57R?linkCode=ll2&tag=pickmyprote03-21&linkId=3e7d5870f2a4a05b0ea51b89320722f4&ref_=as_li_ss_tl"
+                },
+                {
+                    badge: "PLANT / BUDGET PICK",
+                    name: "Cosmix No-Nonsense Plant Protein (1kg)",
+                    desc: "24g protein per scoop • Pea & brown rice isolate • Zero bloating.",
+                    link: "https://www.amazon.in/No-Nonsense-Protein-Indonesian-Isolate-Essential/dp/B0DM1X4FLG?linkCode=ll2&tag=pickmyprote03-21&linkId=711ee4a47bb186fd27345b6cd0cca48e&ref_=as_li_ss_tl"
+                }
+            ],
+            "2500to4000": [
+                {
+                    badge: "CLEAN RAW WHEY",
+                    name: "AS-IT-IS Whey Protein Concentrate 80% (1kg)",
+                    desc: "28g protein per 100g ratio • Labdoor certified • Single ingredient.",
+                    link: "https://www.amazon.in/AS-Nutrition-Protein-Concentrate-Unflavoured/dp/B079SZJJDR?linkCode=ll2&tag=pickmyprote03-21&linkId=33a5562df5760f0e92efff36552681d4&ref_=as_li_ss_tl"
+                },
+                {
+                    badge: "EASY DIGESTION",
+                    name: "MuscleBlaze Raw Whey with Enzymes (1kg)",
+                    desc: "24g protein per scoop • Added digestive enzymes for zero heaviness.",
+                    link: "https://www.amazon.in/MuscleBlaze-Raw-Whey-Protein-Unflavoured/dp/B06XGNT22C?linkCode=ll2&tag=pickmyprote03-21&linkId=047122cc03b79d184c8949803bb1b656&ref_=as_li_ss_tl"
+                }
+            ],
+            above4000: [
+                {
+                    badge: "ZERO CARB ISOLATE",
+                    name: "Isopure 100% Whey Protein Isolate (1kg)",
+                    desc: "25g pure isolate protein • Lactose-free & zero carbs for lean gains.",
+                    link: "https://www.amazon.in/Isopure-Unflavored-Protein-Powder-Lactose-free/dp/B0D17K39TW?linkCode=ll2&tag=pickmyprote03-21&linkId=9d4c440c7a033c0610e5e432fd77d9b0&ref_=as_li_ss_tl"
+                },
+                {
+                    badge: "GLOBAL BENCHMARK",
+                    name: "ON Gold Standard 100% Whey",
+                    desc: "24g protein • Whey isolate primary blend for fast recovery.",
+                    link: "https://www.amazon.in/Nutrition-Standard-Alphonso-Recovery-Vegetarian/dp/B0D1VJ3C7R?linkCode=ll2&tag=pickmyprote03-21&linkId=94c4eeb3c3d722ea89b07614e6111dcc&ref_=as_li_ss_tl"
+                }
+            ]
+        };
+
+        function calcSmartMatch() {
             const w = parseFloat(document.getElementById('weight').value);
-            const g = parseFloat(document.getElementById('goal').value);
-            if (!w || w <= 0) {
-                alert('Please enter a valid body weight in kg.');
+            const age = parseInt(document.getElementById('age').value, 10);
+            const baseMultiplier = parseFloat(document.getElementById('goal').value);
+            const budget = document.getElementById('budget').value;
+
+            if (!w || w < 25 || w > 250) {
+                alert('Please enter a valid body weight between 25 kg and 250 kg.');
                 return;
             }
-            const target = Math.round(w * g);
-            const scoopsNeeded = (target / 24).toFixed(1);
-            const res = document.getElementById('dailyResult');
+            if (!age || age < 14 || age > 100) {
+                alert('Please enter a valid age between 14 and 100.');
+                return;
+            }
+
+            // Age adjustment: Adults 50+ benefit from +0.2g/kg to counter age-related muscle loss; teens 14-18 get +0.1g/kg for growth
+            let ageNote = "";
+            let finalMultiplier = baseMultiplier;
+            if (age >= 50) {
+                finalMultiplier += 0.2;
+                ageNote = "Adjusted +0.2g/kg for age 50+ to protect lean muscle mass.";
+            } else if (age <= 18) {
+                finalMultiplier += 0.1;
+                ageNote = "Adjusted +0.1g/kg for active adolescent growth and recovery.";
+            } else {
+                ageNote = `Standard adult intake rate (${finalMultiplier.toFixed(1)}g per kg body weight).`;
+            }
+
+            const targetGrams = Math.round(w * finalMultiplier);
+            const scoops = (targetGrams / 25).toFixed(1);
+            const matches = productCatalog[budget];
+
+            const cardsHtml = matches.map(item => `
+                <div class="match-card">
+                    <span class="badge">${item.badge}</span>
+                    <h4>${item.name}</h4>
+                    <p>${item.desc}</p>
+                    <a href="${item.link}" target="_blank" rel="nofollow sponsored" class="btn-amazon">Check Price on Amazon &rarr;</a>
+                </div>
+            `).join('');
+
+            const res = document.getElementById('smartResult');
             res.style.display = 'block';
             res.innerHTML = `
-                <strong>Your Daily Target:</strong> ${target}g of protein per day.<br>
-                <span style="color:#94a3b8; font-size:0.9rem;">1 scoop of standard whey (~24g) covers ${Math.round((24 / target) * 100)}% of your daily need (${scoopsNeeded} scoops total if taken purely via whey).</span><br>
-                <a href="/best-protein/" class="rec-link">View Best Proteins For Your Target &rarr;</a>
+                <div style="font-size: 1.15rem; margin-bottom: 0.25rem;">
+                    <strong>Your Daily Protein Target: <span style="color: #34d399;">${targetGrams}g / day</span></strong>
+                </div>
+                <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">
+                    ${ageNote} Equals roughly <strong>${scoops} scoops</strong> (at 25g/scoop) if met via supplements, or 1–2 scoops alongside whole foods.
+                </div>
+                <strong style="font-size: 0.95rem; color: #fff;">Recommended Matches For Your Budget:</strong>
+                <div class="match-grid">${cardsHtml}</div>
             `;
         }
 
@@ -97,13 +213,12 @@
             }
             const totalProtein = s * g;
             const costPerGram = (p / totalProtein).toFixed(2);
-            const verdict = costPerGram <= 2.8 ? 'Great value for money!' : 'Slightly pricey per gram compared to budget concentrates.';
+            const verdict = costPerGram <= 3.0 ? 'Budget value band (Under ₹3.00/g) — great deal!' : (costPerGram <= 5.0 ? 'Mid-market band (₹3–₹5/g).' : 'Premium / Isolate band (Above ₹5/g).');
             const res = document.getElementById('costResult');
             res.style.display = 'block';
             res.innerHTML = `
-                <strong>Cost Per Gram of Pure Protein:</strong> ₹${costPerGram} / gram<br>
-                <span style="color:#94a3b8; font-size:0.9rem;">Total pure protein in pack: ${totalProtein}g. ${verdict}</span><br>
-                <a href="/compare/" class="rec-link">Compare Top Value Brands &rarr;</a>
+                <strong>Cost Per Gram of Pure Protein:</strong> <span style="color: #34d399;">₹${costPerGram} / gram</span><br>
+                <span style="color:#94a3b8; font-size:0.9rem;">Total pure protein in pack: ${totalProtein}g. ${verdict}</span>
             `;
         }
     </script>
