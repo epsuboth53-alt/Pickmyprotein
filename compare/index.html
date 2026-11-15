@@ -46,39 +46,40 @@ th{background:#0b1120;color:#cbd5e1;width:22%}
 
 <script>
 const TAG="pickmyprote03-21";
+const amz=(q)=>"https://www.amazon.in/s?k="+encodeURIComponent(q)+"&tag="+TAG;
 const DB={
 mb_enz:{n:"MuscleBlaze Raw Whey + Enzymes (1kg)",t:"Whey Concentrate",m:2099,s:33,p:24,h:"Digestive Enzymes • 30g Scoop",u:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG},
 mb_raw:{n:"MuscleBlaze Clean Raw Whey 80% (1kg)",t:"Raw Whey Concentrate",m:3499,s:33,p:24,h:"Lab-Tested Purity • Unflavoured",u:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG},
-mb_bio:{n:"MuscleBlaze Biozyme Performance Whey (1kg)",t:"Enhanced Absorption Whey",m:4199,s:28,p:25,h:"50% Higher Absorption • Trustified",u:"https://www.amazon.in/dp/B0843449D9?tag="+TAG},
-mb_pr:{n:"MuscleBlaze Biozyme Whey PR (1kg)",t:"Whey + 3g Creatine",m:3999,s:25,p:30,h:"30g Protein + 3g Creatine",u:"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG},
-mb_beg:{n:"MuscleBlaze Beginner's Whey (1kg)",t:"Beginner Whey Blend",m:1499,s:33,p:12,h:"Starter Formula • Easy Digestion",u:"https://www.amazon.in/dp/B07D512V75?tag="+TAG},
-fuel_max:{n:"Fuel One Whey Max (1kg)",t:"Whey Concentrate",m:2599,s:28,p:27,h:"27g Protein • Trustified Certified",u:"https://www.amazon.in/dp/B0987V561Z?tag="+TAG},
+mb_bio:{n:"MuscleBlaze Biozyme Performance Whey (1kg)",t:"Enhanced Absorption Whey",m:3995,s:28,p:25,h:"50% Higher Absorption • Trustified",u:"https://www.amazon.in/dp/B095SV6BBZ?tag="+TAG},
+mb_pr:{n:"MuscleBlaze Biozyme Whey PR (1kg)",t:"Whey + 3g Creatine",m:3949,s:25,p:30,h:"30g Protein + 3g Creatine",u:"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG},
+mb_beg:{n:"MuscleBlaze Beginner's Whey (1kg)",t:"Beginner Whey Blend",m:1499,s:33,p:12,h:"Starter Formula • Easy Digestion",u:amz("MuscleBlaze Beginners Whey Protein 1kg")},
+fuel_max:{n:"Fuel One Whey Max (1kg)",t:"Whey Concentrate",m:2599,s:28,p:27,h:"27g Protein • Trustified Certified",u:amz("Fuel One Whey Max 1kg")},
 as_raw:{n:"AS-IT-IS ONE Raw Whey 80% (1kg)",t:"Raw Whey Concentrate",m:3299,s:29,p:28,h:"28g/35g Scoop • Labdoor & Trustified",u:"https://www.amazon.in/dp/B079SZJJDR?tag="+TAG},
 as_one780:{n:"AS-IT-IS ONE Raw Whey 80% (780g)",t:"Raw Whey Concentrate",m:2704,s:22,p:28,h:"28g/35g Scoop • Labdoor & Trustified",u:"https://www.amazon.in/dp/B09HKFSSPY?tag="+TAG},
 as_atom:{n:"AS-IT-IS ATOM Whey Chocolate (1kg)",t:"Flavoured Concentrate",m:3299,s:28,p:27,h:"27g Protein + Enzymes • Labdoor",u:"https://www.amazon.in/dp/B09DKFPQ91?tag="+TAG},
-as_beg:{n:"AS-IT-IS ATOM Beginner's Whey (1kg)",t:"Beginner Whey",m:1644,s:33,p:15,h:"Budget Starter Whey",u:"https://www.amazon.in/dp/B09M7212W1?tag="+TAG},
+as_beg:{n:"AS-IT-IS ATOM Beginner's Whey (1kg)",t:"Beginner Whey",m:1644,s:33,p:15,h:"Budget Starter Whey",u:amz("AS-IT-IS ATOM Beginners Whey 1kg")},
 nk_gold:{n:"Nakpro Gold Whey Concentrate (1kg)",t:"Whey Concentrate",m:2999,s:26,p:28,h:"Trustified Certified • 28g/serve",u:"https://www.amazon.in/dp/B07M7YZ57R?tag="+TAG},
-nk_perf:{n:"Nakpro Perform Whey Concentrate (1kg)",t:"Budget Whey Concentrate",m:2199,s:30,p:24,h:"Trustified • High Value Concentrate",u:"https://www.amazon.in/dp/B0859994P9?tag="+TAG},
-nk_imp:{n:"Nakpro Impact Whey Blend (1kg)",t:"Isolate + Concentrate",m:1599,s:30,p:24,h:"Lowest Cost Flavoured Whey",u:"https://www.amazon.in/dp/B09G6791L6?tag="+TAG},
-nk_iso:{n:"Nakpro Platinum Whey Isolate (1kg)",t:"100% Whey Isolate",m:3999,s:30,p:28,h:"Trustified Certified • Pure Isolate",u:"https://www.amazon.in/dp/B0BLZ29HFM?tag="+TAG},
-nk_hyd:{n:"Nakpro Hydro Whey Hydrolyzed (1kg)",t:"Hydrolyzed Whey",m:3899,s:30,p:28,h:"Fast-Absorbing Hydrolyzed Isolate",u:"https://www.amazon.in/dp/B09G676R9W?tag="+TAG},
+nk_perf:{n:"Nakpro Perform Whey Concentrate (1kg)",t:"Budget Whey Concentrate",m:2199,s:30,p:24,h:"Trustified • High Value Concentrate",u:"https://www.amazon.in/dp/B07YX4VLC2?tag="+TAG},
+nk_imp:{n:"Nakpro Impact Whey Blend (1kg)",t:"Isolate + Concentrate",m:1599,s:30,p:24,h:"Lowest Cost Flavoured Whey",u:amz("Nakpro Impact Whey Protein 1kg")},
+nk_iso:{n:"Nakpro Platinum Whey Isolate (1kg)",t:"100% Whey Isolate",m:3499,s:30,p:28,h:"Trustified Certified • Pure Isolate",u:"https://www.amazon.in/dp/B0C23R85XQ?tag="+TAG},
+nk_hyd:{n:"Nakpro Hydro Whey Hydrolyzed (1kg)",t:"Hydrolyzed Whey",m:3899,s:30,p:28,h:"Fast-Absorbing Hydrolyzed Isolate",u:amz("Nakpro Hydro Whey Protein 1kg")},
 avvatar:{n:"Avvatar Whey Protein (1kg)",t:"Fresh Cow Milk Whey",m:3979,s:29,p:27,h:"100% Fresh Indian Cow Milk",u:"https://www.amazon.in/dp/B09CKM57HL?tag="+TAG},
-avv_iso:{n:"Avvatar Isorich Whey Isolate (1kg)",t:"100% Whey Isolate",m:4699,s:29,p:29,h:"29g Pure Isolate • Fresh Milk",u:"https://www.amazon.in/dp/B07476W2P3?tag="+TAG},
-twt:{n:"The Whole Truth Unflavoured Whey (1kg)",t:"Clean Whey Concentrate",m:3599,s:33,p:26,h:"Zero Gums or Artificial Flavours",u:"https://www.amazon.in/dp/B0BV6677Q3?tag="+TAG},
+avv_iso:{n:"Avvatar Isorich Whey Isolate (1kg)",t:"100% Whey Isolate",m:4699,s:29,p:29,h:"29g Pure Isolate • Fresh Milk",u:amz("Avvatar Isorich Whey Protein Isolate 1kg")},
+twt:{n:"The Whole Truth Unflavoured Whey (1kg)",t:"Clean Whey Concentrate",m:3599,s:33,p:26,h:"Zero Gums or Artificial Flavours",u:amz("The Whole Truth Unflavoured Whey Protein Concentrate 1kg")},
 wb:{n:"Wellbeing Nutrition Raw Whey + Probiotics (1kg)",t:"Whey + 4B Probiotics",m:3999,s:28,p:27,h:"4B CFU Probiotics • Grass-Fed",u:"https://www.amazon.in/dp/B0DMNWWH5S?tag="+TAG},
 yb:{n:"Yogabar Pro Clean Whey (1kg)",t:"Whey Concentrate",m:2999,s:28,p:25,h:"Pro-Absorb • Zero Additives",u:"https://www.amazon.in/dp/B0DV5D8355?tag="+TAG},
-nb_gold:{n:"Nutrabay Gold Whey Concentrate (1kg)",t:"Whey Concentrate",m:2599,s:28,p:25,h:"Trustified • Digestive Enzymes",u:"https://www.amazon.in/dp/B0859B82T5?tag="+TAG},
-nb_pure:{n:"Nutrabay Pure Raw Whey (1kg)",t:"Raw Whey Concentrate",m:2699,s:33,p:24,h:"Single Ingredient Unflavoured",u:"https://www.amazon.in/dp/B07P116T2C?tag="+TAG},
-nb_iso:{n:"Nutrabay Gold Whey Isolate (1kg)",t:"100% Whey Isolate",m:3999,s:28,p:26,h:"Low Carb Pure Isolate",u:"https://www.amazon.in/dp/B0859C5Q39?tag="+TAG},
+nb_gold:{n:"Nutrabay Gold Whey Concentrate (1kg)",t:"Whey Concentrate",m:2599,s:28,p:25,h:"Trustified • Digestive Enzymes",u:amz("Nutrabay Gold 100% Whey Protein Concentrate 1kg")},
+nb_pure:{n:"Nutrabay Pure Raw Whey (1kg)",t:"Raw Whey Concentrate",m:2699,s:33,p:24,h:"Single Ingredient Unflavoured",u:amz("Nutrabay Pure 100% Raw Whey Protein Concentrate 1kg")},
+nb_iso:{n:"Nutrabay Gold Whey Isolate (1kg)",t:"100% Whey Isolate",m:3999,s:28,p:26,h:"Low Carb Pure Isolate",u:amz("Nutrabay Gold 100% Whey Protein Isolate 1kg")},
 dz_raw:{n:"Denzour Denz-Raw Whey 80% (1kg)",t:"Imported Raw Whey",m:2399,s:30,p:27,h:"Budget Raw 80% • 5.9g BCAA",u:"https://www.amazon.in/dp/B0C9JWXLH4?tag="+TAG},
 dz_lean:{n:"Denzour Denz-Lean Whey (1kg)",t:"Lean Gaining Blend",m:2499,s:28,p:22,h:"Clinically Tested Formula",u:"https://www.amazon.in/dp/B0CD2LHFNT?tag="+TAG},
 on_gold:{n:"ON Gold Standard 100% Whey (907g)",t:"Isolate Primary Blend",m:5079,s:29,p:24,h:"Global Benchmark • Informed Choice",u:"https://www.amazon.in/dp/B0D1VJ3C7R?tag="+TAG},
-on_perf:{n:"ON Performance Whey (1kg)",t:"Whey Concentrate Blend",m:3499,s:28,p:24,h:"Optimum Nutrition Value Line",u:"https://www.amazon.in/dp/B00QQA0H3S?tag="+TAG},
-dym_iso:{n:"Dymatize ISO100 Hydrolyzed (1.36kg)",t:"Hydrolyzed Whey Isolate",m:6999,s:43,p:25,h:"Fastest Digesting Global Isolate",u:"https://www.amazon.in/dp/B00G6QHYZ6?tag="+TAG},
-mt_nitro:{n:"MuscleTech NitroTech Whey (1kg)",t:"Whey + 3g Creatine",m:3799,s:22,p:30,h:"30g Protein + 3g Creatine Peptides",u:"https://www.amazon.in/dp/B07H3864V5?tag="+TAG},
-gnc_whey:{n:"GNC Pro Performance 100% Whey (1kg)",t:"Whey Concentrate Blend",m:2799,s:28,p:24,h:"Informed Choice • Digestive Enzymes",u:"https://www.amazon.in/dp/B07D534D2R?tag="+TAG},
-ult_pro:{n:"Ultimate Nutrition Prostar 100% Whey (2.39kg)",t:"Isolate + Concentrate",m:6799,s:80,p:25,h:"80 Servings Value Tub",u:"https://www.amazon.in/dp/B002DYJ00C?tag="+TAG},
-myp_imp:{n:"MyProtein Impact Whey (1kg)",t:"Whey Concentrate",m:3199,s:40,p:21,h:"Labdoor Grade A • 40 Servings",u:"https://www.amazon.in/dp/B008BH7N52?tag="+TAG},
+on_perf:{n:"ON Performance Whey (1kg)",t:"Whey Concentrate Blend",m:3499,s:28,p:24,h:"Optimum Nutrition Value Line",u:amz("Optimum Nutrition ON Performance Whey 1kg")},
+dym_iso:{n:"Dymatize ISO100 Hydrolyzed (1.36kg)",t:"Hydrolyzed Whey Isolate",m:6999,s:43,p:25,h:"Fastest Digesting Global Isolate",u:amz("Dymatize ISO100 Hydrolyzed Whey Isolate")},
+mt_nitro:{n:"MuscleTech NitroTech Whey (1kg)",t:"Whey + 3g Creatine",m:3799,s:22,p:30,h:"30g Protein + 3g Creatine Peptides",u:amz("MuscleTech NitroTech Whey Protein 1kg")},
+gnc_whey:{n:"GNC Pro Performance 100% Whey (1kg)",t:"Whey Concentrate Blend",m:2799,s:28,p:24,h:"Informed Choice • Digestive Enzymes",u:amz("GNC Pro Performance 100% Whey Protein 1kg")},
+ult_pro:{n:"Ultimate Nutrition Prostar 100% Whey (2.39kg)",t:"Isolate + Concentrate",m:6799,s:80,p:25,h:"80 Servings Value Tub",u:amz("Ultimate Nutrition Prostar 100% Whey Protein")},
+myp_imp:{n:"MyProtein Impact Whey (1kg)",t:"Whey Concentrate",m:3199,s:40,p:21,h:"Labdoor Grade A • 40 Servings",u:amz("MyProtein Impact Whey Protein 1kg")},
 isopure:{n:"Isopure Zero Carb Isolate (1kg)",t:"100% Whey Isolate",m:6499,s:32,p:25,h:"Zero Carbs • Lactose-Free",u:"https://www.amazon.in/dp/B0D17K39TW?tag="+TAG},
 cosmix:{n:"Cosmix No-Nonsense Plant Protein (1kg)",t:"Pea & Rice Isolate",m:2492,s:28,p:24,h:"Zero Gums • Gut-Friendly Vegan",u:"https://www.amazon.in/dp/B0DM1X4FLG?tag="+TAG},
 tb_plant:{n:"TrueBasics Clean Plant Protein (1kg)",t:"Rice & Pea Protein",m:2299,s:28,p:24,h:"Heavy Metal & Pesticide Tested",u:"https://www.amazon.in/dp/B0FMRVH8QB?tag="+TAG},
@@ -88,7 +89,7 @@ nb_pea:{n:"Nutrabay Gold Pea Protein (1kg)",t:"Hydrolyzed Pea Isolate",m:1499,s:
 tata_egg:{n:"Tata 1mg Egg White Protein (1kg)",t:"Dairy-Free Egg Albumin",m:2499,s:30,p:24,h:"Zero Lactose • High Bioavailability",u:"https://www.amazon.in/dp/B0HFKFJ637?tag="+TAG},
 as_soy:{n:"AS-IT-IS Soy Protein Isolate (1kg)",t:"90% Soy Isolate",m:1199,s:30,p:30,h:"Lowest Cost/Gram • 30g/scoop",u:"https://www.amazon.in/dp/B07ZM7CW2Z?tag="+TAG},
 pn_soy:{n:"Pure Nutrition Soy Isolate (1kg)",t:"Non-GMO Soy Isolate",m:1399,s:33,p:27,h:"Non-GMO • Zero Sugar",u:"https://www.amazon.in/dp/B0DKTNQRWH?tag="+TAG},
-nb_soy:{n:"Nutrabay Pure Soy Protein Isolate (1kg)",t:"Soy Protein Isolate",m:1149,s:33,p:27,h:"Budget Plant Isolate",u:"https://www.amazon.in/dp/B07P24Z44K?tag="+TAG}
+nb_soy:{n:"Nutrabay Pure Soy Protein Isolate (1kg)",t:"Soy Protein Isolate",m:1149,s:33,p:27,h:"Budget Plant Isolate",u:amz("Nutrabay Pure Soy Protein Isolate 1kg")}
 };
 let netHits={1:[],2:[],3:[]};
 
@@ -103,7 +104,7 @@ out+=`<div class="slot"><strong style="color:${i<3?'#f36c21':'#94a3b8'}">Product
 <label>Select from 42 Brands or Search Web</label><select id="s${i}" onchange="onSel(${i})">${opts}</select>
 <div id="c${i}" class="cbox">
 <label>Type Any Brand / Product Name</label><input id="n${i}" placeholder="e.g., BeastLife Whey, MyProtein, GNC">
-<div class="row"><button type="button" class="sbtn" onclick="fetchNet(${i})">🌐 Search Internet</button><button type="button" class="sbtn" onclick="window.open('https://www.amazon.in/s?k='+encodeURIComponent(document.getElementById('n${i}').value||'whey protein 1kg')+'&tag=${TAG}')">🛒 Check Amazon</button></div>
+<div class="row"><button type="button" class="sbtn" onclick="fetchNet(${i})">🌐 Search Internet</button><button type="button" class="sbtn" onclick="window.open(amz(document.getElementById('n${i}').value||'whey protein 1kg'))">🛒 Check Amazon</button></div>
 <div id="st${i}" style="font-size:.75rem;color:#34d399;margin-top:.3rem"></div>
 <select id="res${i}" style="display:none;margin-top:.35rem" onchange="pickHit(${i})"></select>
 <label>Amazon Price (₹)</label><input type="number" id="m${i}" value="2999" oninput="renderTable()">
@@ -154,7 +155,7 @@ const v=document.getElementById("s"+i).value;
 if(v==="none")continue;
 if(v==="custom"){
 const m=+document.getElementById("m"+i).value||0,sc=+document.getElementById("sc"+i).value||0,p=+document.getElementById("p"+i).value||0;
-if(m>0&&sc>0&&p>0){const nm=document.getElementById("n"+i).value.trim()||"Custom "+i;list.push({n:nm,t:"Internet / Custom Lookup",m,s:sc,p,tot:sc*p,cpg:m/(sc*p),h:"Live Web Lookup",u:"https://www.amazon.in/s?k="+encodeURIComponent(nm)+"&tag="+TAG});}
+if(m>0&&sc>0&&p>0){const nm=document.getElementById("n"+i).value.trim()||"Custom "+i;list.push({n:nm,t:"Internet / Custom Lookup",m,s:sc,p,tot:sc*p,cpg:m/(sc*p),h:"Live Web Lookup",u:amz(nm)});}
 }else if(DB[v]){const x=DB[v];list.push({...x,tot:x.s*x.p,cpg:x.m/(x.s*x.p)});}
 }
 if(list.length<2)return;
