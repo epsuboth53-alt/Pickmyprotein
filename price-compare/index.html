@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Protein Prices Across Amazon, Flipkart, HealthKart & Quick Commerce | Pick My Protein</title>
+<style>
+:root{--p:#f36c21;--bg:#0f172a;--card:#1e293b;--b:#334155}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:#fff;margin:0;line-height:1.5}
+header{padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--b);flex-wrap:wrap;gap:1rem}
+nav a{color:#cbd5e1;text-decoration:none;margin-left:1.25rem;font-size:.92rem}
+.wrap{max-width:980px;margin:2rem auto;padding:0 1rem}
+.box{background:var(--card);padding:1.5rem;border-radius:12px;border:1px solid var(--b)}
+select{width:100%;padding:.75rem;border-radius:8px;border:1px solid var(--b);background:var(--bg);color:#fff;font-size:.95rem;margin-top:.4rem}
+.twrap{overflow-x:auto;margin-top:1.5rem}
+table{width:100%;border-collapse:collapse;background:var(--bg)}
+th,td{padding:.85rem;border:1px solid var(--b);text-align:left;font-size:.9rem}
+th{background:#0b1120;color:#cbd5e1}
+.badge{background:rgba(52,211,153,.15);color:#34d399;padding:.2rem .5rem;border-radius:4px;font-size:.74rem;font-weight:700}
+.amz{display:inline-block;background:var(--p);color:#fff;padding:.45rem .85rem;border-radius:6px;text-decoration:none;font-size:.82rem;font-weight:700}
+.ext{display:inline-block;background:#334155;color:#e2e8f0;padding:.4rem .75rem;border-radius:6px;text-decoration:none;font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+<a href="/" style="color:#fff;font-weight:700;text-decoration:none">pickmyprotein.com</a>
+<nav>
+<a href="/calculators/">Calculators</a>
+<a href="/compare/">Compare Brands</a>
+<a href="/price-compare/" style="color:#f36c21;font-weight:600">Compare Store Prices</a>
+<a href="/best-protein/">Best Guides</a>
+</nav>
+</header>
+
+<div class="wrap">
+<h1>Compare Protein Prices Across Online Stores</h1>
+<p style="color:#94a3b8;margin-top:-.4rem">Check how Amazon India stacks up against Flipkart, HealthKart, BigBasket, and quick-commerce apps.</p>
+
+<div class="box">
+<label style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (1kg):</label>
+<select id="prod" onchange="renderPrices()">
+<option value="mb_raw">MuscleBlaze Raw Whey Protein Concentrate, Unflavoured (1kg)</option>
+<option value="mb_clean">MuscleBlaze 100% Clean Raw Whey Concentrate (1kg)</option>
+<option value="as_one">AS-IT-IS Nutrition ONE Whey Protein Concentrate 80% (1kg)</option>
+<option value="nk_gold">NAKPRO Gold Clean Raw Whey Concentrate (1kg)</option>
+<option value="nk_perf">NAKPRO Perform Whey Protein Concentrate (1kg)</option>
+<option value="avvatar">Avvatar Whey Protein Concentrate & Isolate Blend (1kg)</option>
+</select>
+
+<div class="twrap"><table id="ptbl"></table></div>
+<p style="color:#64748b;font-size:.78rem;margin-top:1rem">Note: Prices reflect standard verified online listings and may vary during bank sales or local quick-commerce flash deals. As an Amazon Associate, Pick My Protein earns from qualifying purchases.</p>
+</div>
+</div>
+
+<script>
+const TAG="pickmyprote03-21";
+const DATA={
+mb_raw:{
+g:792,
+stores:[
+{s:"Amazon.in",p:2899,n:"Verified Seller • Prime Delivery + Bank Offers",u:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG,primary:true},
+{s:"BigBasket",p:2899,n:"Same-Day Grocery Delivery",u:"https://www.bigbasket.com/ps/?q=MuscleBlaze+Raw+Whey+1kg"},
+{s:"Flipkart",p:2899,n:"Flipkart Assured • Card Offers",u:"https://www.flipkart.com/search?q=MuscleBlaze+Raw+Whey+1kg"},
+{s:"HealthKart",p:2899,n:"Official Brand Store + HK Cash",u:"https://www.healthkart.com/search?q=MuscleBlaze+Raw+Whey+1kg"},
+{s:"Zepto / Swiggy Instamart",p:2848,n:"10-Min Delivery (Price varies by pincode)",u:"https://www.zeptonow.com/search?query=MuscleBlaze+Raw+Whey"}
+]},
+mb_clean:{
+g:792,
+stores:[
+{s:"Amazon.in",p:3499,n:"Direct Fulfillment • Subscribe & Save Eligible",u:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG,primary:true},
+{s:"Flipkart",p:3499,n:"Standard Online Price",u:"https://www.flipkart.com/search?q=MuscleBlaze+100+Clean+Raw+Whey+1kg"},
+{s:"MuscleBlaze Official",p:3499,n:"Earns MB Cash + Scratch Verification",u:"https://www.muscleblaze.com/"}
+]},
+as_one:{
+g:812,
+stores:[
+{s:"Amazon.in",p:3298,n:"Labdoor & Trustified Certified • Fast Delivery",u:"https://www.amazon.in/dp/B079SZJJDR?tag="+TAG,primary:true},
+{s:"Flipkart",p:2999,n:"Occasional SuperCoin / Card Discount",u:"https://www.flipkart.com/search?q=AS-IT-IS+ONE+Whey+1kg"},
+{s:"AS-IT-IS Official",p:3298,n:"Direct Brand Store",u:"https://asitisnutrition.com/"}
+]},
+nk_gold:{
+g:728,
+stores:[
+{s:"Amazon.in",p:2999,n:"Trustified Certified • 28g Protein/Scoop",u:"https://www.amazon.in/dp/B07M7YZ57R?tag="+TAG,primary:true},
+{s:"Flipkart",p:2999,n:"Standard Marketplace Price",u:"https://www.flipkart.com/search?q=Nakpro+Gold+Whey+1kg"},
+{s:"Nakpro Official",p:2999,n:"Direct Brand Fulfillment",u:"https://nakpro.com/"}
+]},
+nk_perf:{
+g:780,
+stores:[
+{s:"Amazon.in",p:2199,n:"Best Budget Concentrate • Trustified",u:"https://www.amazon.in/dp/B07YX4VLC2?tag="+TAG,primary:true},
+{s:"Flipkart",p:2199,n:"Standard Marketplace Price",u:"https://www.flipkart.com/search?q=Nakpro+Perform+Whey+1kg"},
+{s:"Nakpro Official",p:2199,n:"Direct Brand Fulfillment",u:"https://nakpro.com/"}
+]},
+avvatar:{
+g:812,
+stores:[
+{s:"Amazon.in",p:4229,n:"100% Fresh Indian Cow Milk Whey",u:"https://www.amazon.in/dp/B09CKM57HL?tag="+TAG,primary:true},
+{s:"HealthKart",p:4229,n:"Authorized Retailer",u:"https://www.healthkart.com/search?q=Avvatar+Whey+Protein+1kg"},
+{s:"Avvatar Official",p:4229,n:"Direct from Parag Milk Foods",u:"https://www.avvatarindia.com/"}
+]}
+};
+
+function renderPrices(){
+const item=DATA[document.getElementById("prod").value];
+let html="<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>";
+item.stores.forEach(st=>{
+const cpg=(st.p/item.g).toFixed(2);
+html+=`<tr>
+<td><strong>${st.s}</strong> ${st.primary?'<span class="badge">RECOMMENDED</span>':''}</td>
+<td><strong>₹${st.p.toLocaleString('en-IN')}</strong></td>
+<td style="color:#34d399;font-weight:700">₹${cpg} / g</td>
+<td style="color:#94a3b8;font-size:.82rem">${st.n}</td>
+<td><a href="${st.u}" target="_blank" rel="nofollow sponsored" class="${st.primary?'amz':'ext'}">${st.primary?'Buy on Amazon →':'Check Store'}</a></td>
+</tr>`;
+});
+document.getElementById("ptbl").innerHTML=html;
+}
+renderPrices();
+</script>
+</body>
+</html>
