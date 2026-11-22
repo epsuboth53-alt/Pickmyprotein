@@ -9,14 +9,15 @@
 body{font-family:system-ui,sans-serif;background:var(--bg);color:#fff;margin:0;line-height:1.5}
 header{padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--b);flex-wrap:wrap;gap:1rem}
 nav a{color:#cbd5e1;text-decoration:none;margin-left:1.25rem;font-size:.92rem}
-.wrap{max-width:980px;margin:2rem auto;padding:0 1rem}
+.wrap{max-width:1000px;margin:2rem auto;padding:0 1rem}
 .box{background:var(--card);padding:1.5rem;border-radius:12px;border:1px solid var(--b)}
-select{width:100%;padding:.75rem;border-radius:8px;border:1px solid var(--b);background:var(--bg);color:#fff;font-size:.95rem;margin-top:.4rem}
+select,input{width:100%;padding:.72rem;border-radius:8px;border:1px solid var(--b);background:var(--bg);color:#fff;font-size:.94rem;margin-top:.4rem;box-sizing:border-box}
+.cbox{display:none;margin-top:.8rem;padding:.9rem;background:var(--bg);border-radius:8px;border:1px dashed var(--b)}
 .twrap{overflow-x:auto;margin-top:1.5rem}
 table{width:100%;border-collapse:collapse;background:var(--bg)}
 th,td{padding:.85rem;border:1px solid var(--b);text-align:left;font-size:.9rem}
 th{background:#0b1120;color:#cbd5e1}
-.badge{background:rgba(52,211,153,.15);color:#34d399;padding:.2rem .5rem;border-radius:4px;font-size:.74rem;font-weight:700}
+.badge{background:rgba(52,211,153,.15);color:#34d399;padding:.2rem .5rem;border-radius:4px;font-size:.72rem;font-weight:700}
 .amz{display:inline-block;background:var(--p);color:#fff;padding:.45rem .85rem;border-radius:6px;text-decoration:none;font-size:.82rem;font-weight:700}
 .ext{display:inline-block;background:#334155;color:#e2e8f0;padding:.4rem .75rem;border-radius:6px;text-decoration:none;font-size:.8rem}
 </style>
@@ -34,89 +35,35 @@ th{background:#0b1120;color:#cbd5e1}
 
 <div class="wrap">
 <h1>Compare Protein Prices Across Online Stores</h1>
-<p style="color:#94a3b8;margin-top:-.4rem">Check how Amazon India stacks up against Flipkart, HealthKart, BigBasket, and quick-commerce apps.</p>
+<p style="color:#94a3b8;margin-top:-.4rem">Compare live selling prices & cost per gram across Amazon India, Flipkart, HealthKart, BigBasket, and quick-commerce apps.</p>
 
 <div class="box">
-<label style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (1kg):</label>
-<select id="prod" onchange="renderPrices()">
-<option value="mb_raw">MuscleBlaze Raw Whey Protein Concentrate, Unflavoured (1kg)</option>
-<option value="mb_clean">MuscleBlaze 100% Clean Raw Whey Concentrate (1kg)</option>
-<option value="as_one">AS-IT-IS Nutrition ONE Whey Protein Concentrate 80% (1kg)</option>
-<option value="nk_gold">NAKPRO Gold Clean Raw Whey Concentrate (1kg)</option>
-<option value="nk_perf">NAKPRO Perform Whey Protein Concentrate (1kg)</option>
-<option value="avvatar">Avvatar Whey Protein Concentrate & Isolate Blend (1kg)</option>
-</select>
+<label style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (All 20 Verified Products):</label>
+<select id="prod" onchange="onProdChange()"></select>
+
+<div id="customBox" class="cbox">
+<label style="font-size:.82rem;color:#cbd5e1">Type Any Protein Brand / Product Name to Check Across Stores:</label>
+<div style="display:flex;gap:.5rem;margin-top:.35rem">
+<input id="cq" placeholder="e.g., MyProtein Impact Whey 1kg, GNC Whey 1kg" oninput="renderCustom()">
+</div>
+</div>
 
 <div class="twrap"><table id="ptbl"></table></div>
-<p style="color:#64748b;font-size:.78rem;margin-top:1rem">Note: Prices reflect standard verified online listings and may vary during bank sales or local quick-commerce flash deals. As an Amazon Associate, Pick My Protein earns from qualifying purchases.</p>
+<p style="color:#64748b;font-size:.78rem;margin-top:1rem">Note: Prices reflect verified online listings and may vary during bank sales or local quick-commerce flash deals. As an Amazon Associate, Pick My Protein earns from qualifying purchases.</p>
 </div>
 </div>
 
 <script>
 const TAG="pickmyprote03-21";
-const DATA={
-mb_raw:{
-g:792,
-stores:[
-{s:"Amazon.in",p:2899,n:"Verified Seller • Prime Delivery + Bank Offers",u:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG,primary:true},
-{s:"BigBasket",p:2899,n:"Same-Day Grocery Delivery",u:"https://www.bigbasket.com/ps/?q=MuscleBlaze+Raw+Whey+1kg"},
-{s:"Flipkart",p:2899,n:"Flipkart Assured • Card Offers",u:"https://www.flipkart.com/search?q=MuscleBlaze+Raw+Whey+1kg"},
-{s:"HealthKart",p:2899,n:"Official Brand Store + HK Cash",u:"https://www.healthkart.com/search?q=MuscleBlaze+Raw+Whey+1kg"},
-{s:"Zepto / Swiggy Instamart",p:2848,n:"10-Min Delivery (Price varies by pincode)",u:"https://www.zeptonow.com/search?query=MuscleBlaze+Raw+Whey"}
-]},
-mb_clean:{
-g:792,
-stores:[
-{s:"Amazon.in",p:3499,n:"Direct Fulfillment • Subscribe & Save Eligible",u:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG,primary:true},
-{s:"Flipkart",p:3499,n:"Standard Online Price",u:"https://www.flipkart.com/search?q=MuscleBlaze+100+Clean+Raw+Whey+1kg"},
-{s:"MuscleBlaze Official",p:3499,n:"Earns MB Cash + Scratch Verification",u:"https://www.muscleblaze.com/"}
-]},
-as_one:{
-g:812,
-stores:[
-{s:"Amazon.in",p:3298,n:"Labdoor & Trustified Certified • Fast Delivery",u:"https://www.amazon.in/dp/B079SZJJDR?tag="+TAG,primary:true},
-{s:"Flipkart",p:2999,n:"Occasional SuperCoin / Card Discount",u:"https://www.flipkart.com/search?q=AS-IT-IS+ONE+Whey+1kg"},
-{s:"AS-IT-IS Official",p:3298,n:"Direct Brand Store",u:"https://asitisnutrition.com/"}
-]},
-nk_gold:{
-g:728,
-stores:[
-{s:"Amazon.in",p:2999,n:"Trustified Certified • 28g Protein/Scoop",u:"https://www.amazon.in/dp/B07M7YZ57R?tag="+TAG,primary:true},
-{s:"Flipkart",p:2999,n:"Standard Marketplace Price",u:"https://www.flipkart.com/search?q=Nakpro+Gold+Whey+1kg"},
-{s:"Nakpro Official",p:2999,n:"Direct Brand Fulfillment",u:"https://nakpro.com/"}
-]},
-nk_perf:{
-g:780,
-stores:[
-{s:"Amazon.in",p:2199,n:"Best Budget Concentrate • Trustified",u:"https://www.amazon.in/dp/B07YX4VLC2?tag="+TAG,primary:true},
-{s:"Flipkart",p:2199,n:"Standard Marketplace Price",u:"https://www.flipkart.com/search?q=Nakpro+Perform+Whey+1kg"},
-{s:"Nakpro Official",p:2199,n:"Direct Brand Fulfillment",u:"https://nakpro.com/"}
-]},
-avvatar:{
-g:812,
-stores:[
-{s:"Amazon.in",p:4229,n:"100% Fresh Indian Cow Milk Whey",u:"https://www.amazon.in/dp/B09CKM57HL?tag="+TAG,primary:true},
-{s:"HealthKart",p:4229,n:"Authorized Retailer",u:"https://www.healthkart.com/search?q=Avvatar+Whey+Protein+1kg"},
-{s:"Avvatar Official",p:4229,n:"Direct from Parag Milk Foods",u:"https://www.avvatarindia.com/"}
-]}
-};
+const amzS=(q)=>"https://www.amazon.in/s?k="+encodeURIComponent(q)+"&tag="+TAG;
+const fkS=(q)=>"https://www.flipkart.com/search?q="+encodeURIComponent(q);
+const hkS=(q)=>"https://www.healthkart.com/search?q="+encodeURIComponent(q);
+const bbS=(q)=>"https://www.bigbasket.com/ps/?q="+encodeURIComponent(q);
+const zpS=(q)=>"https://www.zeptonow.com/search?query="+encodeURIComponent(q);
 
-function renderPrices(){
-const item=DATA[document.getElementById("prod").value];
-let html="<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>";
-item.stores.forEach(st=>{
-const cpg=(st.p/item.g).toFixed(2);
-html+=`<tr>
-<td><strong>${st.s}</strong> ${st.primary?'<span class="badge">RECOMMENDED</span>':''}</td>
-<td><strong>₹${st.p.toLocaleString('en-IN')}</strong></td>
-<td style="color:#34d399;font-weight:700">₹${cpg} / g</td>
-<td style="color:#94a3b8;font-size:.82rem">${st.n}</td>
-<td><a href="${st.u}" target="_blank" rel="nofollow sponsored" class="${st.primary?'amz':'ext'}">${st.primary?'Buy on Amazon →':'Check Store'}</a></td>
-</tr>`;
-});
-document.getElementById("ptbl").innerHTML=html;
-}
-renderPrices();
-</script>
-</body>
-</html>
+const DATA=[
+{id:"mb_enz",n:"MuscleBlaze Raw Whey Protein Concentrate, Unflavoured, 1kg",g:792,amzP:2899,amzU:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG,amzN:"Verified Seller • Prime + Bank Offers",fkP:2899,hkP:2899,bbP:2899,zpP:2848,offN:"MuscleBlaze Official",offP:2899,offU:"https://www.muscleblaze.com/"},
+{id:"mb_raw",n:"MuscleBlaze 100% Clean Raw Whey Protein Concentrate, 1kg",g:792,amzP:3499,amzU:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG,amzN:"Direct Fulfillment • Subscribe & Save",fkP:3499,hkP:3499,bbP:3499,zpP:null,offN:"MuscleBlaze Official",offP:3499,offU:"https://www.muscleblaze.com/"},
+{id:"mb_bio2kg",n:"MuscleBlaze Biozyme Performance Whey Protein Powder, 2kg",g:1400,amzP:8199,amzU:"https://www.amazon.in/dp/B095SV6BBZ?tag="+TAG,amzN:"50% Higher Absorption • 2kg Value Pack",fkP:8199,hkP:7999,bbP:null,zpP:null,offN:"MuscleBlaze Official",offP:8199,offU:"https://www.muscleblaze.com/"},
+{id:"mb_pr",n:"MuscleBlaze Biozyme Whey PR Protein Powder, 1kg",g:750,amzP:3949,amzU:"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG,amzN:"30g Protein + 3g Creatine",fkP:3949,hkP:3949,bbP:null,zpP:null,offN:"MuscleBlaze Official",offP:3949,offU:"https://www.muscleblaze.com/"},
+{id:"mb_beg",n:"MuscleBlaze Beginner's Whey Protein Powder, Chocolate, 1kg",g:396,amzP:1849,amzU:amzS("MuscleBlaze Beginners Whey Protein 1kg"),amzN:"Starter Formula • Easy Digestion",fkP:1849,hkP:1799,bbP:1849,zpP:1849,offN:"MuscleBlaze Official",offP:18
