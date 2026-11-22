@@ -38,10 +38,10 @@ th{background:#0b1120;color:#cbd5e1}
 
 <div class="wrap">
 <h1>Compare Protein Prices Across Online Stores</h1>
-<p style="color:#94a3b8;margin-top:-.4rem">Compare verified prices, cost per gram, and availability across stores. Unavailable stores show <strong>Not Available</strong>.</p>
+<p style="color:#94a3b8;margin-top:-.4rem">Check official MRP, total protein per pack, and live discounted prices across Amazon India, Flipkart, HealthKart, Zepto, Blinkit, BigBasket, and official brand stores.</p>
 
 <div class="box">
-<label for="prod" style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement:</label>
+<label for="prod" style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (All 20 Verified Products):</label>
 <select id="prod" onchange="render()">
   <option value="0" selected>MuscleBlaze Raw Whey Protein Concentrate, Unflavoured, 1kg</option>
   <option value="1">MuscleBlaze 100% Clean Raw Whey Protein Concentrate, 1kg</option>
@@ -56,7 +56,7 @@ th{background:#0b1120;color:#cbd5e1}
   <option value="10">NAKPRO NUTRITION Perform Whey Protein Concentrate | 1kg</option>
   <option value="11">NAKPRO NUTRITION Impact Whey Protein Isolate &amp; Concentrate | 1kg</option>
   <option value="12">NAKPRO Platinum Plus+ Whey Protein Isolate | 1kg</option>
-  <option value="13">Nakpro Hydro Whey Hydrolyzed (1kg) — Not Available</option>
+  <option value="13">Nakpro Hydro Whey Hydrolyzed (1kg) — Discontinued</option>
   <option value="14">avvatar WHEY PROTEIN | 1Kg | Malai Kulfi Flavour</option>
   <option value="15">avvatar ISORICH WHEY PROTEIN | 1Kg | Malai Kulfi Flavour</option>
   <option value="16">The Whole Truth Whey Protein Concentrate | Unflavoured | 1kg</option>
@@ -68,66 +68,63 @@ th{background:#0b1120;color:#cbd5e1}
 <div class="twrap">
 <table>
   <thead>
-    <tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Status &amp; Perks</th><th>Action</th></tr>
+    <tr><th>Online Store</th><th>Pack MRP</th><th>Live Offer Price</th><th>Store Availability &amp; Perks</th><th>Action</th></tr>
   </thead>
   <tbody id="rows"></tbody>
 </table>
 </div>
-<p style="color:#64748b;font-size:.78rem;margin-top:1rem">Note: Prices and stock vary by seller, pincode, and active discounts. As an Amazon Associate, Pick My Protein earns from qualifying purchases.</p>
+<p style="color:#64748b;font-size:.78rem;margin-top:1rem">Note: Online store discounts change daily and quick-commerce stock (Zepto/Blinkit) depends on your delivery pincode. As an Amazon Associate, Pick My Protein earns from qualifying purchases.</p>
 </div>
 </div>
 
 <script>
 const TAG = "pickmyprote03-21";
 const ITEMS = [
-  {g:792, amz:[2899,"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG], fk:[2899,"MuscleBlaze Raw Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:792, amz:[3499,"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG], fk:[3499,"MuscleBlaze 100 Clean Raw Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:1400,amz:[8199,"https://www.amazon.in/dp/B095SV6BBZ?tag="+TAG], fk:[8199,"MuscleBlaze Biozyme Performance Whey 2kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:750, amz:[3949,"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG], fk:[3949,"MuscleBlaze Biozyme Whey PR 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:396, amz:[1849,"https://www.amazon.in/s?k=MuscleBlaze+Beginners+Whey+Protein+1kg&tag="+TAG], fk:[1849,"MuscleBlaze Beginners Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:756, amz:[2799,"https://www.amazon.in/s?k=Fuel+One+Whey+Max+1kg&tag="+TAG], fk:[2799,"Fuel One Whey Max 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:812, amz:[3298,"https://www.amazon.in/dp/B079SZJJDR?tag="+TAG], fk:[3199,"AS-IT-IS Whey Protein Concentrate 80 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:756, amz:[3134,"https://www.amazon.in/dp/B09DKFPQ91?tag="+TAG], fk:[3099,"AS-IT-IS ATOM Whey Protein 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:792, amz:[1792,"https://www.amazon.in/s?k=AS-IT-IS+ATOM+PWR+Whey+Protein+XL+1kg&tag="+TAG], fk:[1792,"AS-IT-IS ATOM PWR Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:728, amz:[2999,"https://www.amazon.in/dp/B07M7YZ57R?tag="+TAG], fk:[2999,"Nakpro Gold Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:780, amz:[2199,"https://www.amazon.in/dp/B07YX4VLC2?tag="+TAG], fk:[2199,"Nakpro Perform Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:720, amz:[1599,"https://www.amazon.in/s?k=Nakpro+Impact+Whey+Protein+1kg&tag="+TAG], fk:[1599,"Nakpro Impact Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:840, amz:[3499,"https://www.amazon.in/dp/B0C23R85XQ?tag="+TAG], fk:[3499,"Nakpro Platinum Whey Isolate 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:0,   amz:[0,""], fk:0, hk:0, zp:0, bl:0, off:0},
-  {g:812, amz:[4229,"https://www.amazon.in/dp/B09CKM57HL?tag="+TAG], fk:[4229,"Avvatar Whey Protein 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:841, amz:[5469,"https://www.amazon.in/s?k=Avvatar+Isorich+Whey+Protein+Isolate+1kg&tag="+TAG], fk:[5469,"Avvatar Isorich Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:858, amz:[3899,"https://www.amazon.in/s?k=The+Whole+Truth+Unflavoured+Whey+Protein+Concentrate+1kg&tag="+TAG], fk:[3899,"The Whole Truth Whey Protein 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:756, amz:[3999,"https://www.amazon.in/dp/B0DMNWWH5S?tag="+TAG], fk:[3999,"Wellbeing Nutrition Clean Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:756, amz:[2670,"https://www.amazon.in/dp/B0DV5D8355?tag="+TAG], fk:[2670,"Yogabar ProClean Whey 1kg"], hk:0, zp:0, bl:0, bb:0, off:0},
-  {g:700, amz:[2999,"https://www.amazon.in/s?k=Nutrabay+Gold+100%25+Whey+Protein+Concentrate+1kg&tag="+TAG], fk:[2999,"Nutrabay Gold Whey Protein 1kg"], hk:0, zp:0, bl:0, bb:0, off:0}
+  {mrp:"₹3,699", g:"792g protein", amz:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG, fk:"MuscleBlaze Raw Whey 1kg", hk:"MuscleBlaze Raw Whey", zp:"MuscleBlaze Raw Whey", bl:"MuscleBlaze Raw Whey", bb:"MuscleBlaze Raw Whey", off:["MuscleBlaze Official","https://www.muscleblaze.com/sv/muscleblaze-raw-whey-protein/SP-110990"]},
+  {mrp:"₹4,799", g:"792g protein", amz:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG, fk:"MuscleBlaze 100 Clean Raw Whey 1kg", hk:"MuscleBlaze Raw Whey", zp:"MuscleBlaze Raw Whey", bl:"", bb:"", off:["MuscleBlaze Official","https://www.muscleblaze.com/sv/muscleblaze-raw-whey-protein/SP-110990"]},
+  {mrp:"₹9,699", g:"1,400g protein", amz:"https://www.amazon.in/dp/B095SV6BBZ?tag="+TAG, fk:"MuscleBlaze Biozyme Performance Whey 2kg", hk:"MuscleBlaze Biozyme Performance 2kg", zp:"", bl:"", bb:"", off:["MuscleBlaze Official","https://www.muscleblaze.com/sv/muscleblaze-biozyme-performance-whey/SP-88093"]},
+  {mrp:"₹4,999", g:"750g protein", amz:"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG, fk:"MuscleBlaze Biozyme Whey PR 1kg", hk:"MuscleBlaze Biozyme Whey PR", zp:"MuscleBlaze Biozyme PR", bl:"", bb:"", off:["MuscleBlaze Official","https://www.muscleblaze.com/sv/muscleblaze-biozyme-whey-pr/SP-122029"]},
+  {mrp:"₹2,599", g:"396g protein", amz:"https://www.amazon.in/s?k=MuscleBlaze+Beginners+Whey+Protein+1kg&tag="+TAG, fk:"MuscleBlaze Beginners Whey 1kg", hk:"MuscleBlaze Beginners Whey", zp:"MuscleBlaze Beginners Whey", bl:"MuscleBlaze Beginners Whey", bb:"MuscleBlaze Beginners Whey", off:["MuscleBlaze Official","https://www.muscleblaze.com/categories/proteins/beginners-whey-proteins?navKey=CL-5694"]},
+  {mrp:"₹3,699", g:"756g protein", amz:"https://www.amazon.in/s?k=Fuel+One+Whey+Max+1kg&tag="+TAG, fk:"Fuel One Whey Max 1kg", hk:"Fuel One Whey Max", zp:"Fuel One Whey Max", bl:"", bb:"", off:["FuelOne / MB Store","https://www.muscleblaze.com/categories/proteins/whey-proteins"]},
+  {mrp:"₹3,999", g:"812g protein", amz:"https://www.amazon.in/dp/B079SZJJDR?tag="+TAG, fk:"AS-IT-IS Whey Protein Concentrate 80 1kg", hk:"AS-IT-IS Whey Concentrate", zp:"", bl:"", bb:"AS-IT-IS Whey", off:["AS-IT-IS Official","https://asitisnutrition.com/collections/best-whey-protein-in-india"]},
+  {mrp:"₹3,899", g:"756g protein", amz:"https://www.amazon.in/dp/B09DKFPQ91?tag="+TAG, fk:"AS-IT-IS ATOM Whey Protein 1kg", hk:"AS-IT-IS ATOM Whey", zp:"AS-IT-IS ATOM Whey", bl:"", bb:"", off:["AS-IT-IS Official","https://asitisnutrition.com/collections/best-whey-protein-in-india/products/atom-whey-protein"]},
+  {mrp:"₹2,499", g:"792g protein", amz:"https://www.amazon.in/s?k=AS-IT-IS+ATOM+PWR+Whey+Protein+XL+1kg&tag="+TAG, fk:"AS-IT-IS ATOM PWR Whey 1kg", hk:"", zp:"", bl:"", bb:"", off:["AS-IT-IS Official","https://asitisnutrition.com/collections/best-whey-protein-in-india"]},
+  {mrp:"₹3,799", g:"728g protein", amz:"https://www.amazon.in/dp/B07M7YZ57R?tag="+TAG, fk:"Nakpro Gold Whey 1kg", hk:"Nakpro Gold Whey", zp:"Nakpro Gold Whey", bl:"", bb:"", off:["Nakpro Official","https://nakpro.com/collections/whey-protein"]},
+  {mrp:"₹2,999", g:"780g protein", amz:"https://www.amazon.in/dp/B07YX4VLC2?tag="+TAG, fk:"Nakpro Perform Whey 1kg", hk:"Nakpro Perform Whey", zp:"Nakpro Perform Whey", bl:"", bb:"", off:["Nakpro Official","https://nakpro.com/collections/whey-protein"]},
+  {mrp:"₹2,299", g:"720g protein", amz:"https://www.amazon.in/s?k=Nakpro+Impact+Whey+Protein+1kg&tag="+TAG, fk:"Nakpro Impact Whey 1kg", hk:"", zp:"Nakpro Impact Whey", bl:"", bb:"", off:["Nakpro Official","https://nakpro.com/collections/whey-protein"]},
+  {mrp:"₹4,499", g:"840g protein", amz:"https://www.amazon.in/dp/B0C23R85XQ?tag="+TAG, fk:"Nakpro Platinum Whey Isolate 1kg", hk:"Nakpro Platinum Isolate", zp:"", bl:"", bb:"", off:["Nakpro Official","https://nakpro.com/collections/whey-protein"]},
+  {mrp:"—", g:"", amz:"", fk:"", hk:"", zp:"", bl:"", bb:"", off:["Nakpro Official",""]},
+  {mrp:"₹4,999", g:"812g protein", amz:"https://www.amazon.in/dp/B09CKM57HL?tag="+TAG, fk:"Avvatar Whey Protein 1kg", hk:"Avvatar Whey Protein", zp:"Avvatar Whey", bl:"", bb:"", off:["Avvatar Official","https://www.avvatarindia.com/product/whey-protein"]},
+  {mrp:"₹6,499", g:"841g protein", amz:"https://www.amazon.in/s?k=Avvatar+Isorich+Whey+Protein+Isolate+1kg&tag="+TAG, fk:"Avvatar Isorich Whey 1kg", hk:"Avvatar Isorich", zp:"", bl:"", bb:"", off:["Avvatar Official","https://www.avvatarindia.com/product/isorich"]},
+  {mrp:"₹4,499", g:"858g protein", amz:"https://www.amazon.in/s?k=The+Whole+Truth+Unflavoured+Whey+Protein+Concentrate+1kg&tag="+TAG, fk:"The Whole Truth Whey Protein 1kg", hk:"The Whole Truth Whey", zp:"The Whole Truth Whey", bl:"The Whole Truth Whey", bb:"The Whole Truth Whey", off:["The Whole Truth Official","https://thewholetruthfoods.com/collections/protein-powder"]},
+  {mrp:"₹4,999", g:"756g protein", amz:"https://www.amazon.in/dp/B0DMNWWH5S?tag="+TAG, fk:"Wellbeing Nutrition Clean Whey 1kg", hk:"Wellbeing Nutrition Whey", zp:"Wellbeing Nutrition Whey", bl:"", bb:"", off:["Wellbeing Official","https://wellbeingnutrition.com/collections/whey-protein"]},
+  {mrp:"₹3,499", g:"756g protein", amz:"https://www.amazon.in/dp/B0DV5D8355?tag="+TAG, fk:"Yogabar ProClean Whey 1kg", hk:"Yogabar Whey", zp:"Yogabar Whey", bl:"Yogabar Whey", bb:"Yogabar Whey", off:["Yogabar Official","https://www.yogabars.in/collections/protein"]},
+  {mrp:"₹3,799", g:"700g protein", amz:"https://www.amazon.in/s?k=Nutrabay+Gold+100%25+Whey+Protein+Concentrate+1kg&tag="+TAG, fk:"Nutrabay Gold Whey Protein 1kg", hk:"", zp:"Nutrabay Gold Whey", bl:"", bb:"", off:["Nutrabay Official","https://nutrabay.com/product/nutrabay-gold-100-whey-protein-concentrate"]}
 ];
 
-function rowHtml(store, price, grams, perk, url, isAmz){
-  if(!price || !url){
-    return `<tr><td><strong>${store}</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">${perk || "Currently not available on this store"}</td><td style="color:#64748b">—</td></tr>`;
+function rowHtml(store, mrp, g, perk, url, isAmz){
+  if(!url){
+    return `<tr><td><strong>${store}</strong></td><td style="color:#64748b">—</td><td><span class="na">Not Available</span></td><td style="color:#94a3b8">${perk || "Not stocked on this platform"}</td><td style="color:#64748b">—</td></tr>`;
   }
-  const cpg = grams ? `₹${(price / grams).toFixed(2)} / g` : "—";
   const badge = isAmz ? `<span class="badge">RECOMMENDED</span>` : "";
   const btnClass = isAmz ? "amz" : "ext";
-  const btnText = isAmz ? "Buy on Amazon &rarr;" : "View Store";
-  return `<tr><td><strong>${store}</strong>${badge}</td><td><strong>₹${price.toLocaleString("en-IN")}</strong></td><td style="color:#34d399;font-weight:700">${cpg}</td><td style="color:#94a3b8">${perk}</td><td><a href="${url}" target="_blank" rel="nofollow sponsored" class="${btnClass}">${btnText}</a></td></tr>`;
+  const btnText = isAmz ? "Check Price on Amazon &rarr;" : "Check Live Price";
+  return `<tr><td><strong>${store}</strong>${badge}</td><td>${mrp}</td><td style="color:#34d399;font-weight:700">Live Discounted</td><td style="color:#94a3b8">${g ? g + " • " : ""}${perk}</td><td><a href="${url}" target="_blank" rel="nofollow sponsored" class="${btnClass}">${btnText}</a></td></tr>`;
 }
 
 function render(){
   const idx = parseInt(document.getElementById("prod").value, 10) || 0;
   const item = ITEMS[idx] || ITEMS[0];
   const g = item.g;
-  const fkUrl = item.fk ? "https://www.flipkart.com/search?q=" + encodeURIComponent(item.fk[1]) : "";
-  const fkPrice = item.fk ? item.fk[0] : 0;
 
   document.getElementById("rows").innerHTML = [
-    rowHtml("Amazon.in", item.amz[0], g, "Prime Delivery • Verified Listing", item.amz[1], true),
-    rowHtml("Flipkart", fkPrice, g, "Flipkart Assured Listings", fkUrl, false),
-    rowHtml("HealthKart", item.hk, g, "Not verified for this SKU", "", false),
-    rowHtml("Zepto", item.zp, g, "Not available / pincode-dependent", "", false),
-    rowHtml("Blinkit", item.bl, g, "Not available / pincode-dependent", "", false),
-    rowHtml("BigBasket", item.bb, g, "Not available on BigBasket", "", false),
-    rowHtml("Official Brand Store", item.off, g, "Direct link not set for this SKU", "", false)
+    rowHtml("Amazon.in", item.mrp, g, "Prime Delivery + Bank Offers", item.amz, true),
+    rowHtml("Flipkart", item.mrp, g, "Flipkart Assured Listings", item.fk ? "https://www.flipkart.com/search?q=" + encodeURIComponent(item.fk) : "", false),
+    rowHtml("HealthKart", item.mrp, g, "Authorized Supplement Store + HK Cash", item.hk ? "https://www.healthkart.com/search?q=" + encodeURIComponent(item.hk) : "", false),
+    rowHtml("Zepto", item.mrp, g, "10-Min Quick Delivery (By Pincode)", item.zp ? "https://www.zeptonow.com/search?query=" + encodeURIComponent(item.zp) : "", false),
+    rowHtml("Blinkit", item.mrp, g, "10-Min Instant Delivery (By Pincode)", item.bl ? "https://blinkit.com/s/?q=" + encodeURIComponent(item.bl) : "", false),
+    rowHtml("BigBasket", item.mrp, g, "Same-Day Grocery Delivery", item.bb ? "https://www.bigbasket.com/ps/?q=" + encodeURIComponent(item.bb) : "", false),
+    rowHtml(item.off[0], item.mrp, g, "Direct Brand Store Fulfillment", item.off[1], false)
   ].join("");
 }
 
