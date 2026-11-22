@@ -3,49 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compare Protein Prices Across Amazon, Flipkart, HealthKart & Quick Commerce | Pick My Protein</title>
+<title>Compare Protein Prices Across Online Stores | Pick My Protein</title>
 <style>
 :root{--p:#f36c21;--bg:#0f172a;--card:#1e293b;--b:#334155}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:#fff;margin:0;line-height:1.5}
-header{padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--b);flex-wrap:wrap;gap:1rem}
-nav a{color:#cbd5e1;text-decoration:none;margin-left:1.25rem;font-size:.92rem}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:#fff;margin:0;line-height:1.5;overflow-x:hidden}
+header{padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--b);flex-wrap:wrap;gap:.75rem}
+header a.logo{color:#fff;font-weight:700;text-decoration:none;font-size:1.1rem}
+nav{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+nav a{color:#cbd5e1;text-decoration:none;font-size:.88rem;white-space:nowrap}
 .wrap{max-width:1000px;margin:2rem auto;padding:0 1rem}
 .box{background:var(--card);padding:1.5rem;border-radius:12px;border:1px solid var(--b)}
 select,input{width:100%;padding:.72rem;border-radius:8px;border:1px solid var(--b);background:var(--bg);color:#fff;font-size:.94rem;margin-top:.4rem;box-sizing:border-box}
 .cbox{display:none;margin-top:.8rem;padding:.9rem;background:var(--bg);border-radius:8px;border:1px dashed var(--b)}
 .twrap{overflow-x:auto;margin-top:1.5rem}
 table{width:100%;border-collapse:collapse;background:var(--bg)}
-th,td{padding:.85rem;border:1px solid var(--b);text-align:left;font-size:.9rem}
+th,td{padding:.8rem;border:1px solid var(--b);text-align:left;font-size:.88rem}
 th{background:#0b1120;color:#cbd5e1}
-.badge{background:rgba(52,211,153,.15);color:#34d399;padding:.2rem .5rem;border-radius:4px;font-size:.72rem;font-weight:700}
-.amz{display:inline-block;background:var(--p);color:#fff;padding:.45rem .85rem;border-radius:6px;text-decoration:none;font-size:.82rem;font-weight:700}
-.ext{display:inline-block;background:#334155;color:#e2e8f0;padding:.4rem .75rem;border-radius:6px;text-decoration:none;font-size:.8rem}
+.badge{background:rgba(52,211,153,.15);color:#34d399;padding:.18rem .45rem;border-radius:4px;font-size:.72rem;font-weight:700;margin-left:.35rem}
+.amz{display:inline-block;background:var(--p);color:#fff;padding:.45rem .8rem;border-radius:6px;text-decoration:none;font-size:.8rem;font-weight:700}
+.ext{display:inline-block;background:#334155;color:#e2e8f0;padding:.4rem .75rem;border-radius:6px;text-decoration:none;font-size:.78rem}
 </style>
 </head>
 <body>
 <header>
-<a href="/" style="color:#fff;font-weight:700;text-decoration:none">pickmyprotein.com</a>
+<a href="/" class="logo">pickmyprotein.com</a>
 <nav>
 <a href="/calculators/">Calculators</a>
-<a href="/compare/">Compare Brands</a>
-<a href="/price-compare/" style="color:#f36c21;font-weight:600">Compare Store Prices</a>
+<a href="/compare/">Compare</a>
+<a href="/price-compare/" style="color:#f36c21;font-weight:600">Store Prices</a>
 <a href="/best-protein/">Best Guides</a>
 </nav>
 </header>
 
 <div class="wrap">
 <h1>Compare Protein Prices Across Online Stores</h1>
-<p style="color:#94a3b8;margin-top:-.4rem">Compare live selling prices & cost per gram across Amazon India, Flipkart, HealthKart, BigBasket, and quick-commerce apps.</p>
+<p style="color:#94a3b8;margin-top:-.4rem">Compare verified selling prices &amp; cost per gram across Amazon India, Flipkart, HealthKart, BigBasket, and quick-commerce apps.</p>
 
 <div class="box">
-<label style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (All 20 Verified Products):</label>
+<label for="prod" style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (All 20 Verified Products):</label>
 <select id="prod" onchange="onProdChange()"></select>
 
 <div id="customBox" class="cbox">
-<label style="font-size:.82rem;color:#cbd5e1">Type Any Protein Brand / Product Name to Check Across Stores:</label>
-<div style="display:flex;gap:.5rem;margin-top:.35rem">
+<label for="cq" style="font-size:.82rem;color:#cbd5e1">Type Any Protein Brand / Product Name to Check Across Stores:</label>
 <input id="cq" placeholder="e.g., MyProtein Impact Whey 1kg, GNC Whey 1kg" oninput="renderCustom()">
-</div>
 </div>
 
 <div class="twrap"><table id="ptbl"></table></div>
@@ -54,16 +54,107 @@ th{background:#0b1120;color:#cbd5e1}
 </div>
 
 <script>
-const TAG="pickmyprote03-21";
-const amzS=(q)=>"https://www.amazon.in/s?k="+encodeURIComponent(q)+"&tag="+TAG;
-const fkS=(q)=>"https://www.flipkart.com/search?q="+encodeURIComponent(q);
-const hkS=(q)=>"https://www.healthkart.com/search?q="+encodeURIComponent(q);
-const bbS=(q)=>"https://www.bigbasket.com/ps/?q="+encodeURIComponent(q);
-const zpS=(q)=>"https://www.zeptonow.com/search?query="+encodeURIComponent(q);
+(function(){
+var TAG = "pickmyprote03-21";
 
-const DATA=[
-{id:"mb_enz",n:"MuscleBlaze Raw Whey Protein Concentrate, Unflavoured, 1kg",g:792,amzP:2899,amzU:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG,amzN:"Verified Seller • Prime + Bank Offers",fkP:2899,hkP:2899,bbP:2899,zpP:2848,offN:"MuscleBlaze Official",offP:2899,offU:"https://www.muscleblaze.com/"},
-{id:"mb_raw",n:"MuscleBlaze 100% Clean Raw Whey Protein Concentrate, 1kg",g:792,amzP:3499,amzU:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG,amzN:"Direct Fulfillment • Subscribe & Save",fkP:3499,hkP:3499,bbP:3499,zpP:null,offN:"MuscleBlaze Official",offP:3499,offU:"https://www.muscleblaze.com/"},
-{id:"mb_bio2kg",n:"MuscleBlaze Biozyme Performance Whey Protein Powder, 2kg",g:1400,amzP:8199,amzU:"https://www.amazon.in/dp/B095SV6BBZ?tag="+TAG,amzN:"50% Higher Absorption • 2kg Value Pack",fkP:8199,hkP:7999,bbP:null,zpP:null,offN:"MuscleBlaze Official",offP:8199,offU:"https://www.muscleblaze.com/"},
-{id:"mb_pr",n:"MuscleBlaze Biozyme Whey PR Protein Powder, 1kg",g:750,amzP:3949,amzU:"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG,amzN:"30g Protein + 3g Creatine",fkP:3949,hkP:3949,bbP:null,zpP:null,offN:"MuscleBlaze Official",offP:3949,offU:"https://www.muscleblaze.com/"},
-{id:"mb_beg",n:"MuscleBlaze Beginner's Whey Protein Powder, Chocolate, 1kg",g:396,amzP:1849,amzU:amzS("MuscleBlaze Beginners Whey Protein 1kg"),amzN:"Starter Formula • Easy Digestion",fkP:1849,hkP:1799,bbP:1849,zpP:1849,offN:"MuscleBlaze Official",offP:18
+function amzS(q){ return "https://www.amazon.in/s?k=" + encodeURIComponent(q) + "&tag=" + TAG; }
+function fkS(q){ return "https://www.flipkart.com/search?q=" + encodeURIComponent(q); }
+function hkS(q){ return "https://www.healthkart.com/search?q=" + encodeURIComponent(q); }
+function bbS(q){ return "https://www.bigbasket.com/ps/?q=" + encodeURIComponent(q); }
+function zpS(q){ return "https://www.zeptonow.com/search?query=" + encodeURIComponent(q); }
+
+function fmtINR(n){
+  return "₹" + Number(n).toLocaleString("en-IN");
+}
+
+function fmtCPG(price, grams){
+  if(!price || !grams) return "—";
+  return "₹" + (price / grams).toFixed(2) + " / g";
+}
+
+var DATA = [
+  {n:"MuscleBlaze Raw Whey Protein Concentrate, Unflavoured, 1kg", g:792, amzP:2899, amzU:"https://www.amazon.in/dp/B0BPH457FG?tag="+TAG, amzN:"Verified Seller • Prime + Bank Offers", fkP:2899, hkP:2899, bbP:2899, zpP:2848, offN:"MuscleBlaze Official", offP:2899, offU:"https://www.muscleblaze.com/"},
+  {n:"MuscleBlaze 100% Clean Raw Whey Protein Concentrate, 1kg", g:792, amzP:3499, amzU:"https://www.amazon.in/dp/B06XGNT22C?tag="+TAG, amzN:"Direct Fulfillment • Subscribe & Save", fkP:3499, hkP:3499, bbP:3499, zpP:null, offN:"MuscleBlaze Official", offP:3499, offU:"https://www.muscleblaze.com/"},
+  {n:"MuscleBlaze Biozyme Performance Whey Protein Powder, 2kg", g:1400, amzP:8199, amzU:"https://www.amazon.in/dp/B095SV6BBZ?tag="+TAG, amzN:"50% Higher Absorption • 2kg Value Pack", fkP:8199, hkP:7999, bbP:null, zpP:null, offN:"MuscleBlaze Official", offP:8199, offU:"https://www.muscleblaze.com/"},
+  {n:"MuscleBlaze Biozyme Whey PR Protein Powder, 1kg", g:750, amzP:3949, amzU:"https://www.amazon.in/dp/B0D6R1GKH3?tag="+TAG, amzN:"30g Protein + 3g Creatine", fkP:3949, hkP:3949, bbP:null, zpP:null, offN:"MuscleBlaze Official", offP:3949, offU:"https://www.muscleblaze.com/"},
+  {n:"MuscleBlaze Beginner's Whey Protein Powder, Chocolate, 1kg", g:396, amzP:1849, amzU:amzS("MuscleBlaze Beginners Whey Protein 1kg"), amzN:"Starter Formula • Easy Digestion", fkP:1849, hkP:1799, bbP:1849, zpP:1849, offN:"MuscleBlaze Official", offP:1849, offU:"https://www.muscleblaze.com/"},
+  {n:"FUELONE Whey Max Protein Blend, Cold Coffee, 1kg", g:756, amzP:2799, amzU:amzS("Fuel One Whey Max 1kg"), amzN:"27g Protein • Trustified Certified", fkP:2799, hkP:2799, bbP:null, zpP:null, offN:"MuscleBlaze / FuelOne Official", offP:2799, offU:"https://www.muscleblaze.com/"},
+  {n:"AS-IT-IS Nutrition Whey Protein Concentrate 80% - 1kg", g:812, amzP:3298, amzU:"https://www.amazon.in/dp/B079SZJJDR?tag="+TAG, amzN:"Labdoor & Trustified Certified • 28g/scoop", fkP:3199, hkP:3298, bbP:3298, zpP:null, offN:"AS-IT-IS Official", offP:3298, offU:"https://asitisnutrition.com/"},
+  {n:"AS-IT-IS ATOM Whey Protein Powder 1kg", g:756, amzP:3134, amzU:"https://www.amazon.in/dp/B09DKFPQ91?tag="+TAG, amzN:"27g Protein + Digestive Enzymes", fkP:3099, hkP:3134, bbP:null, zpP:null, offN:"AS-IT-IS Official", offP:3134, offU:"https://asitisnutrition.com/"},
+  {n:"AS-IT-IS ATOM PWR Whey Protein XL Powder 1kg", g:792, amzP:1792, amzU:amzS("AS-IT-IS ATOM PWR Whey Protein XL 1kg"), amzN:"24g Protein per Serving • Budget Pick", fkP:1792, hkP:null, bbP:null, zpP:null, offN:"AS-IT-IS Official", offP:1792, offU:"https://asitisnutrition.com/"},
+  {n:"NAKPRO NUTRITION Gold Clean Raw Whey Protein Concentrate | 1kg", g:728, amzP:2999, amzU:"https://www.amazon.in/dp/B07M7YZ57R?tag="+TAG, amzN:"Trustified Certified • 28g/scoop", fkP:2999, hkP:2999, bbP:null, zpP:null, offN:"Nakpro Official", offP:2999, offU:"https://nakpro.com/"},
+  {n:"NAKPRO NUTRITION Perform Whey Protein Concentrate | 1kg", g:780, amzP:2199, amzU:"https://www.amazon.in/dp/B07YX4VLC2?tag="+TAG, amzN:"Trustified • 26g Protein per Scoop", fkP:2199, hkP:2199, bbP:null, zpP:null, offN:"Nakpro Official", offP:2199, offU:"https://nakpro.com/"},
+  {n:"NAKPRO NUTRITION Impact Whey Protein Isolate & Concentrate | 1kg", g:720, amzP:1599, amzU:amzS("Nakpro Impact Whey Protein 1kg"), amzN:"Lowest Cost Flavoured Whey • Enzymes", fkP:1599, hkP:null, bbP:null, zpP:null, offN:"Nakpro Official", offP:1599, offU:"https://nakpro.com/"},
+  {n:"NAKPRO Platinum Plus+ Whey Protein Isolate | 1kg", g:840, amzP:3499, amzU:"https://www.amazon.in/dp/B0C23R85XQ?tag="+TAG, amzN:"Pure Isolate • 28g Protein + 6.36g BCAA", fkP:3499, hkP:3499, bbP:null, zpP:null, offN:"Nakpro Official", offP:3499, offU:"https://nakpro.com/"},
+  {n:"Nakpro Hydro Whey Hydrolyzed (1kg)", g:840, amzP:3899, amzU:amzS("Nakpro Hydro Whey Protein 1kg"), amzN:"Fast-Absorbing Hydrolyzed Isolate", fkP:3899, hkP:null, bbP:null, zpP:null, offN:"Nakpro Official", offP:3899, offU:"https://nakpro.com/"},
+  {n:"avvatar WHEY PROTEIN | 1Kg | Malai Kulfi Flavour", g:812, amzP:4229, amzU:"https://www.amazon.in/dp/B09CKM57HL?tag="+TAG, amzN:"100% Fresh Indian Cow Milk Whey", fkP:4229, hkP:4229, bbP:null, zpP:null, offN:"Avvatar Official", offP:4229, offU:"https://www.avvatarindia.com/"},
+  {n:"avvatar ISORICH WHEY PROTEIN | 1Kg | Malai Kulfi Flavour", g:841, amzP:5469, amzU:amzS("Avvatar Isorich Whey Protein Isolate 1kg"), amzN:"29g Pure Isolate • 29 Servings", fkP:5469, hkP:5469, bbP:null, zpP:null, offN:"Avvatar Official", offP:5469, offU:"https://www.avvatarindia.com/"},
+  {n:"The Whole Truth Whey Protein Concentrate | Unflavoured | 1kg", g:858, amzP:3899, amzU:amzS("The Whole Truth Unflavoured Whey Protein Concentrate 1kg"), amzN:"Zero Gums or Fillers • 26g Protein", fkP:3899, hkP:3899, bbP:3899, zpP:3899, offN:"The Whole Truth Official", offP:3899, offU:"https://thewholetruthfoods.com/"},
+  {n:"Wellbeing Nutrition Clean Whey Protein Concentrate 1kg Unflavoured", g:756, amzP:3999, amzU:"https://www.amazon.in/dp/B0DMNWWH5S?tag="+TAG, amzN:"4B CFU Probiotics + Digestive Enzymes", fkP:3999, hkP:3999, bbP:null, zpP:null, offN:"Wellbeing Nutrition Official", offP:3999, offU:"https://wellbeingnutrition.com/"},
+  {n:"Yogabar ProClean Whey Protein Concentrate 1kg", g:756, amzP:2670, amzU:"https://www.amazon.in/dp/B0DV5D8355?tag="+TAG, amzN:"27g Protein • Patented Pro-Absorb Blend", fkP:2670, hkP:2670, bbP:2670, zpP:2670, offN:"Yogabar Official", offP:2670, offU:"https://www.yogabars.in/"},
+  {n:"Nutrabay Gold Whey Protein Concentrate with Enzymes | 1kg", g:700, amzP:2999, amzU:amzS("Nutrabay Gold 100% Whey Protein Concentrate 1kg"), amzN:"25g Protein • Trustified Certified", fkP:2999, hkP:null, bbP:null, zpP:null, offN:"Nutrabay Official", offP:2999, offU:"https://nutrabay.com/"}
+];
+
+function drawTable(stores){
+  var html = "<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>";
+  for(var i = 0; i < stores.length; i++){
+    var st = stores[i];
+    var badge = st.primary ? '<span class="badge">RECOMMENDED</span>' : '';
+    var btnClass = st.primary ? 'amz' : 'ext';
+    var btnText = st.primary ? 'Buy on Amazon &rarr;' : 'Check Store';
+    html += "<tr>" +
+      "<td><strong>" + st.s + "</strong>" + badge + "</td>" +
+      "<td><strong>" + st.p + "</strong></td>" +
+      "<td style='color:#34d399;font-weight:700'>" + st.cpg + "</td>" +
+      "<td style='color:#94a3b8;font-size:.82rem'>" + st.n + "</td>" +
+      "<td><a href='" + st.u + "' target='_blank' rel='nofollow sponsored' class='" + btnClass + "'>" + btnText + "</a></td>" +
+      "</tr>";
+  }
+  document.getElementById("ptbl").innerHTML = html;
+}
+
+window.renderCustom = function(){
+  var q = (document.getElementById("cq").value || "").trim() || "Whey Protein 1kg";
+  drawTable([
+    {s:"Amazon.in", p:"Check Live", cpg:"—", n:"Prime Delivery + Bank Offers", u:amzS(q), primary:true},
+    {s:"Flipkart", p:"Check Live", cpg:"—", n:"Flipkart Assured + Card Offers", u:fkS(q), primary:false},
+    {s:"HealthKart", p:"Check Live", cpg:"—", n:"Authorized Supplement Store", u:hkS(q), primary:false},
+    {s:"BigBasket", p:"Check Live", cpg:"—", n:"Same-Day Grocery Delivery", u:bbS(q), primary:false},
+    {s:"Zepto", p:"Check Live", cpg:"—", n:"10-Min Quick Delivery", u:zpS(q), primary:false}
+  ]);
+};
+
+window.renderPrices = function(){
+  var idx = parseInt(document.getElementById("prod").value, 10);
+  var item = DATA[idx] || DATA[0];
+  var q = item.n.split("|")[0].trim();
+  var stores = [
+    {s:"Amazon.in", p:fmtINR(item.amzP), cpg:fmtCPG(item.amzP, item.g), n:item.amzN, u:item.amzU, primary:true}
+  ];
+  if(item.fkP) stores.push({s:"Flipkart", p:fmtINR(item.fkP), cpg:fmtCPG(item.fkP, item.g), n:"Flipkart Assured • Card Discounts", u:fkS(q), primary:false});
+  if(item.hkP) stores.push({s:"HealthKart", p:fmtINR(item.hkP), cpg:fmtCPG(item.hkP, item.g), n:"Authorized Retailer + HK Cash", u:hkS(q), primary:false});
+  if(item.bbP) stores.push({s:"BigBasket", p:fmtINR(item.bbP), cpg:fmtCPG(item.bbP, item.g), n:"Same-Day Grocery Delivery", u:bbS(q), primary:false});
+  if(item.zpP) stores.push({s:"Zepto / Instamart", p:fmtINR(item.zpP), cpg:fmtCPG(item.zpP, item.g), n:"10-Min Delivery (Varies by Pincode)", u:zpS(q), primary:false});
+  if(item.offP) stores.push({s:item.offN, p:fmtINR(item.offP), cpg:fmtCPG(item.offP, item.g), n:"Direct Brand Store Fulfillment", u:item.offU, primary:false});
+  drawTable(stores);
+};
+
+window.onProdChange = function(){
+  var v = document.getElementById("prod").value;
+  document.getElementById("customBox").style.display = (v === "custom") ? "block" : "none";
+  if(v === "custom") window.renderCustom();
+  else window.renderPrices();
+};
+
+var sel = document.getElementById("prod");
+var opts = "";
+for(var i = 0; i < DATA.length; i++){
+  opts += "<option value='" + i + "'>" + DATA[i].n + "</option>";
+}
+opts += "<option value='custom'>Search Any Other Protein Brand Across Stores...</option>";
+sel.innerHTML = opts;
+window.renderPrices();
+})();
+</script>
+</body>
+</html>
