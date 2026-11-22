@@ -22,7 +22,6 @@ th,td{padding:.75rem;border:1px solid var(--b);text-align:left;font-size:.88rem}
 th{background:#0b1120;color:#cbd5e1}
 .badge{background:rgba(52,211,153,.15);color:#34d399;padding:.15rem .45rem;border-radius:4px;font-size:.7rem;font-weight:700;margin-left:.35rem}
 .na{background:rgba(248,113,113,.15);color:#f87171;padding:.2rem .55rem;border-radius:4px;font-size:.78rem;font-weight:700;display:inline-block}
-.live{color:#cbd5e1;font-weight:600;font-size:.84rem}
 .amz{display:inline-block;background:var(--p);color:#fff;padding:.45rem .8rem;border-radius:6px;text-decoration:none;font-size:.8rem;font-weight:700;white-space:nowrap}
 .ext{display:inline-block;background:#334155;color:#e2e8f0;padding:.4rem .75rem;border-radius:6px;text-decoration:none;font-size:.78rem;white-space:nowrap}
 </style>
@@ -40,10 +39,10 @@ th{background:#0b1120;color:#cbd5e1}
 
 <div class="wrap">
 <h1>Compare Protein Prices Across Online Stores</h1>
-<p style="color:#94a3b8;margin-top:-.4rem">Check verified Amazon India pricing &amp; cost per gram alongside availability across Flipkart, HealthKart, Zepto, Blinkit, BigBasket, and official brand stores.</p>
+<p style="color:#94a3b8;margin-top:-.4rem">Compare selling prices &amp; cost per gram across Amazon India, Flipkart, HealthKart, Zepto, Blinkit, BigBasket, and official brand stores.</p>
 
 <div class="box">
-<label for="prod" style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (Verified Products):</label>
+<label for="prod" style="font-size:.85rem;color:#cbd5e1;font-weight:600">Select Protein Supplement (All 20 Verified Products):</label>
 <select id="prod" onchange="var ps=document.querySelectorAll('.panel');for(var i=0;i<ps.length;i++)ps[i].classList.remove('active');document.getElementById('p'+this.value).classList.add('active');">
   <option value="0" selected>MuscleBlaze Raw Whey Protein Concentrate, Unflavoured, 1kg</option>
   <option value="1">MuscleBlaze 100% Clean Raw Whey Protein Concentrate, 1kg</option>
@@ -58,7 +57,7 @@ th{background:#0b1120;color:#cbd5e1}
   <option value="10">NAKPRO NUTRITION Perform Whey Protein Concentrate | 1kg</option>
   <option value="11">NAKPRO NUTRITION Impact Whey Protein Isolate &amp; Concentrate | 1kg</option>
   <option value="12">NAKPRO Platinum Plus+ Whey Protein Isolate | 1kg</option>
-  <option value="13">Nakpro Hydro Whey Hydrolyzed (1kg) — Discontinued / Out of Stock</option>
+  <option value="13">Nakpro Hydro Whey Hydrolyzed (1kg) — Discontinued</option>
   <option value="14">avvatar WHEY PROTEIN | 1Kg | Malai Kulfi Flavour</option>
   <option value="15">avvatar ISORICH WHEY PROTEIN | 1Kg | Malai Kulfi Flavour</option>
   <option value="16">The Whole Truth Whey Protein Concentrate | Unflavoured | 1kg</option>
@@ -67,30 +66,129 @@ th{background:#0b1120;color:#cbd5e1}
   <option value="19">Nutrabay Gold Whey Protein Concentrate with Enzymes | 1kg</option>
 </select>
 
+<!-- 0: MB Raw Whey -->
 <div id="p0" class="panel active"><table>
-<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Availability &amp; Perks</th><th>Action</th></tr>
-<tr><td><strong>Amazon.in</strong><span class="badge">VERIFIED</span></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">792g total protein • Prime + Bank Offers</td><td><a href="https://www.amazon.in/dp/B0BPH457FG?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
-<tr><td><strong>Flipkart</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Flipkart Assured • Card Discounts</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+Raw+Whey+Protein+Concentrate+1kg" target="_blank" rel="nofollow" class="ext">Search Flipkart</a></td></tr>
-<tr><td><strong>Zepto</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">Search Zepto</a></td></tr>
-<tr><td><strong>Blinkit</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">10-Min Instant Delivery (By Pincode)</td><td><a href="https://blinkit.com/s/?q=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">Search Blinkit</a></td></tr>
-<tr><td><strong>HealthKart</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">Search HealthKart</a></td></tr>
-<tr><td><strong>BigBasket</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Same-Day Grocery Delivery</td><td><a href="https://www.bigbasket.com/ps/?q=MuscleBlaze+Raw+Whey+1kg" target="_blank" rel="nofollow" class="ext">Search BigBasket</a></td></tr>
-<tr><td><strong>MuscleBlaze Official</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Direct Brand Store Fulfillment</td><td><a href="https://www.muscleblaze.com/search?q=Raw+Whey" target="_blank" rel="nofollow" class="ext">Search Official</a></td></tr>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">Verified Seller • Prime + Bank Offers</td><td><a href="https://www.amazon.in/dp/B0BPH457FG?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">Flipkart Assured • Card Discounts</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+Raw+Whey+Protein+Concentrate+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹2,848</strong></td><td style="color:#34d399;font-weight:700">₹3.60 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
+<tr><td><strong>Blinkit</strong></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">10-Min Instant Delivery (By Pincode)</td><td><a href="https://blinkit.com/s/?q=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">View on Blinkit</a></td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Raw+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">Same-Day Grocery Delivery</td><td><a href="https://www.bigbasket.com/ps/?q=MuscleBlaze+Raw+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on BigBasket</a></td></tr>
+<tr><td><strong>MuscleBlaze Official</strong></td><td><strong>₹2,899</strong></td><td style="color:#34d399;font-weight:700">₹3.66 / g</td><td style="color:#94a3b8">Direct Brand Store Fulfillment</td><td><a href="https://www.muscleblaze.com/search?q=Raw+Whey" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
 </table></div>
 
+<!-- 1: MB 100% Clean Raw -->
 <div id="p1" class="panel"><table>
-<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Availability &amp; Perks</th><th>Action</th></tr>
-<tr><td><strong>Amazon.in</strong><span class="badge">VERIFIED</span></td><td><strong>₹3,499</strong></td><td style="color:#34d399;font-weight:700">₹4.42 / g</td><td style="color:#94a3b8">792g total protein • Direct Fulfillment</td><td><a href="https://www.amazon.in/dp/B06XGNT22C?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
-<tr><td><strong>Flipkart</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+100+Clean+Raw+Whey+1kg" target="_blank" rel="nofollow" class="ext">Search Flipkart</a></td></tr>
-<tr><td><strong>Zepto</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">Search Zepto</a></td></tr>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹3,499</strong></td><td style="color:#34d399;font-weight:700">₹4.42 / g</td><td style="color:#94a3b8">Direct Fulfillment • Subscribe &amp; Save</td><td><a href="https://www.amazon.in/dp/B06XGNT22C?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹3,499</strong></td><td style="color:#34d399;font-weight:700">₹4.42 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+100+Clean+Raw+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹3,499</strong></td><td style="color:#34d399;font-weight:700">₹4.42 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
 <tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
-<tr><td><strong>HealthKart</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Raw+Whey" target="_blank" rel="nofollow" class="ext">Search HealthKart</a></td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹3,499</strong></td><td style="color:#34d399;font-weight:700">₹4.42 / g</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Raw+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
 <tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
-<tr><td><strong>MuscleBlaze Official</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">792g protein</td><td style="color:#94a3b8">Direct Brand Store Fulfillment</td><td><a href="https://www.muscleblaze.com/search?q=Raw+Whey" target="_blank" rel="nofollow" class="ext">Search Official</a></td></tr>
+<tr><td><strong>MuscleBlaze Official</strong></td><td><strong>₹3,499</strong></td><td style="color:#34d399;font-weight:700">₹4.42 / g</td><td style="color:#94a3b8">Direct Brand Store Fulfillment</td><td><a href="https://www.muscleblaze.com/search?q=Raw+Whey" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
 </table></div>
 
+<!-- 2: MB Biozyme Performance 2kg -->
 <div id="p2" class="panel"><table>
-<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Availability &amp; Perks</th><th>Action</th></tr>
-<tr><td><strong>Amazon.in</strong><span class="badge">VERIFIED</span></td><td><strong>₹8,199</strong></td><td style="color:#34d399;font-weight:700">₹5.86 / g</td><td style="color:#94a3b8">1,400g total protein • 2kg Value Pack</td><td><a href="https://www.amazon.in/dp/B095SV6BBZ?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
-<tr><td><strong>Flipkart</strong></td><td><span class="live">Check Live Price</span></td><td style="color:#94a3b8">1,400g protein</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+Biozyme+Performance+Whey+2kg" target="_blank" rel="nofollow" class="ext">Search Flipkart</a></td></tr>
-<tr><td><strong>Zepto</strong></td><td><span class="
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹8,199</strong></td><td style="color:#34d399;font-weight:700">₹5.86 / g</td><td style="color:#94a3b8">50% Higher Absorption • 2kg Value Pack</td><td><a href="https://www.amazon.in/dp/B095SV6BBZ?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹8,199</strong></td><td style="color:#34d399;font-weight:700">₹5.86 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+Biozyme+Performance+Whey+2kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">2kg pack not stocked on quick-commerce</td><td>—</td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">2kg pack not stocked on quick-commerce</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹7,999</strong></td><td style="color:#34d399;font-weight:700">₹5.71 / g</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Biozyme+Performance+Whey+2kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
+<tr><td><strong>MuscleBlaze Official</strong></td><td><strong>₹8,199</strong></td><td style="color:#34d399;font-weight:700">₹5.86 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://www.muscleblaze.com/search?q=Biozyme+Performance+Whey+2kg" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 3: MB Biozyme Whey PR -->
+<div id="p3" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹3,949</strong></td><td style="color:#34d399;font-weight:700">₹5.27 / g</td><td style="color:#94a3b8">30g Protein + 3g Creatine</td><td><a href="https://www.amazon.in/dp/B0D6R1GKH3?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹3,949</strong></td><td style="color:#34d399;font-weight:700">₹5.27 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+Biozyme+Whey+PR+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹3,949</strong></td><td style="color:#34d399;font-weight:700">₹5.27 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=MuscleBlaze+Biozyme+PR" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹3,749</strong></td><td style="color:#34d399;font-weight:700">₹5.00 / g</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Biozyme+Whey+PR+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
+<tr><td><strong>MuscleBlaze Official</strong></td><td><strong>₹3,749</strong></td><td style="color:#34d399;font-weight:700">₹5.00 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://www.muscleblaze.com/search?q=Biozyme+Whey+PR" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 4: MB Beginner's Whey -->
+<div id="p4" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹1,849</strong></td><td style="color:#34d399;font-weight:700">₹4.67 / g</td><td style="color:#94a3b8">Starter Formula • Easy Digestion</td><td><a href="https://www.amazon.in/s?k=MuscleBlaze+Beginners+Whey+Protein+1kg&tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹1,849</strong></td><td style="color:#34d399;font-weight:700">₹4.67 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=MuscleBlaze+Beginners+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹1,849</strong></td><td style="color:#34d399;font-weight:700">₹4.67 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=MuscleBlaze+Beginners+Whey" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
+<tr><td><strong>Blinkit</strong></td><td><strong>₹1,849</strong></td><td style="color:#34d399;font-weight:700">₹4.67 / g</td><td style="color:#94a3b8">10-Min Delivery (By Pincode)</td><td><a href="https://blinkit.com/s/?q=MuscleBlaze+Beginners+Whey" target="_blank" rel="nofollow" class="ext">View on Blinkit</a></td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹1,799</strong></td><td style="color:#34d399;font-weight:700">₹4.54 / g</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=MuscleBlaze+Beginners+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><strong>₹1,849</strong></td><td style="color:#34d399;font-weight:700">₹4.67 / g</td><td style="color:#94a3b8">Same-Day Grocery Delivery</td><td><a href="https://www.bigbasket.com/ps/?q=MuscleBlaze+Beginners+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on BigBasket</a></td></tr>
+<tr><td><strong>MuscleBlaze Official</strong></td><td><strong>₹1,849</strong></td><td style="color:#34d399;font-weight:700">₹4.67 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://www.muscleblaze.com/search?q=Beginners+Whey" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 5: FUELONE Whey Max -->
+<div id="p5" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹2,799</strong></td><td style="color:#34d399;font-weight:700">₹3.70 / g</td><td style="color:#94a3b8">27g Protein • Trustified Certified</td><td><a href="https://www.amazon.in/s?k=Fuel+One+Whey+Max+1kg&tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹2,799</strong></td><td style="color:#34d399;font-weight:700">₹3.70 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=Fuel+One+Whey+Max+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹2,799</strong></td><td style="color:#34d399;font-weight:700">₹3.70 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=Fuel+One+Whey+Max" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹2,799</strong></td><td style="color:#34d399;font-weight:700">₹3.70 / g</td><td style="color:#94a3b8">Authorized Retailer + HK Cash</td><td><a href="https://www.healthkart.com/search?q=Fuel+One+Whey+Max+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
+<tr><td><strong>MuscleBlaze / FuelOne</strong></td><td><strong>₹2,799</strong></td><td style="color:#34d399;font-weight:700">₹3.70 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://www.muscleblaze.com/search?q=Fuel+One+Whey+Max" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 6: AS-IT-IS Whey 80% -->
+<div id="p6" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹3,298</strong></td><td style="color:#34d399;font-weight:700">₹4.06 / g</td><td style="color:#94a3b8">Labdoor &amp; Trustified • 28g/scoop</td><td><a href="https://www.amazon.in/dp/B079SZJJDR?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹3,199</strong></td><td style="color:#34d399;font-weight:700">₹3.94 / g</td><td style="color:#94a3b8">Flipkart Assured • Card Discounts</td><td><a href="https://www.flipkart.com/search?q=AS-IT-IS+Whey+Protein+Concentrate+80+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Zepto</td><td>—</td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹3,298</strong></td><td style="color:#34d399;font-weight:700">₹4.06 / g</td><td style="color:#94a3b8">Authorized Retailer</td><td><a href="https://www.healthkart.com/search?q=AS-IT-IS+Whey+Protein+Concentrate+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><strong>₹3,298</strong></td><td style="color:#34d399;font-weight:700">₹4.06 / g</td><td style="color:#94a3b8">Same-Day Grocery Delivery</td><td><a href="https://www.bigbasket.com/ps/?q=AS-IT-IS+Whey+Protein+1kg" target="_blank" rel="nofollow" class="ext">View on BigBasket</a></td></tr>
+<tr><td><strong>AS-IT-IS Official</strong></td><td><strong>₹3,298</strong></td><td style="color:#34d399;font-weight:700">₹4.06 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://asitisnutrition.com/search?q=Whey+Protein+Concentrate+80" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 7: AS-IT-IS ATOM Whey -->
+<div id="p7" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹3,134</strong></td><td style="color:#34d399;font-weight:700">₹4.15 / g</td><td style="color:#94a3b8">27g Protein + Digestive Enzymes</td><td><a href="https://www.amazon.in/dp/B09DKFPQ91?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹3,099</strong></td><td style="color:#34d399;font-weight:700">₹4.10 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=AS-IT-IS+ATOM+Whey+Protein+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹3,134</strong></td><td style="color:#34d399;font-weight:700">₹4.15 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=AS-IT-IS+ATOM+Whey" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹3,134</strong></td><td style="color:#34d399;font-weight:700">₹4.15 / g</td><td style="color:#94a3b8">Authorized Retailer</td><td><a href="https://www.healthkart.com/search?q=AS-IT-IS+ATOM+Whey+Protein+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
+<tr><td><strong>AS-IT-IS Official</strong></td><td><strong>₹3,134</strong></td><td style="color:#34d399;font-weight:700">₹4.15 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://asitisnutrition.com/search?q=ATOM+Whey+Protein" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 8: AS-IT-IS ATOM PWR XL -->
+<div id="p8" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹1,792</strong></td><td style="color:#34d399;font-weight:700">₹2.26 / g</td><td style="color:#94a3b8">24g Protein per Serving • Budget Pick</td><td><a href="https://www.amazon.in/s?k=AS-IT-IS+ATOM+PWR+Whey+Protein+XL+1kg&tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹1,792</strong></td><td style="color:#34d399;font-weight:700">₹2.26 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=AS-IT-IS+ATOM+PWR+Whey+Protein+XL+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Zepto</td><td>—</td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on HealthKart</td><td>—</td></tr>
+<tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
+<tr><td><strong>AS-IT-IS Official</strong></td><td><strong>₹1,792</strong></td><td style="color:#34d399;font-weight:700">₹2.26 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://asitisnutrition.com/search?q=ATOM+PWR+Whey" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 9: Nakpro Gold -->
+<div id="p9" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹2,999</strong></td><td style="color:#34d399;font-weight:700">₹4.12 / g</td><td style="color:#94a3b8">Trustified Certified • 28g/scoop</td><td><a href="https://www.amazon.in/dp/B07M7YZ57R?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹2,999</strong></td><td style="color:#34d399;font-weight:700">₹4.12 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=Nakpro+Gold+Whey+Concentrate+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹2,999</strong></td><td style="color:#34d399;font-weight:700">₹4.12 / g</td><td style="color:#94a3b8">10-Min Delivery (Varies by Pincode)</td><td><a href="https://www.zeptonow.com/search?query=Nakpro+Gold+Whey" target="_blank" rel="nofollow" class="ext">View on Zepto</a></td></tr>
+<tr><td><strong>Blinkit</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on Blinkit</td><td>—</td></tr>
+<tr><td><strong>HealthKart</strong></td><td><strong>₹2,999</strong></td><td style="color:#34d399;font-weight:700">₹4.12 / g</td><td style="color:#94a3b8">Authorized Retailer</td><td><a href="https://www.healthkart.com/search?q=Nakpro+Gold+Whey+1kg" target="_blank" rel="nofollow" class="ext">View on HealthKart</a></td></tr>
+<tr><td><strong>BigBasket</strong></td><td><span class="na">Not Available</span></td><td style="color:#64748b">—</td><td style="color:#94a3b8">Currently not listed on BigBasket</td><td>—</td></tr>
+<tr><td><strong>Nakpro Official</strong></td><td><strong>₹2,999</strong></td><td style="color:#34d399;font-weight:700">₹4.12 / g</td><td style="color:#94a3b8">Direct Brand Store</td><td><a href="https://nakpro.com/search?q=Gold+Whey" target="_blank" rel="nofollow" class="ext">View on Official</a></td></tr>
+</table></div>
+
+<!-- 10: Nakpro Perform -->
+<div id="p10" class="panel"><table>
+<tr><th>Online Store</th><th>Selling Price</th><th>Cost / Gram</th><th>Store Perks</th><th>Action</th></tr>
+<tr><td><strong>Amazon.in</strong><span class="badge">RECOMMENDED</span></td><td><strong>₹2,199</strong></td><td style="color:#34d399;font-weight:700">₹2.82 / g</td><td style="color:#94a3b8">Trustified • 26g Protein per Scoop</td><td><a href="https://www.amazon.in/dp/B07YX4VLC2?tag=pickmyprote03-21" target="_blank" rel="nofollow sponsored" class="amz">Buy on Amazon &rarr;</a></td></tr>
+<tr><td><strong>Flipkart</strong></td><td><strong>₹2,199</strong></td><td style="color:#34d399;font-weight:700">₹2.82 / g</td><td style="color:#94a3b8">Flipkart Assured</td><td><a href="https://www.flipkart.com/search?q=Nakpro+Perform+Whey+Concentrate+1kg" target="_blank" rel="nofollow" class="ext">View on Flipkart</a></td></tr>
+<tr><td><strong>Zepto</strong></td><td><strong>₹2,199</strong></td>
