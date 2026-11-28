@@ -1,5 +1,287 @@
-<script>
-(function () {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick My Protein | Compare 100+ Protein Supplements & Calculate Your Needs</title>
+    <meta name="description" content="Find the best protein for your goal and budget. Compare protein powders, calculate your daily protein gap, scan product barcodes, and check label transparency in India.">
+    <style>
+        :root {
+            --primary: #f36c21;
+            --primary-hover: #d95a14;
+            --bg-dark: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #162032;
+            --border: #334155;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --nav-text: #cbd5e1;
+            --good: #4ade80;
+            --ok: #fbbf24;
+            --poor: #f87171;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--surface);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .brand-logo {
+            color: var(--text);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .main-nav {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .main-nav a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .main-nav a:hover { color: var(--primary); }
+
+        .hero {
+            text-align: center;
+            padding: 3.5rem 1rem 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 { font-size: 2.5rem; margin: 0 0 1rem; }
+        .hero p { color: var(--muted); font-size: 1.1rem; margin: 0 auto 2rem; max-width: 640px; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            background-color: var(--primary);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border);
+        }
+        .btn-secondary:hover { background: var(--surface); }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem 2rem 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .feature-card h3 { margin: 0 0 0.5rem; }
+        .feature-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+
+        /* Scanner Section */
+        .scanner-section {
+            max-width: 640px;
+            margin: 1rem auto 4rem;
+            padding: 0 1.5rem;
+        }
+        .scanner-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+        .scanner-box h2 { margin: 0 0 0.35rem; font-size: 1.5rem; }
+        .scanner-lead { color: var(--muted); margin: 0 0 1.25rem; font-size: 0.95rem; }
+        .scan-btn {
+            width: 100%;
+            padding: 0.95rem 1.25rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+        }
+        .scan-btn:hover { background: var(--primary-hover); }
+        .cam { display: none; margin-top: 1rem; position: relative; }
+        .cam video {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .cam .guide {
+            position: absolute;
+            inset: 30% 12%;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .cam .stop-btn {
+            margin-top: 0.5rem;
+            width: 100%;
+            padding: 0.65rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .manual-form { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .manual-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .manual-form .go-btn {
+            padding: 0.75rem 1.1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+        .chip {
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--nav-text);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .chip:hover { border-color: var(--primary); color: var(--text); }
+        .status-msg { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.88rem; min-height: 1.3em; }
+
+        .result-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+        }
+        .result-top { display: flex; gap: 1rem; align-items: center; }
+        .score-ring {
+            flex: none;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 5px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .good { color: var(--good); }
+        .ok { color: var(--ok); }
+        .poor { color: var(--poor); }
+        .prod-name { margin: 0; font-size: 1.1rem; font-weight: 700; }
+        .prod-grade { margin: 0.15rem 0; font-weight: 700; font-size: 0.95rem; }
+        .prod-brand { margin: 0; color: var(--muted); font-size: 0.85rem; }
+        .scanner-box h3 { font-size: 1rem; margin: 1.25rem 0 0.5rem; }
+        table.nut-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        table.nut-table td { padding: 0.4rem 0; border-bottom: 1px solid var(--surface); }
+        table.nut-table td:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
+        .pos { color: var(--good); }
+        .neg { color: var(--poor); }
+        .ing-text { font-size: 0.88rem; color: var(--muted); margin: 0; }
+        .note-text { font-size: 0.8rem; color: var(--muted); margin: 1rem 0 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="brand-logo">pickmyprotein.com</a>
+        <nav class="main-nav" aria-label="Primary">
+            <a href="/calculators/">Calculators</a>
+            <a href="/compare/">Compare</a>
+            <a href="/best-protein/">Best Guides</a>
+            <a href="#barcode-scanner">Scanner</a>
+        </nav>
+    </header>
+
+    <main class="hero">
+        <h1>Find the Best Protein for Your Goal and Budget</h1>
+        <p>Stop guessing. Calculate your exact protein gap, compare 100+ supplements side-by-side, and find the true cost per gram before you buy.</p>
+        <div class="cta-buttons">
+            <a href="/calculators/" class="btn">Calculate Now</a>
+            <a href="/compare/" class="btn btn-secondary">Compare Proteins</a>
+        </div>
+    </main>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>📊 Protein Cost Calculator</h3>
+            <p>Find out exactly how much protein you are getting per rupee spent.</p>
+        </div>
+        <div class="feature-card">
+            <h3>⚔️ Direct Brand Face-Offs</h3>
+            <p>Compare MuscleBlaze, Avvatar, Nakpro, and ON side-by-side.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🛡️ Lab-Tested Scoring</h3>
+            <p>Check purity, amino profiles, and independent test results.</p>
+        </div>
+    </section>
+
+    <section id="barcode-scanner" class="scanner-section">
+        <div class="scanner-box">
+            <h2>Barcode &amp; Label Scanner</h2>
+            <p class="scanner-lead">Point your camera at a barcode or type the number below to check per-100g nutrition and ingredient flags.</p>
+
+            <button class="scan-btn" id="scanBtn" type="button">Scan barcode</button>
+            <div class="cam" id="cam">
+                <video id="video" playsinline muted></video>
+                <div class="guide"></div>
+                <button class="stop-btn" id="stopBtn" type="button">Stop camera</button>
+            </div>
+
+            <form class="manual-form" id="manual">
+                <input id="code" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
+                <button class="go-btn" type="submit">Check</button>
+            </form>
+
+            <div class="chips" id="chips"></div>
+            <p class="status-msg" id="msg" role="status"></p>
+            <div id="out"></div>
+        </div>
+    </section>
+
+    <script>
     const SAMPLES = {
         "8900000000011": { name: "Choco Crunch cereal (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
         "8900000000028": { name: "Plain rolled oats (sample)", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
@@ -12,11 +294,6 @@
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const band = (v, steps) => { for (const [l, p] of steps) if (v <= l) return p; return 0; };
     const atLeast = (v, steps) => { for (const [l, p] of steps) if (v >= l) return p; return 0; };
-
-    function setMsg(text) {
-        const el = $("msg");
-        if (el) el.textContent = text;
-    }
 
     function scoreProduct(p) {
         const n = p.per100;
@@ -116,12 +393,12 @@
     }
 
     async function lookup(raw) {
-        const code = String(raw || "").replace(/\D/g, "");
-        if (!code) { setMsg("Enter the digits printed under the barcode or pick a sample below."); return; }
-        setMsg("Looking up " + code + "…");
+        const code = String(raw).replace(/\D/g, "");
+        if (!code) { $("msg").textContent = "Enter the digits printed under the barcode."; return; }
+        $("msg").textContent = "Looking up " + code + "…";
         const p = await getProduct(code);
-        if (!p) { $("out").innerHTML = ""; setMsg("Product not found yet. Try another barcode or one of the sample chips above."); return; }
-        setMsg("");
+        if (!p) { $("out").innerHTML = ""; $("msg").textContent = "Product not found yet. Try another barcode or one of the sample chips above."; return; }
+        $("msg").textContent = "";
         render(p, code);
     }
 
@@ -129,104 +406,36 @@
     function stopCam() {
         scanning = false;
         if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-        if ($("cam")) $("cam").style.display = "none";
+        $("cam").style.display = "none";
     }
-
     async function startCam() {
-        setMsg("Checking camera & barcode scanner support…");
-        const hasMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-        const hasDetector = ("BarcodeDetector" in window);
-
-        if (!hasMedia || !hasDetector) {
-            setMsg("Live camera barcode scanning isn't supported in this browser. Choose a barcode photo or type the number below.");
-            if ($("barcodePhoto")) $("barcodePhoto").click();
-            return;
-        }
-
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } } });
-        } catch (e) {
-            setMsg("Camera unavailable or blocked. Choose a barcode photo or type the barcode number below.");
-            if ($("barcodePhoto")) $("barcodePhoto").click();
-            return;
-        }
-
+        if (!("BarcodeDetector" in window)) { $("msg").textContent = "Camera barcode detection isn't supported in this browser. Type the barcode number below."; return; }
+        try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }); }
+        catch (e) { $("msg").textContent = "Camera access was blocked. Allow camera permission or type the barcode number."; return; }
         const v = $("video");
         v.srcObject = stream;
         await v.play();
         $("cam").style.display = "block";
-        setMsg("Hold the barcode inside the orange guide box.");
+        $("msg").textContent = "Hold the barcode inside the orange guide box.";
         scanning = true;
-
-        let det;
-        try {
-            det = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"] });
-        } catch (e) {
-            det = new BarcodeDetector();
-        }
-
+        const det = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e"] });
         const tick = async () => {
             if (!scanning) return;
-            try {
-                const c = await det.detect(v);
-                if (c && c.length && c[0].rawValue) {
-                    stopCam();
-                    lookup(c[0].rawValue);
-                    return;
-                }
-            } catch (e) {}
+            try { const c = await det.detect(v); if (c.length) { stopCam(); lookup(c[0].rawValue); return; } } catch (e) {}
             requestAnimationFrame(tick);
         };
         tick();
     }
 
-    if ($("barcodePhoto")) {
-        $("barcodePhoto").addEventListener("change", async e => {
-            const file = e.target.files && e.target.files[0];
-            if (!file) return;
-            if (!("BarcodeDetector" in window)) {
-                setMsg("Photo barcode reading isn't supported in this browser. Please type the barcode digits below.");
-                $("code").focus();
-                return;
-            }
-            try {
-                setMsg("Reading barcode from image…");
-                const img = new Image();
-                const url = URL.createObjectURL(file);
-                img.onload = async () => {
-                    try {
-                        const det = new BarcodeDetector();
-                        const codes = await det.detect(img);
-                        URL.revokeObjectURL(url);
-                        if (codes && codes.length && codes[0].rawValue) {
-                            $("code").value = codes[0].rawValue;
-                            lookup(codes[0].rawValue);
-                        } else {
-                            setMsg("Could not detect a barcode in that photo. Type the number below or try a sample.");
-                        }
-                    } catch (err) {
-                        URL.revokeObjectURL(url);
-                        setMsg("Could not read barcode from image. Type the number below.");
-                    }
-                };
-                img.src = url;
-            } catch (err) {
-                setMsg("Could not process image. Type the barcode number below.");
-            }
-        });
-    }
-
-    if ($("scanBtn")) $("scanBtn").addEventListener("click", startCam);
-    if ($("stopBtn")) $("stopBtn").addEventListener("click", () => { stopCam(); setMsg(""); });
-    if ($("manual")) $("manual").addEventListener("submit", e => { e.preventDefault(); lookup($("code").value); });
-    if ($("chips")) {
-        $("chips").innerHTML = '<span class="status-msg" style="margin:0;width:100%">Try a sample product:</span>' +
-            Object.keys(SAMPLES).map(k => `<button class="chip" type="button" data-c="${k}">${esc(SAMPLES[k].name.replace(" (sample)", ""))}</button>`).join("");
-        $("chips").addEventListener("click", e => {
-            const btn = e.target.closest(".chip");
-            const c = btn && btn.dataset && btn.dataset.c;
-            if (c) { $("code").value = c; lookup(c); }
-        });
-    }
-})();
-</script>
+    $("scanBtn").addEventListener("click", startCam);
+    $("stopBtn").addEventListener("click", () => { stopCam(); $("msg").textContent = ""; });
+    $("manual").addEventListener("submit", e => { e.preventDefault(); lookup($("code").value); });
+    $("chips").innerHTML = '<span class="status-msg" style="margin:0;width:100%">Try a sample product:</span>' +
+        Object.keys(SAMPLES).map(k => `<button class="chip" type="button" data-c="${k}">${esc(SAMPLES[k].name.replace(" (sample)", ""))}</button>`).join("");
+    $("chips").addEventListener("click", e => {
+        const c = e.target.dataset && e.target.dataset.c;
+        if (c) { $("code").value = c; lookup(c); }
+    });
+    </script>
+</body>
+</html>
