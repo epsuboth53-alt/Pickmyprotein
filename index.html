@@ -1,52 +1,6 @@
-<section id="barcode-scanner" class="scanner-section">
-    <div class="scanner-box">
-        <h2>Barcode &amp; Label Scanner</h2>
-        <p class="scanner-lead">Scan a barcode, type a number, or add any product (like creatine, ghee, or snacks) if it isn't in the database yet.</p>
-
-        <button class="scan-btn" id="scanBtn" type="button">Scan barcode</button>
-        <input id="barcodePhoto" type="file" accept="image/*" capture="environment" style="display:none">
-
-        <div class="cam" id="cam">
-            <video id="video" playsinline muted></video>
-            <div class="guide"></div>
-            <button class="stop-btn" id="stopBtn" type="button">Stop camera</button>
-        </div>
-
-        <form class="manual-form" id="manual">
-            <input id="code" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
-            <button class="go-btn" type="submit">Check</button>
-        </form>
-
-        <div class="chips" id="chips"></div>
-        <p class="status-msg" id="msg" role="status" aria-live="polite"></p>
-        <div id="addFormWrap" style="display:none;margin-top:1rem;padding:1rem;border-radius:10px;border:1px solid var(--border);background:var(--bg-dark);">
-            <h3 style="margin:0 0 0.5rem;">Add product for barcode <span id="addCodeLabel"></span></h3>
-            <p class="ing-text" style="margin-bottom:0.75rem;">Values are per 100g from the product label. Saved locally on your device.</p>
-            <form id="addProductForm" style="display:grid;gap:0.6rem;">
-                <input id="pName" type="text" required placeholder="Product name (e.g., Creatine Monohydrate / Cow Ghee)" style="padding:0.6rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                <input id="pBrand" type="text" placeholder="Brand (e.g., MuscleBlaze, Amul, Nandini)" style="padding:0.6rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.5rem;">
-                    <input id="pSugar" type="number" step="any" min="0" placeholder="Sugar / 100g (g)" style="padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                    <input id="pSat" type="number" step="any" min="0" placeholder="Sat. fat / 100g (g)" style="padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                    <input id="pSodium" type="number" step="any" min="0" placeholder="Sodium / 100g (mg)" style="padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                    <input id="pFiber" type="number" step="any" min="0" placeholder="Fibre / 100g (g)" style="padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                    <input id="pProtein" type="number" step="any" min="0" placeholder="Protein / 100g (g)" style="grid-column:1/-1;padding:0.55rem 0.7rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                </div>
-                <input id="pIng" type="text" placeholder="Ingredients (comma separated, e.g., 100% Creatine Monohydrate)" style="padding:0.6rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);">
-                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                    <button type="submit" class="btn" style="padding:0.6rem 1rem;font-size:0.92rem;">Save &amp; Score</button>
-                    <button type="button" id="cancelAddBtn" class="go-btn" style="padding:0.6rem 1rem;font-size:0.92rem;">Cancel</button>
-                </div>
-            </form>
-        </div>
-        <div id="out"></div>
-    </div>
-</section>
-
 <script>
 (function () {
-    const STORAGE_KEY = "pmp_custom_barcodes_v1";
-    const BUILTIN = {
+    const SAMPLES = {
         "8900000000011": { name: "Choco Crunch cereal (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
         "8900000000028": { name: "Plain rolled oats (sample)", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
         "8900000000035": { name: "Chocolate whey protein (sample)", brand: "Sample brand", ingredients: "Whey protein concentrate, cocoa powder, sucralose, acesulfame potassium, soy lecithin, xanthan gum, flavour", per100: { sugar: 4, sat: 3, sodium: 420, fiber: 2, protein: 72 } },
@@ -54,49 +8,14 @@
         "8900000000059": { name: "Unsweetened muesli (sample)", brand: "Sample brand", ingredients: "Oats, almonds, sunflower seeds, raisins, wheat flakes", per100: { sugar: 9, sat: 1.8, sodium: 30, fiber: 8, protein: 11 } }
     };
 
-    function loadCustom() {
-        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
-        catch (e) { return {}; }
-    }
-    function saveCustom(map) {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); }
-        catch (e) {}
-    }
-    function getCatalog() {
-        return Object.assign({}, BUILTIN, loadCustom());
-    }
-
     const $ = id => document.getElementById(id);
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const band = (v, steps) => { for (const [l, p] of steps) if (v <= l) return p; return 0; };
     const atLeast = (v, steps) => { for (const [l, p] of steps) if (v >= l) return p; return 0; };
 
-    let lastMissingCode = "";
-
     function setMsg(text) {
         const el = $("msg");
         if (el) el.textContent = text;
-    }
-
-    function hideAddForm() {
-        if ($("addFormWrap")) $("addFormWrap").style.display = "none";
-    }
-
-    function showAddForm(code) {
-        lastMissingCode = code;
-        if ($("addCodeLabel")) $("addCodeLabel").textContent = code;
-        if ($("pName")) $("pName").value = "";
-        if ($("pBrand")) $("pBrand").value = "";
-        if ($("pSugar")) $("pSugar").value = "";
-        if ($("pSat")) $("pSat").value = "";
-        if ($("pSodium")) $("pSodium").value = "";
-        if ($("pFiber")) $("pFiber").value = "";
-        if ($("pProtein")) $("pProtein").value = "";
-        if ($("pIng")) $("pIng").value = "";
-        if ($("addFormWrap")) {
-            $("addFormWrap").style.display = "block";
-            $("pName").focus();
-        }
     }
 
     function scoreProduct(p) {
@@ -142,7 +61,6 @@
     const grade = s => s >= 80 ? ["Excellent", "good"] : s >= 60 ? ["Good", "good"] : s >= 40 ? ["Mediocre", "ok"] : ["Poor", "poor"];
 
     function render(p, code) {
-        hideAddForm();
         const r = scoreProduct(p);
         const [g, cls] = grade(r.score);
         const nutRows = r.nut.map(x => `<tr><td>${x[0]} ${esc(x[1])} per 100g</td><td class="${x[2] >= x[3] * 0.6 ? "pos" : "neg"}">${x[2]} of ${x[3]}</td></tr>`).join("");
@@ -165,23 +83,18 @@
             <table class="nut-table">${dedRows}</table>
             <h3>Ingredient list</h3>
             <p class="ing-text">${esc(p.ingredients || "Not available")}</p>
-            <p class="note-text">Score is based on label data only, using method v1.0. Source: ${esc(p.source || "Saved / Sample data")}. General information only, not medical advice.</p>
+            <p class="note-text">Score is based on label data only, using method v1.0. Source: ${esc(p.source || "Sample data")}. General information only, not medical advice.</p>
         </section>`;
         $("out").scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     async function getProduct(code) {
-        const catalog = getCatalog();
-        if (catalog[code]) {
-            return Object.assign({ source: BUILTIN[code] ? "Sample data" : "Saved product" }, catalog[code]);
-        }
         try {
             const res = await fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json?fields=product_name,brands,ingredients_text,nutriments");
             const j = await res.json();
             if (j.status === 1 && j.product) {
                 const p = j.product, n = p.nutriments || {};
-                const hasAnyNutriment = n.sugars_100g != null || n.proteins_100g != null || n["saturated-fat_100g"] != null || n.sodium_100g != null || n.salt_100g != null || n.fiber_100g != null;
-                if (hasAnyNutriment || p.ingredients_text) {
+                if (n.sugars_100g != null || n.proteins_100g != null || n.fat_100g != null) {
                     const sodiumMg = n.sodium_100g != null ? (+n.sodium_100g) * 1000 : (n.salt_100g != null ? (+n.salt_100g) * 400 : 0);
                     return {
                         name: p.product_name || "Unnamed product",
@@ -199,7 +112,7 @@
                 }
             }
         } catch (e) {}
-        return null;
+        return SAMPLES[code] || null;
     }
 
     async function lookup(raw) {
@@ -207,45 +120,9 @@
         if (!code) { setMsg("Enter the digits printed under the barcode or pick a sample below."); return; }
         setMsg("Looking up " + code + "…");
         const p = await getProduct(code);
-        if (!p) {
-            $("out").innerHTML = "";
-            setMsg("Barcode " + code + " wasn't found automatically. Add its label details below to score and save it.");
-            showAddForm(code);
-            return;
-        }
+        if (!p) { $("out").innerHTML = ""; setMsg("Product not found yet. Try another barcode or one of the sample chips above."); return; }
         setMsg("");
         render(p, code);
-    }
-
-    if ($("addProductForm")) {
-        $("addProductForm").addEventListener("submit", e => {
-            e.preventDefault();
-            if (!lastMissingCode) return;
-            const entry = {
-                name: ($("pName").value || "").trim() || ("Product " + lastMissingCode),
-                brand: ($("pBrand").value || "").trim(),
-                ingredients: ($("pIng").value || "").trim(),
-                per100: {
-                    sugar: +($("pSugar").value || 0),
-                    sat: +($("pSat").value || 0),
-                    sodium: +($("pSodium").value || 0),
-                    fiber: +($("pFiber").value || 0),
-                    protein: +($("pProtein").value || 0)
-                }
-            };
-            const custom = loadCustom();
-            custom[lastMissingCode] = entry;
-            saveCustom(custom);
-            setMsg("Saved " + entry.name + " for barcode " + lastMissingCode + ".");
-            render(Object.assign({ source: "Saved product" }, entry), lastMissingCode);
-        });
-    }
-
-    if ($("cancelAddBtn")) {
-        $("cancelAddBtn").addEventListener("click", () => {
-            hideAddForm();
-            setMsg("");
-        });
     }
 
     let stream = null, scanning = false;
@@ -344,7 +221,7 @@
     if ($("manual")) $("manual").addEventListener("submit", e => { e.preventDefault(); lookup($("code").value); });
     if ($("chips")) {
         $("chips").innerHTML = '<span class="status-msg" style="margin:0;width:100%">Try a sample product:</span>' +
-            Object.keys(BUILTIN).map(k => `<button class="chip" type="button" data-c="${k}">${esc(BUILTIN[k].name.replace(" (sample)", ""))}</button>`).join("");
+            Object.keys(SAMPLES).map(k => `<button class="chip" type="button" data-c="${k}">${esc(SAMPLES[k].name.replace(" (sample)", ""))}</button>`).join("");
         $("chips").addEventListener("click", e => {
             const btn = e.target.closest(".chip");
             const c = btn && btn.dataset && btn.dataset.c;
