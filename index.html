@@ -4,29 +4,233 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick My Protein | Compare 100+ Protein Supplements & Calculate Your Needs</title>
-    <meta name="description" content="Find the best protein for your goal and budget. Compare protein powders, calculate your daily protein gap, and discover the lowest prices in India.">
-    <!-- Include your brand color styling (#f36c21) -->
+    <meta name="description" content="Find the best protein for your goal and budget. Compare protein powders, calculate your daily protein gap, scan product barcodes, and check label transparency in India.">
     <style>
-        :root { --primary: #f36c21; --bg-dark: #0f172a; }
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-dark); color: #fff; margin: 0; padding: 0; }
-        .hero { text-align: center; padding: 4rem 1rem; max-width: 800px; margin: 0 auto; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .hero p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 2rem; }
+        :root {
+            --primary: #f36c21;
+            --primary-hover: #d95a14;
+            --bg-dark: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #162032;
+            --border: #334155;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --nav-text: #cbd5e1;
+            --good: #4ade80;
+            --ok: #fbbf24;
+            --poor: #f87171;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--surface);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .brand-logo {
+            color: var(--text);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .main-nav {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .main-nav a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .main-nav a:hover { color: var(--primary); }
+
+        .hero {
+            text-align: center;
+            padding: 3.5rem 1rem 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 { font-size: 2.5rem; margin: 0 0 1rem; }
+        .hero p { color: var(--muted); font-size: 1.1rem; margin: 0 auto 2rem; max-width: 640px; }
         .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn { background-color: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
-        .btn-secondary { background: transparent; border: 2px solid #334155; }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; padding: 2rem; max-width: 1000px; margin: 0 auto; }
-        .feature-card { background: #1e293b; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; }
+        .btn {
+            background-color: var(--primary);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border);
+        }
+        .btn-secondary:hover { background: var(--surface); }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem 2rem 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .feature-card h3 { margin: 0 0 0.5rem; }
+        .feature-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+
+        /* Scanner Section */
+        .scanner-section {
+            max-width: 640px;
+            margin: 1rem auto 4rem;
+            padding: 0 1.5rem;
+        }
+        .scanner-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+        .scanner-box h2 { margin: 0 0 0.35rem; font-size: 1.5rem; }
+        .scanner-lead { color: var(--muted); margin: 0 0 1.25rem; font-size: 0.95rem; }
+        .scan-btn {
+            width: 100%;
+            padding: 0.95rem 1.25rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+        }
+        .scan-btn:hover { background: var(--primary-hover); }
+        .cam { display: none; margin-top: 1rem; position: relative; }
+        .cam video {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .cam .guide {
+            position: absolute;
+            inset: 30% 12%;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .cam .stop-btn {
+            margin-top: 0.5rem;
+            width: 100%;
+            padding: 0.65rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .manual-form { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .manual-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .manual-form .go-btn {
+            padding: 0.75rem 1.1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+        .chip {
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-dark);
+            color: var(--nav-text);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .chip:hover { border-color: var(--primary); color: var(--text); }
+        .status-msg { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.88rem; min-height: 1.3em; }
+
+        .result-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+        }
+        .result-top { display: flex; gap: 1rem; align-items: center; }
+        .score-ring {
+            flex: none;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 5px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .good { color: var(--good); }
+        .ok { color: var(--ok); }
+        .poor { color: var(--poor); }
+        .prod-name { margin: 0; font-size: 1.1rem; font-weight: 700; }
+        .prod-grade { margin: 0.15rem 0; font-weight: 700; font-size: 0.95rem; }
+        .prod-brand { margin: 0; color: var(--muted); font-size: 0.85rem; }
+        .scanner-box h3 { font-size: 1rem; margin: 1.25rem 0 0.5rem; }
+        table.nut-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        table.nut-table td { padding: 0.4rem 0; border-bottom: 1px solid var(--surface); }
+        table.nut-table td:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
+        .pos { color: var(--good); }
+        .neg { color: var(--poor); }
+        .ing-text { font-size: 0.88rem; color: var(--muted); margin: 0; }
+        .note-text { font-size: 0.8rem; color: var(--muted); margin: 1rem 0 0; }
     </style>
 </head>
 <body>
 
-    <header style="padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; flex-wrap: wrap; gap: 1rem;">
-        <a href="/" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 1.2rem;">pickmyprotein.com</a>
-        <nav style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-            <a href="/calculators/" style="color: #cbd5e1; text-decoration: none;">Calculators</a>
-            <a href="/compare/" style="color: #cbd5e1; text-decoration: none;">Compare</a>
-            <a href="/best-protein/" style="color: #cbd5e1; text-decoration: none;">Best Guides</a>
+    <header>
+        <a href="/" class="brand-logo">pickmyprotein.com</a>
+        <nav class="main-nav" aria-label="Primary">
+            <a href="/calculators/">Calculators</a>
+            <a href="/compare/">Compare</a>
+            <a href="/best-protein/">Best Guides</a>
+            <a href="#barcode-scanner">Scanner</a>
         </nav>
     </header>
 
@@ -42,17 +246,196 @@
     <section class="features">
         <div class="feature-card">
             <h3>📊 Protein Cost Calculator</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem;">Find out exactly how much protein you are getting per rupee spent.</p>
+            <p>Find out exactly how much protein you are getting per rupee spent.</p>
         </div>
         <div class="feature-card">
             <h3>⚔️ Direct Brand Face-Offs</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem;">Compare MuscleBlaze, Avvatar, Nakpro, and ON side-by-side.</p>
+            <p>Compare MuscleBlaze, Avvatar, Nakpro, and ON side-by-side.</p>
         </div>
         <div class="feature-card">
             <h3>🛡️ Lab-Tested Scoring</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem;">Check purity, amino profiles, and independent test results.</p>
+            <p>Check purity, amino profiles, and independent test results.</p>
         </div>
     </section>
 
+    <section id="barcode-scanner" class="scanner-section">
+        <div class="scanner-box">
+            <h2>Barcode &amp; Label Scanner</h2>
+            <p class="scanner-lead">Point your camera at a barcode or type the number below to check per-100g nutrition and ingredient flags.</p>
+
+            <button class="scan-btn" id="scanBtn" type="button">Scan barcode</button>
+            <div class="cam" id="cam">
+                <video id="video" playsinline muted></video>
+                <div class="guide"></div>
+                <button class="stop-btn" id="stopBtn" type="button">Stop camera</button>
+            </div>
+
+            <form class="manual-form" id="manual">
+                <input id="code" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
+                <button class="go-btn" type="submit">Check</button>
+            </form>
+
+            <div class="chips" id="chips"></div>
+            <p class="status-msg" id="msg" role="status"></p>
+            <div id="out"></div>
+        </div>
+    </section>
+
+    <script>
+    const SAMPLES = {
+        "8900000000011": { name: "Choco Crunch cereal (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
+        "8900000000028": { name: "Plain rolled oats (sample)", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
+        "8900000000035": { name: "Chocolate whey protein (sample)", brand: "Sample brand", ingredients: "Whey protein concentrate, cocoa powder, sucralose, acesulfame potassium, soy lecithin, xanthan gum, flavour", per100: { sugar: 4, sat: 3, sodium: 420, fiber: 2, protein: 72 } },
+        "8900000000042": { name: "Cream biscuits (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, palm oil, invert syrup, milk solids, raising agents (INS 500), artificial flavour, colour (INS 102)", per100: { sugar: 32, sat: 12, sodium: 310, fiber: 1, protein: 5 } },
+        "8900000000059": { name: "Unsweetened muesli (sample)", brand: "Sample brand", ingredients: "Oats, almonds, sunflower seeds, raisins, wheat flakes", per100: { sugar: 9, sat: 1.8, sodium: 30, fiber: 8, protein: 11 } }
+    };
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const band = (v, steps) => { for (const [l, p] of steps) if (v <= l) return p; return 0; };
+    const atLeast = (v, steps) => { for (const [l, p] of steps) if (v >= l) return p; return 0; };
+
+    function scoreProduct(p) {
+        const n = p.per100;
+        const nut = [
+            ["Sugar", n.sugar + "g", band(n.sugar, [[2, 20], [5, 16], [10, 11], [15, 6]]), 20],
+            ["Saturated fat", n.sat + "g", band(n.sat, [[1, 10], [3, 7], [5, 4]]), 10],
+            ["Sodium", Math.round(n.sodium) + "mg", band(n.sodium, [[120, 10], [400, 7], [700, 3]]), 10],
+            ["Fibre", n.fiber + "g", atLeast(n.fiber, [[6, 10], [3, 6], [1.5, 3]]), 10],
+            ["Protein", n.protein + "g", atLeast(n.protein, [[15, 10], [8, 6], [4, 3]]), 10]
+        ];
+        let nutTotal = 0;
+        nut.forEach(r => nutTotal += r[2]);
+
+        const ing = (p.ingredients || "").toLowerCase();
+        const parts = ing.split(",").map(s => s.trim()).filter(Boolean);
+        const ded = [];
+        const count = re => { const m = ing.match(new RegExp(re.source, "g")); return m ? new Set(m).size : 0; };
+
+        const sweet = count(/aspartame|sucralose|acesulfame|saccharin|ins ?95\d/);
+        if (sweet) ded.push(["Artificial sweetener" + (sweet > 1 ? "s (" + sweet + ")" : ""), -Math.min(10, 5 * sweet)]);
+        const col = count(/tartrazine|sunset yellow|carmoisine|brilliant blue|ins ?1[0-9]{2}[a-z]?|artificial colou?r/);
+        if (col) ded.push(["Added colour" + (col > 1 ? "s (" + col + ")" : ""), -Math.min(10, 5 * col)]);
+        const trans = /hydrogenated|trans fat|vanaspati|margarine/.test(ing);
+        if (trans) ded.push(["Hydrogenated fat or trans fat", -10]);
+        if (/palm/.test(ing)) ded.push(["Palm oil", -3]);
+        if (parts.length && /refined (wheat )?flour|maida/.test(parts[0])) ded.push(["Refined flour is the first ingredient", -5]);
+        const sugars = count(/sugar|maltodextrin|dextrose|glucose|invert|fructose|syrup/);
+        if (sugars) ded.push(["Added sugar in " + sugars + " form" + (sugars > 1 ? "s" : ""), -Math.min(8, 2 * sugars)]);
+        const pres = count(/sodium benzoate|potassium sorbate|propionate|ins ?2[0-9]{2}/);
+        if (pres) ded.push(["Preservative" + (pres > 1 ? "s (" + pres + ")" : ""), -Math.min(6, 2 * pres)]);
+        if (parts.length > 15) ded.push(["Very long ingredient list", -3]);
+
+        let ingTotal = 30;
+        ded.forEach(d => ingTotal += d[1]);
+        ingTotal = Math.max(0, ingTotal);
+
+        let score = Math.round((nutTotal + ingTotal) / 90 * 100);
+        if (trans) score = Math.min(score, 59);
+        return { score, nut, ded, nutTotal, ingTotal };
+    }
+
+    const grade = s => s >= 80 ? ["Excellent", "good"] : s >= 60 ? ["Good", "good"] : s >= 40 ? ["Mediocre", "ok"] : ["Poor", "poor"];
+
+    function render(p, code) {
+        const r = scoreProduct(p);
+        const [g, cls] = grade(r.score);
+        const nutRows = r.nut.map(x => `<tr><td>${x[0]} ${esc(x[1])} per 100g</td><td class="${x[2] >= x[3] * 0.6 ? "pos" : "neg"}">${x[2]} of ${x[3]}</td></tr>`).join("");
+        const dedRows = r.ded.length
+            ? r.ded.map(d => `<tr><td>${esc(d[0])}</td><td class="neg">${d[1]}</td></tr>`).join("")
+            : `<tr><td>No flagged ingredients</td><td class="pos">30 of 30</td></tr>`;
+
+        $("out").innerHTML = `<section class="result-card" aria-live="polite">
+            <div class="result-top">
+                <div class="score-ring ${cls}" aria-label="Score ${r.score} out of 100">${r.score}</div>
+                <div>
+                    <p class="prod-name">${esc(p.name)}</p>
+                    <p class="prod-grade ${cls}">${g}, ${r.score} out of 100</p>
+                    <p class="prod-brand">${esc(p.brand || "")} ${esc(code)}</p>
+                </div>
+            </div>
+            <h3>Nutrition</h3>
+            <table class="nut-table">${nutRows}</table>
+            <h3>Ingredients</h3>
+            <table class="nut-table">${dedRows}</table>
+            <h3>Ingredient list</h3>
+            <p class="ing-text">${esc(p.ingredients || "Not available")}</p>
+            <p class="note-text">Score is based on label data only, using method v1.0. Source: ${esc(p.source || "Sample data")}. General information only, not medical advice.</p>
+        </section>`;
+        $("out").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    async function getProduct(code) {
+        try {
+            const res = await fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json?fields=product_name,brands,ingredients_text,nutriments");
+            const j = await res.json();
+            if (j.status === 1 && j.product) {
+                const p = j.product, n = p.nutriments || {};
+                if (n.sugars_100g != null || n.proteins_100g != null || n.fat_100g != null) {
+                    const sodiumMg = n.sodium_100g != null ? (+n.sodium_100g) * 1000 : (n.salt_100g != null ? (+n.salt_100g) * 400 : 0);
+                    return {
+                        name: p.product_name || "Unnamed product",
+                        brand: p.brands || "",
+                        ingredients: p.ingredients_text || "",
+                        source: "Open Food Facts",
+                        per100: {
+                            sugar: +(n.sugars_100g || 0),
+                            sat: +(n["saturated-fat_100g"] || 0),
+                            sodium: sodiumMg,
+                            fiber: +(n.fiber_100g || 0),
+                            protein: +(n.proteins_100g || 0)
+                        }
+                    };
+                }
+            }
+        } catch (e) {}
+        return SAMPLES[code] || null;
+    }
+
+    async function lookup(raw) {
+        const code = String(raw).replace(/\D/g, "");
+        if (!code) { $("msg").textContent = "Enter the digits printed under the barcode."; return; }
+        $("msg").textContent = "Looking up " + code + "…";
+        const p = await getProduct(code);
+        if (!p) { $("out").innerHTML = ""; $("msg").textContent = "Product not found yet. Try another barcode or one of the sample chips above."; return; }
+        $("msg").textContent = "";
+        render(p, code);
+    }
+
+    let stream = null, scanning = false;
+    function stopCam() {
+        scanning = false;
+        if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+        $("cam").style.display = "none";
+    }
+    async function startCam() {
+        if (!("BarcodeDetector" in window)) { $("msg").textContent = "Camera barcode detection isn't supported in this browser. Type the barcode number below."; return; }
+        try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }); }
+        catch (e) { $("msg").textContent = "Camera access was blocked. Allow camera permission or type the barcode number."; return; }
+        const v = $("video");
+        v.srcObject = stream;
+        await v.play();
+        $("cam").style.display = "block";
+        $("msg").textContent = "Hold the barcode inside the orange guide box.";
+        scanning = true;
+        const det = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e"] });
+        const tick = async () => {
+            if (!scanning) return;
+            try { const c = await det.detect(v); if (c.length) { stopCam(); lookup(c[0].rawValue); return; } } catch (e) {}
+            requestAnimationFrame(tick);
+        };
+        tick();
+    }
+
+    $("scanBtn").addEventListener("click", startCam);
+    $("stopBtn").addEventListener("click", () => { stopCam(); $("msg").textContent = ""; });
+    $("manual").addEventListener("submit", e => { e.preventDefault(); lookup($("code").value); });
+    $("chips").innerHTML = '<span class="status-msg" style="margin:0;width:100%">Try a sample product:</span>' +
+        Object.keys(SAMPLES).map(k => `<button class="chip" type="button" data-c="${k}">${esc(SAMPLES[k].name.replace(" (sample)", ""))}</button>`).join("");
+    $("chips").addEventListener("click", e => {
+        const c = e.target.dataset && e.target.dataset.c;
+        if (c) { $("code").value = c; lookup(c); }
+    });
+    </script>
 </body>
 </html>
