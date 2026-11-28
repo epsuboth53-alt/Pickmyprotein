@@ -1,393 +1,415 @@
-<section id="barcode-scanner" class="scanner-section">
-    <div class="scanner-box">
-        <h2>Barcode &amp; Label Scanner</h2>
-        <p class="scanner-lead">Scan a barcode with your camera, upload a barcode photo, or type the number below.</p>
+<style>
+#pmp-scanner-wrap{max-width:640px;margin:24px auto 48px;padding:0 16px;font-family:system-ui,-apple-system,sans-serif;color:#fff}
+#pmp-scanner-wrap .pmp-box{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px}
+#pmp-scanner-wrap h2{margin:0 0 6px;font-size:22px;color:#fff}
+#pmp-scanner-wrap .pmp-lead{margin:0 0 16px;color:#94a3b8;font-size:14px;line-height:1.5}
+#pmp-scanner-wrap .pmp-top-actions{display:flex;gap:10px;flex-wrap:wrap}
+#pmp-scanner-wrap .pmp-scan-btn{flex:1 1 200px;padding:14px 18px;border:0;border-radius:10px;background:#f36c21;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+#pmp-scanner-wrap .pmp-scan-btn:hover{background:#d95a14}
+#pmp-scanner-wrap .pmp-btn-dark{padding:12px 16px;border-radius:10px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+#pmp-scanner-wrap .pmp-cam{display:none;margin-top:12px;position:relative}
+#pmp-scanner-wrap .pmp-cam video{width:100%;border-radius:10px;background:#000;aspect-ratio:4/3;object-fit:cover}
+#pmp-scanner-wrap .pmp-guide{position:absolute;inset:30% 12%;border:3px solid #f36c21;border-radius:8px;pointer-events:none}
+#pmp-scanner-wrap .pmp-manual{display:flex;gap:8px;margin-top:12px}
+#pmp-scanner-wrap input,#pmp-scanner-wrap .pmp-add-form input{flex:1;min-width:0;padding:11px 12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:15px;box-sizing:border-box}
+#pmp-scanner-wrap .pmp-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+#pmp-scanner-wrap .pmp-chip{padding:6px 12px;border-radius:999px;border:1px solid #334155;background:#0f172a;color:#cbd5e1;font-size:13px;cursor:pointer}
+#pmp-scanner-wrap .pmp-chip:hover{border-color:#f36c21;color:#fff}
+#pmp-scanner-wrap .pmp-msg{margin:10px 0 0;color:#94a3b8;font-size:14px;min-height:1.4em}
+#pmp-scanner-wrap .pmp-add-wrap{display:none;margin-top:14px;padding:14px;border-radius:10px;border:1px solid #334155;background:#0f172a}
+#pmp-scanner-wrap .pmp-add-wrap h3{margin:0 0 6px;font-size:16px;color:#fff}
+#pmp-scanner-wrap .pmp-add-form{display:grid;gap:10px;margin-top:10px}
+#pmp-scanner-wrap .pmp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#pmp-scanner-wrap .pmp-span2{grid-column:1/-1}
+#pmp-scanner-wrap .pmp-card{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:16px;margin-top:16px}
+#pmp-scanner-wrap .pmp-top{display:flex;gap:14px;align-items:center}
+#pmp-scanner-wrap .pmp-score{flex:none;width:68px;height:68px;border-radius:50%;border:5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700}
+#pmp-scanner-wrap .good{color:#4ade80}#pmp-scanner-wrap .ok{color:#fbbf24}#pmp-scanner-wrap .poor{color:#f87171}
+#pmp-scanner-wrap table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+#pmp-scanner-wrap td{padding:6px 0;border-bottom:1px solid #1e293b}
+#pmp-scanner-wrap td:last-child{text-align:right;font-weight:700}
+#pmp-scanner-wrap .pos{color:#4ade80}#pmp-scanner-wrap .neg{color:#f87171}
+#pmp-scanner-wrap .pmp-note{font-size:12px;color:#94a3b8;margin:12px 0 0}
+</style>
 
-        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-            <button class="scan-btn" id="scanBtn" type="button" style="flex:1 1 200px;">Scan barcode</button>
-            <label for="barcodePhoto" class="go-btn" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;">Upload photo</label>
-        </div>
-        <input id="barcodePhoto" type="file" accept="image/*" capture="environment" style="display:none">
+<section id="pmp-scanner-wrap" aria-label="Barcode and label scanner">
+  <div class="pmp-box">
+    <h2>Barcode &amp; Label Scanner</h2>
+    <p class="pmp-lead">Scan a barcode with your camera, upload a barcode photo, or type the number below to check nutrition and ingredients.</p>
 
-        <div class="cam" id="cam">
-            <video id="video" playsinline autoplay muted></video>
-            <div class="guide"></div>
-            <button class="stop-btn" id="stopBtn" type="button">Stop camera</button>
-        </div>
-
-        <form class="manual-form" id="manual">
-            <input id="code" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
-            <button class="go-btn" type="submit">Check</button>
-        </form>
-
-        <div class="chips" id="chips"></div>
-        <p class="status-msg" id="msg" role="status" aria-live="polite"></p>
-
-        <div id="addFormWrap" class="add-wrap">
-            <h3>Add product for barcode <span id="addCodeLabel"></span></h3>
-            <p class="ing-text">Not in database yet. Fill label values per 100g or use a quick preset below—saved on your device.</p>
-            <div class="preset-row">
-                <button type="button" class="chip" id="presetCreatine">Fill Creatine Monohydrate</button>
-                <button type="button" class="chip" id="presetGhee">Fill Pure Ghee</button>
-            </div>
-            <form id="addProductForm" class="add-form">
-                <input id="pName" type="text" required placeholder="Product name (e.g., Creatine Monohydrate / Cow Ghee)">
-                <input id="pBrand" type="text" placeholder="Brand (e.g., MuscleBlaze, Amul, Nandini)">
-                <div class="nut-grid">
-                    <input id="pSugar" type="number" step="any" min="0" placeholder="Sugar / 100g (g)">
-                    <input id="pSat" type="number" step="any" min="0" placeholder="Sat. fat / 100g (g)">
-                    <input id="pSodium" type="number" step="any" min="0" placeholder="Sodium / 100g (mg)">
-                    <input id="pFiber" type="number" step="any" min="0" placeholder="Fibre / 100g (g)">
-                    <input id="pProtein" type="number" step="any" min="0" placeholder="Protein / 100g (g)" class="span-2">
-                </div>
-                <input id="pIng" type="text" placeholder="Ingredients (e.g., 100% Creatine Monohydrate or Milk fat)">
-                <div class="add-actions">
-                    <button type="submit" class="btn" style="padding:0.6rem 1rem;font-size:0.92rem;">Save &amp; Score</button>
-                    <button type="button" id="cancelAddBtn" class="cancel-btn">Cancel</button>
-                </div>
-            </form>
-        </div>
-
-        <div id="out"></div>
+    <div class="pmp-top-actions">
+      <button type="button" id="pmpScanBtn" class="pmp-scan-btn">Scan barcode</button>
+      <label for="pmpPhotoInput" class="pmp-btn-dark">Upload photo</label>
+      <input type="file" id="pmpPhotoInput" accept="image/*" capture="environment" style="display:none">
     </div>
+
+    <div id="pmpCam" class="pmp-cam">
+      <video id="pmpVideo" playsinline autoplay muted></video>
+      <div class="pmp-guide"></div>
+      <button type="button" id="pmpStopBtn" class="pmp-btn-dark" style="width:100%;margin-top:8px;">Stop camera</button>
+    </div>
+
+    <form id="pmpManualForm" class="pmp-manual">
+      <input type="text" id="pmpCodeInput" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
+      <button type="submit" class="pmp-btn-dark">Check</button>
+    </form>
+
+    <div id="pmpChips" class="pmp-chips"></div>
+    <p id="pmpMsg" class="pmp-msg" role="status" aria-live="polite"></p>
+
+    <div id="pmpAddWrap" class="pmp-add-wrap">
+      <h3>Add product for barcode <span id="pmpAddCodeLabel"></span></h3>
+      <p class="pmp-lead" style="margin-bottom:8px;">Not found automatically. Enter per-100g label values or tap a preset below (saved on your device).</p>
+      <div class="pmp-top-actions">
+        <button type="button" id="pmpPresetCreatine" class="pmp-chip">Fill Creatine Monohydrate</button>
+        <button type="button" id="pmpPresetGhee" class="pmp-chip">Fill Pure Ghee</button>
+      </div>
+      <form id="pmpAddForm" class="pmp-add-form">
+        <input type="text" id="pmpPName" required placeholder="Product name (e.g., Creatine Monohydrate or Cow Ghee)">
+        <input type="text" id="pmpPBrand" placeholder="Brand (e.g., MuscleBlaze, Amul, Nandini)">
+        <div class="pmp-grid">
+          <input type="number" step="any" min="0" id="pmpPSugar" placeholder="Sugar / 100g (g)">
+          <input type="number" step="any" min="0" id="pmpPSat" placeholder="Sat. fat / 100g (g)">
+          <input type="number" step="any" min="0" id="pmpPSodium" placeholder="Sodium / 100g (mg)">
+          <input type="number" step="any" min="0" id="pmpPFiber" placeholder="Fibre / 100g (g)">
+          <input type="number" step="any" min="0" id="pmpPProtein" placeholder="Protein / 100g (g)" class="pmp-span2">
+        </div>
+        <input type="text" id="pmpPIng" placeholder="Ingredients (e.g., 100% Creatine Monohydrate or Milk fat)">
+        <div class="pmp-top-actions">
+          <button type="submit" class="pmp-scan-btn" style="flex:0 1 auto;padding:10px 16px;font-size:14px;">Save &amp; Score</button>
+          <button type="button" id="pmpCancelAdd" class="pmp-btn-dark">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="pmpOut"></div>
+  </div>
 </section>
 
 <script>
-(function () {
-    const STORAGE_KEY = "pmp_custom_barcodes_v1";
-    const BUILTIN = {
-        "8900000000011": { name: "Choco Crunch cereal (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
-        "8900000000028": { name: "Plain rolled oats (sample)", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
-        "8900000000035": { name: "Chocolate whey protein (sample)", brand: "Sample brand", ingredients: "Whey protein concentrate, cocoa powder, sucralose, acesulfame potassium, soy lecithin, xanthan gum, flavour", per100: { sugar: 4, sat: 3, sodium: 420, fiber: 2, protein: 72 } },
-        "8900000000042": { name: "Cream biscuits (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, palm oil, invert syrup, milk solids, raising agents (INS 500), artificial flavour, colour (INS 102)", per100: { sugar: 32, sat: 12, sodium: 310, fiber: 1, protein: 5 } },
-        "8900000000059": { name: "Unsweetened muesli (sample)", brand: "Sample brand", ingredients: "Oats, almonds, sunflower seeds, raisins, wheat flakes", per100: { sugar: 9, sat: 1.8, sodium: 30, fiber: 8, protein: 11 } }
-    };
+(function(){
+  var STORAGE_KEY = "pmp_custom_barcodes_v1";
+  var BUILTIN = {
+    "8900000000011": { name: "Choco Crunch cereal", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
+    "8900000000028": { name: "Plain rolled oats", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
+    "8900000000035": { name: "Chocolate whey protein", brand: "Sample brand", ingredients: "Whey protein concentrate, cocoa powder, sucralose, acesulfame potassium, soy lecithin, xanthan gum, flavour", per100: { sugar: 4, sat: 3, sodium: 420, fiber: 2, protein: 72 } },
+    "8900000000042": { name: "Cream biscuits", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, palm oil, invert syrup, milk solids, raising agents (INS 500), artificial flavour, colour (INS 102)", per100: { sugar: 32, sat: 12, sodium: 310, fiber: 1, protein: 5 } },
+    "8900000000059": { name: "Unsweetened muesli", brand: "Sample brand", ingredients: "Oats, almonds, sunflower seeds, raisins, wheat flakes", per100: { sugar: 9, sat: 1.8, sodium: 30, fiber: 8, protein: 11 } }
+  };
 
-    function loadCustom() {
-        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
-        catch (e) { return {}; }
-    }
-    function saveCustom(map) {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); }
-        catch (e) {}
-    }
-    function getCatalog() {
-        return Object.assign({}, BUILTIN, loadCustom());
-    }
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function msg(t){ if($("pmpMsg")) $("pmpMsg").textContent = t; }
 
-    const $ = id => document.getElementById(id);
-    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    const band = (v, steps) => { for (const [l, p] of steps) if (v <= l) return p; return 0; };
-    const atLeast = (v, steps) => { for (const [l, p] of steps) if (v >= l) return p; return 0; };
+  function loadCustom(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch(e){ return {}; }
+  }
+  function saveCustom(obj){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch(e){}
+  }
+  function getCatalog(){
+    var out = {}, k;
+    for(k in BUILTIN) out[k] = BUILTIN[k];
+    var custom = loadCustom();
+    for(k in custom) out[k] = custom[k];
+    return out;
+  }
 
-    let lastMissingCode = "";
+  function band(v, steps){
+    for(var i = 0; i < steps.length; i++) if(v <= steps[i][0]) return steps[i][1];
+    return 0;
+  }
+  function atLeast(v, steps){
+    for(var i = 0; i < steps.length; i++) if(v >= steps[i][0]) return steps[i][1];
+    return 0;
+  }
 
-    function setMsg(text) {
-        const el = $("msg");
-        if (el) el.textContent = text;
-    }
+  function scoreProduct(p){
+    var n = p.per100 || {};
+    var sugar = +(n.sugar || 0), sat = +(n.sat || 0), sodium = +(n.sodium || 0), fiber = +(n.fiber || 0), protein = +(n.protein || 0);
+    var nut = [
+      ["Sugar", sugar + "g", band(sugar, [[2,20],[5,16],[10,11],[15,6]]), 20],
+      ["Saturated fat", sat + "g", band(sat, [[1,10],[3,7],[5,4]]), 10],
+      ["Sodium", Math.round(sodium) + "mg", band(sodium, [[120,10],[400,7],[700,3]]), 10],
+      ["Fibre", fiber + "g", atLeast(fiber, [[6,10],[3,6],[1.5,3]]), 10],
+      ["Protein", protein + "g", atLeast(protein, [[15,10],[8,6],[4,3]]), 10]
+    ];
+    var nutTotal = 0, i;
+    for(i = 0; i < nut.length; i++) nutTotal += nut[i][2];
 
-    function hideAddForm() {
-        if ($("addFormWrap")) $("addFormWrap").style.display = "none";
-    }
-
-    function showAddForm(code) {
-        lastMissingCode = code;
-        if ($("addCodeLabel")) $("addCodeLabel").textContent = code;
-        if ($("pName")) $("pName").value = "";
-        if ($("pBrand")) $("pBrand").value = "";
-        if ($("pSugar")) $("pSugar").value = "";
-        if ($("pSat")) $("pSat").value = "";
-        if ($("pSodium")) $("pSodium").value = "";
-        if ($("pFiber")) $("pFiber").value = "";
-        if ($("pProtein")) $("pProtein").value = "";
-        if ($("pIng")) $("pIng").value = "";
-        if ($("addFormWrap")) {
-            $("addFormWrap").style.display = "block";
-            $("pName").focus();
-        }
-    }
-
-    if ($("presetCreatine")) {
-        $("presetCreatine").addEventListener("click", () => {
-            if (!$("pName").value) $("pName").value = "Creatine Monohydrate";
-            $("pSugar").value = 0;
-            $("pSat").value = 0;
-            $("pSodium").value = 0;
-            $("pFiber").value = 0;
-            $("pProtein").value = 0;
-            if (!$("pIng").value) $("pIng").value = "100% Creatine Monohydrate";
-        });
+    var ing = String(p.ingredients || "").toLowerCase();
+    var parts = ing.split(",").map(function(s){ return s.trim(); }).filter(Boolean);
+    var ded = [];
+    function countMatches(re){
+      var m = ing.match(new RegExp(re.source, "g"));
+      if(!m) return 0;
+      var seen = {}, c = 0;
+      for(var j = 0; j < m.length; j++) if(!seen[m[j]]){ seen[m[j]] = 1; c++; }
+      return c;
     }
 
-    if ($("presetGhee")) {
-        $("presetGhee").addEventListener("click", () => {
-            if (!$("pName").value) $("pName").value = "Pure Ghee";
-            $("pSugar").value = 0;
-            $("pSat").value = 62;
-            $("pSodium").value = 0;
-            $("pFiber").value = 0;
-            $("pProtein").value = 0;
-            if (!$("pIng").value) $("pIng").value = "Milk fat (Ghee)";
-        });
+    var sweet = countMatches(/aspartame|sucralose|acesulfame|saccharin|ins ?95\d/);
+    if(sweet) ded.push(["Artificial sweetener" + (sweet > 1 ? "s (" + sweet + ")" : ""), -Math.min(10, 5 * sweet)]);
+    var col = countMatches(/tartrazine|sunset yellow|carmoisine|brilliant blue|ins ?1[0-9]{2}[a-z]?|artificial colou?r/);
+    if(col) ded.push(["Added colour" + (col > 1 ? "s (" + col + ")" : ""), -Math.min(10, 5 * col)]);
+    var trans = /hydrogenated|trans fat|vanaspati|margarine/.test(ing);
+    if(trans) ded.push(["Hydrogenated fat or trans fat", -10]);
+    if(/palm/.test(ing)) ded.push(["Palm oil", -3]);
+    if(parts.length && /refined (wheat )?flour|maida/.test(parts[0])) ded.push(["Refined flour is the first ingredient", -5]);
+    var sugars = countMatches(/sugar|maltodextrin|dextrose|glucose|invert|fructose|syrup/);
+    if(sugars) ded.push(["Added sugar in " + sugars + " form" + (sugars > 1 ? "s" : ""), -Math.min(8, 2 * sugars)]);
+    var pres = countMatches(/sodium benzoate|potassium sorbate|propionate|ins ?2[0-9]{2}/);
+    if(pres) ded.push(["Preservative" + (pres > 1 ? "s (" + pres + ")" : ""), -Math.min(6, 2 * pres)]);
+    if(parts.length > 15) ded.push(["Very long ingredient list", -3]);
+
+    var ingTotal = 30;
+    for(i = 0; i < ded.length; i++) ingTotal += ded[i][1];
+    ingTotal = Math.max(0, ingTotal);
+
+    var score = Math.round((nutTotal + ingTotal) / 90 * 100);
+    if(trans) score = Math.min(score, 59);
+    return { score: score, nut: nut, ded: ded };
+  }
+
+  function gradeInfo(s){
+    if(s >= 80) return ["Excellent", "good"];
+    if(s >= 60) return ["Good", "good"];
+    if(s >= 40) return ["Mediocre", "ok"];
+    return ["Poor", "poor"];
+  }
+
+  var pendingCode = "";
+  function hideAdd(){ if($("pmpAddWrap")) $("pmpAddWrap").style.display = "none"; }
+  function showAdd(code){
+    pendingCode = code;
+    if($("pmpAddCodeLabel")) $("pmpAddCodeLabel").textContent = code;
+    $("pmpPName").value = "";
+    $("pmpPBrand").value = "";
+    $("pmpPSugar").value = "";
+    $("pmpPSat").value = "";
+    $("pmpPSodium").value = "";
+    $("pmpPFiber").value = "";
+    $("pmpPProtein").value = "";
+    $("pmpPIng").value = "";
+    if($("pmpAddWrap")) $("pmpAddWrap").style.display = "block";
+  }
+
+  function render(p, code){
+    hideAdd();
+    var r = scoreProduct(p), g = gradeInfo(r.score);
+    var nutHtml = r.nut.map(function(x){
+      var cls = x[2] >= x[3] * 0.6 ? "pos" : "neg";
+      return "<tr><td>" + x[0] + " " + esc(x[1]) + " per 100g</td><td class=\"" + cls + "\">" + x[2] + " of " + x[3] + "</td></tr>";
+    }).join("");
+    var dedHtml = r.ded.length
+      ? r.ded.map(function(d){ return "<tr><td>" + esc(d[0]) + "</td><td class=\"neg\">" + d[1] + "</td></tr>"; }).join("")
+      : "<tr><td>No flagged ingredients</td><td class=\"pos\">30 of 30</td></tr>";
+
+    $("pmpOut").innerHTML =
+      "<section class=\"pmp-card\" aria-live=\"polite\">" +
+        "<div class=\"pmp-top\">" +
+          "<div class=\"pmp-score " + g[1] + "\">" + r.score + "</div>" +
+          "<div>" +
+            "<div style=\"font-size:18px;font-weight:700;\">" + esc(p.name) + "</div>" +
+            "<div class=\"" + g[1] + "\" style=\"font-weight:700;font-size:14px;\">" + g[0] + ", " + r.score + " out of 100</div>" +
+            "<div style=\"color:#94a3b8;font-size:13px;\">" + esc(p.brand || "") + " " + esc(code) + "</div>" +
+          "</div>" +
+        "</div>" +
+        "<h3 style=\"margin:14px 0 4px;font-size:15px;\">Nutrition</h3>" +
+        "<table>" + nutHtml + "</table>" +
+        "<h3 style=\"margin:14px 0 4px;font-size:15px;\">Ingredients</h3>" +
+        "<table>" + dedHtml + "</table>" +
+        "<h3 style=\"margin:14px 0 4px;font-size:15px;\">Ingredient list</h3>" +
+        "<p class=\"pmp-lead\" style=\"margin:0;\">" + esc(p.ingredients || "Not available") + "</p>" +
+        "<p class=\"pmp-note\">Based on label data only (method v1.0). Source: " + esc(p.source || "Saved data") + ". General info only, not medical advice.</p>" +
+      "</section>";
+  }
+
+  async function fetchProduct(code){
+    var cat = getCatalog();
+    if(cat[code]){
+      return Object.assign({ source: BUILTIN[code] ? "Sample data" : "Saved product" }, cat[code]);
     }
-
-    function scoreProduct(p) {
-        const n = p.per100;
-        const nut = [
-            ["Sugar", n.sugar + "g", band(n.sugar, [[2, 20], [5, 16], [10, 11], [15, 6]]), 20],
-            ["Saturated fat", n.sat + "g", band(n.sat, [[1, 10], [3, 7], [5, 4]]), 10],
-            ["Sodium", Math.round(n.sodium) + "mg", band(n.sodium, [[120, 10], [400, 7], [700, 3]]), 10],
-            ["Fibre", n.fiber + "g", atLeast(n.fiber, [[6, 10], [3, 6], [1.5, 3]]), 10],
-            ["Protein", n.protein + "g", atLeast(n.protein, [[15, 10], [8, 6], [4, 3]]), 10]
-        ];
-        let nutTotal = 0;
-        nut.forEach(r => nutTotal += r[2]);
-
-        const ing = (p.ingredients || "").toLowerCase();
-        const parts = ing.split(",").map(s => s.trim()).filter(Boolean);
-        const ded = [];
-        const count = re => { const m = ing.match(new RegExp(re.source, "g")); return m ? new Set(m).size : 0; };
-
-        const sweet = count(/aspartame|sucralose|acesulfame|saccharin|ins ?95\d/);
-        if (sweet) ded.push(["Artificial sweetener" + (sweet > 1 ? "s (" + sweet + ")" : ""), -Math.min(10, 5 * sweet)]);
-        const col = count(/tartrazine|sunset yellow|carmoisine|brilliant blue|ins ?1[0-9]{2}[a-z]?|artificial colou?r/);
-        if (col) ded.push(["Added colour" + (col > 1 ? "s (" + col + ")" : ""), -Math.min(10, 5 * col)]);
-        const trans = /hydrogenated|trans fat|vanaspati|margarine/.test(ing);
-        if (trans) ded.push(["Hydrogenated fat or trans fat", -10]);
-        if (/palm/.test(ing)) ded.push(["Palm oil", -3]);
-        if (parts.length && /refined (wheat )?flour|maida/.test(parts[0])) ded.push(["Refined flour is the first ingredient", -5]);
-        const sugars = count(/sugar|maltodextrin|dextrose|glucose|invert|fructose|syrup/);
-        if (sugars) ded.push(["Added sugar in " + sugars + " form" + (sugars > 1 ? "s" : ""), -Math.min(8, 2 * sugars)]);
-        const pres = count(/sodium benzoate|potassium sorbate|propionate|ins ?2[0-9]{2}/);
-        if (pres) ded.push(["Preservative" + (pres > 1 ? "s (" + pres + ")" : ""), -Math.min(6, 2 * pres)]);
-        if (parts.length > 15) ded.push(["Very long ingredient list", -3]);
-
-        let ingTotal = 30;
-        ded.forEach(d => ingTotal += d[1]);
-        ingTotal = Math.max(0, ingTotal);
-
-        let score = Math.round((nutTotal + ingTotal) / 90 * 100);
-        if (trans) score = Math.min(score, 59);
-        return { score, nut, ded, nutTotal, ingTotal };
-    }
-
-    const grade = s => s >= 80 ? ["Excellent", "good"] : s >= 60 ? ["Good", "good"] : s >= 40 ? ["Mediocre", "ok"] : ["Poor", "poor"];
-
-    function render(p, code) {
-        hideAddForm();
-        const r = scoreProduct(p);
-        const [g, cls] = grade(r.score);
-        const nutRows = r.nut.map(x => `<tr><td>${x[0]} ${esc(x[1])} per 100g</td><td class="${x[2] >= x[3] * 0.6 ? "pos" : "neg"}">${x[2]} of ${x[3]}</td></tr>`).join("");
-        const dedRows = r.ded.length
-            ? r.ded.map(d => `<tr><td>${esc(d[0])}</td><td class="neg">${d[1]}</td></tr>`).join("")
-            : `<tr><td>No flagged ingredients</td><td class="pos">30 of 30</td></tr>`;
-
-        $("out").innerHTML = `<section class="result-card" aria-live="polite">
-            <div class="result-top">
-                <div class="score-ring ${cls}" aria-label="Score ${r.score} out of 100">${r.score}</div>
-                <div>
-                    <p class="prod-name">${esc(p.name)}</p>
-                    <p class="prod-grade ${cls}">${g}, ${r.score} out of 100</p>
-                    <p class="prod-brand">${esc(p.brand || "")} ${esc(code)}</p>
-                </div>
-            </div>
-            <h3>Nutrition</h3>
-            <table class="nut-table">${nutRows}</table>
-            <h3>Ingredients</h3>
-            <table class="nut-table">${dedRows}</table>
-            <h3>Ingredient list</h3>
-            <p class="ing-text">${esc(p.ingredients || "Not available")}</p>
-            <p class="note-text">Score is based on label data only, using method v1.0. Source: ${esc(p.source || "Saved / Sample data")}. General information only, not medical advice.</p>
-        </section>`;
-        $("out").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-
-    async function getProduct(code) {
-        const catalog = getCatalog();
-        if (catalog[code]) {
-            return Object.assign({ source: BUILTIN[code] ? "Sample data" : "Saved product" }, catalog[code]);
-        }
-        try {
-            const res = await fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json?fields=product_name,brands,ingredients_text,nutriments");
-            const j = await res.json();
-            if (j.status === 1 && j.product) {
-                const p = j.product, n = p.nutriments || {};
-                const hasAnyNutriment = n.sugars_100g != null || n.proteins_100g != null || n["saturated-fat_100g"] != null || n.sodium_100g != null || n.salt_100g != null || n.fiber_100g != null;
-                if (hasAnyNutriment || p.ingredients_text) {
-                    const sodiumMg = n.sodium_100g != null ? (+n.sodium_100g) * 1000 : (n.salt_100g != null ? (+n.salt_100g) * 400 : 0);
-                    return {
-                        name: p.product_name || "Unnamed product",
-                        brand: p.brands || "",
-                        ingredients: p.ingredients_text || "",
-                        source: "Open Food Facts",
-                        per100: {
-                            sugar: +(n.sugars_100g || 0),
-                            sat: +(n["saturated-fat_100g"] || 0),
-                            sodium: sodiumMg,
-                            fiber: +(n.fiber_100g || 0),
-                            protein: +(n.proteins_100g || 0)
-                        }
-                    };
-                }
+    try{
+      var res = await fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json?fields=product_name,brands,ingredients_text,nutriments");
+      var j = await res.json();
+      if(j && j.status === 1 && j.product){
+        var pr = j.product, n = pr.nutriments || {};
+        var hasData = n.sugars_100g != null || n.proteins_100g != null || n["saturated-fat_100g"] != null || n.sodium_100g != null || n.salt_100g != null || n.fiber_100g != null || pr.ingredients_text;
+        if(hasData){
+          var sod = n.sodium_100g != null ? (+n.sodium_100g) * 1000 : (n.salt_100g != null ? (+n.salt_100g) * 400 : 0);
+          return {
+            name: pr.product_name || "Unnamed product",
+            brand: pr.brands || "",
+            ingredients: pr.ingredients_text || "",
+            source: "Open Food Facts",
+            per100: {
+              sugar: +(n.sugars_100g || 0),
+              sat: +(n["saturated-fat_100g"] || 0),
+              sodium: sod,
+              fiber: +(n.fiber_100g || 0),
+              protein: +(n.proteins_100g || 0)
             }
-        } catch (e) {}
-        return null;
-    }
-
-    async function lookup(raw) {
-        const code = String(raw || "").replace(/\D/g, "");
-        if (!code) { setMsg("Enter the digits printed under the barcode or pick a sample below."); return; }
-        setMsg("Looking up " + code + "…");
-        const p = await getProduct(code);
-        if (!p) {
-            $("out").innerHTML = "";
-            setMsg("Barcode " + code + " wasn't found automatically. Add its label details below to score and save it.");
-            showAddForm(code);
-            return;
+          };
         }
-        setMsg("");
-        render(p, code);
-    }
+      }
+    } catch(e){}
+    return null;
+  }
 
-    if ($("addProductForm")) {
-        $("addProductForm").addEventListener("submit", e => {
-            e.preventDefault();
-            if (!lastMissingCode) return;
-            const entry = {
-                name: ($("pName").value || "").trim() || ("Product " + lastMissingCode),
-                brand: ($("pBrand").value || "").trim(),
-                ingredients: ($("pIng").value || "").trim(),
-                per100: {
-                    sugar: +($("pSugar").value || 0),
-                    sat: +($("pSat").value || 0),
-                    sodium: +($("pSodium").value || 0),
-                    fiber: +($("pFiber").value || 0),
-                    protein: +($("pProtein").value || 0)
-                }
-            };
-            const custom = loadCustom();
-            custom[lastMissingCode] = entry;
-            saveCustom(custom);
-            setMsg("Saved " + entry.name + " for barcode " + lastMissingCode + ".");
-            render(Object.assign({ source: "Saved product" }, entry), lastMissingCode);
-        });
+  async function lookup(raw){
+    var code = String(raw || "").replace(/\D/g, "");
+    if(!code){ msg("Enter the digits printed under the barcode or pick a sample."); return; }
+    msg("Looking up " + code + "...");
+    var p = await fetchProduct(code);
+    if(!p){
+      $("pmpOut").innerHTML = "";
+      msg("Barcode " + code + " was not found automatically. Add its label values below to score and save it.");
+      showAdd(code);
+      return;
     }
+    msg("");
+    render(p, code);
+  }
 
-    if ($("cancelAddBtn")) {
-        $("cancelAddBtn").addEventListener("click", () => {
-            hideAddForm();
-            setMsg("");
-        });
+  var stream = null, active = false;
+  function stopCam(){
+    active = false;
+    if(stream){ stream.getTracks().forEach(function(t){ t.stop(); }); stream = null; }
+    if($("pmpCam")) $("pmpCam").style.display = "none";
+  }
+
+  async function startCam(){
+    stopCam();
+    msg("Opening camera...");
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      msg("Live camera is not available in this browser. Tap Upload photo or type the barcode number.");
+      return;
     }
-
-    let stream = null, scanning = false;
-    function stopCam() {
-        scanning = false;
-        if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-        if ($("cam")) $("cam").style.display = "none";
+    try{
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+    } catch(e){
+      msg("Camera blocked or unavailable. Allow camera access, tap Upload photo, or type the barcode.");
+      return;
     }
+    var vid = $("pmpVideo");
+    vid.srcObject = stream;
+    try{ await vid.play(); } catch(e){}
+    $("pmpCam").style.display = "block";
 
-    async function startCam() {
-        stopCam();
-        setMsg("Requesting camera access…");
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            setMsg("Camera isn't available here. Tap 'Upload photo' or type the barcode number below.");
-            return;
+    if(!("BarcodeDetector" in window)){
+      msg("Camera opened. Live barcode auto-scan is not supported in this browser; tap Upload photo or type the number.");
+      return;
+    }
+    msg("Point the barcode inside the orange guide box.");
+    active = true;
+    var det;
+    try{ det = new BarcodeDetector({ formats: ["ean_13","ean_8","upc_a","upc_e","code_128"] }); } catch(e){ det = new BarcodeDetector(); }
+
+    async function scanLoop(){
+      if(!active) return;
+      try{
+        var hits = await det.detect(vid);
+        if(hits && hits.length && hits[0].rawValue){
+          stopCam();
+          lookup(hits[0].rawValue);
+          return;
         }
-
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: { ideal: "environment" } },
-                audio: false
-            });
-        } catch (e) {
-            setMsg("Camera permission was blocked or unavailable. Allow camera access in browser settings, tap 'Upload photo', or type the barcode.");
-            return;
-        }
-
-        const v = $("video");
-        v.srcObject = stream;
-        try { await v.play(); } catch (e) {}
-        $("cam").style.display = "block";
-
-        if (!("BarcodeDetector" in window)) {
-            setMsg("Camera opened. Your browser doesn't support live barcode auto-detect—tap 'Upload photo' or type the barcode number below.");
-            return;
-        }
-
-        setMsg("Hold the barcode inside the orange guide box.");
-        scanning = true;
-
-        let det;
-        try {
-            det = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"] });
-        } catch (e) {
-            det = new BarcodeDetector();
-        }
-
-        const tick = async () => {
-            if (!scanning) return;
-            try {
-                const c = await det.detect(v);
-                if (c && c.length && c[0].rawValue) {
-                    stopCam();
-                    lookup(c[0].rawValue);
-                    return;
-                }
-            } catch (e) {}
-            requestAnimationFrame(tick);
-        };
-        tick();
+      } catch(e){}
+      requestAnimationFrame(scanLoop);
     }
+    scanLoop();
+  }
 
-    if ($("barcodePhoto")) {
-        $("barcodePhoto").addEventListener("change", async e => {
-            const file = e.target.files && e.target.files[0];
-            if (!file) return;
-            if (!("BarcodeDetector" in window)) {
-                setMsg("Photo barcode auto-read isn't supported in this browser. Type the barcode digits below to check or add it.");
-                if ($("code")) $("code").focus();
-                return;
-            }
-            try {
-                setMsg("Reading barcode from image…");
-                const img = new Image();
-                const url = URL.createObjectURL(file);
-                img.onload = async () => {
-                    try {
-                        const det = new BarcodeDetector();
-                        const codes = await det.detect(img);
-                        URL.revokeObjectURL(url);
-                        if (codes && codes.length && codes[0].rawValue) {
-                            $("code").value = codes[0].rawValue;
-                            lookup(codes[0].rawValue);
-                        } else {
-                            setMsg("No barcode detected in the photo. Type the number below to check or add it.");
-                        }
-                    } catch (err) {
-                        URL.revokeObjectURL(url);
-                        setMsg("Could not read barcode from photo. Type the number below.");
-                    }
-                };
-                img.src = url;
-            } catch (err) {
-                setMsg("Could not process image. Type the barcode number below.");
-            }
-        });
-    }
+  if($("pmpPhotoInput")){
+    $("pmpPhotoInput").addEventListener("change", function(e){
+      var file = e.target.files && e.target.files[0];
+      if(!file) return;
+      if(!("BarcodeDetector" in window)){
+        msg("Photo barcode auto-detect is not supported in this browser. Type the barcode digits below to check or add.");
+        if($("pmpCodeInput")) $("pmpCodeInput").focus();
+        return;
+      }
+      msg("Reading barcode from photo...");
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = async function(){
+        try{
+          var det = new BarcodeDetector();
+          var hits = await det.detect(img);
+          URL.revokeObjectURL(url);
+          if(hits && hits.length && hits[0].rawValue){
+            $("pmpCodeInput").value = hits[0].rawValue;
+            lookup(hits[0].rawValue);
+          } else {
+            msg("No barcode found in photo. Type the barcode number below to check or add.");
+          }
+        } catch(err){
+          URL.revokeObjectURL(url);
+          msg("Could not read photo. Type the barcode number below.");
+        }
+      };
+      img.src = url;
+    });
+  }
 
-    if ($("scanBtn")) $("scanBtn").addEventListener("click", startCam);
-    if ($("stopBtn")) $("stopBtn").addEventListener("click", () => { stopCam(); setMsg(""); });
-    if ($("manual")) $("manual").addEventListener("submit", e => { e.preventDefault(); lookup($("code").value); });
-    if ($("chips")) {
-        $("chips").innerHTML = '<span class="status-msg" style="margin:0;width:100%">Try a sample product:</span>' +
-            Object.keys(BUILTIN).map(k => `<button class="chip" type="button" data-c="${k}">${esc(BUILTIN[k].name.replace(" (sample)", ""))}</button>`).join("");
-        $("chips").addEventListener("click", e => {
-            const btn = e.target.closest(".chip");
-            const c = btn && btn.dataset && btn.dataset.c;
-            if (c) { $("code").value = c; lookup(c); }
-        });
-    }
+  if($("pmpPresetCreatine")){
+    $("pmpPresetCreatine").addEventListener("click", function(){
+      if(!$("pmpPName").value) $("pmpPName").value = "Creatine Monohydrate";
+      $("pmpPSugar").value = 0; $("pmpPSat").value = 0; $("pmpPSodium").value = 0; $("pmpPFiber").value = 0; $("pmpPProtein").value = 0;
+      if(!$("pmpPIng").value) $("pmpPIng").value = "100% Creatine Monohydrate";
+    });
+  }
+  if($("pmpPresetGhee")){
+    $("pmpPresetGhee").addEventListener("click", function(){
+      if(!$("pmpPName").value) $("pmpPName").value = "Pure Ghee";
+      $("pmpPSugar").value = 0; $("pmpPSat").value = 62; $("pmpPSodium").value = 0; $("pmpPFiber").value = 0; $("pmpPProtein").value = 0;
+      if(!$("pmpPIng").value) $("pmpPIng").value = "Milk fat (Ghee)";
+    });
+  }
+  if($("pmpAddForm")){
+    $("pmpAddForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      if(!pendingCode) return;
+      var entry = {
+        name: ($("pmpPName").value || "").trim() || ("Product " + pendingCode),
+        brand: ($("pmpPBrand").value || "").trim(),
+        ingredients: ($("pmpPIng").value || "").trim(),
+        per100: {
+          sugar: +($("pmpPSugar").value || 0),
+          sat: +($("pmpPSat").value || 0),
+          sodium: +($("pmpPSodium").value || 0),
+          fiber: +($("pmpPFiber").value || 0),
+          protein: +($("pmpPProtein").value || 0)
+        }
+      };
+      var custom = loadCustom();
+      custom[pendingCode] = entry;
+      saveCustom(custom);
+      msg("Saved " + entry.name + " for barcode " + pendingCode + ".");
+      render(Object.assign({ source: "Saved product" }, entry), pendingCode);
+    });
+  }
+  if($("pmpCancelAdd")){
+    $("pmpCancelAdd").addEventListener("click", function(){ hideAdd(); msg(""); });
+  }
+  if($("pmpScanBtn")) $("pmpScanBtn").addEventListener("click", startCam);
+  if($("pmpStopBtn")) $("pmpStopBtn").addEventListener("click", function(){ stopCam(); msg(""); });
+  if($("pmpManualForm")) $("pmpManualForm").addEventListener("submit", function(e){ e.preventDefault(); lookup($("pmpCodeInput").value); });
+
+  if($("pmpChips")){
+    var keys = Object.keys(BUILTIN);
+    $("pmpChips").innerHTML = keys.map(function(k){
+      return "<button type=\"button\" class=\"pmp-chip\" data-code=\"" + k + "\">" + esc(BUILTIN[k].name) + "</button>";
+    }).join("");
+    $("pmpChips").addEventListener("click", function(e){
+      var b = e.target.closest(".pmp-chip");
+      if(b && b.getAttribute("data-code")){
+        var c = b.getAttribute("data-code");
+        $("pmpCodeInput").value = c;
+        lookup(c);
+      }
+    });
+  }
 })();
 </script>
