@@ -1,649 +1,393 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick My Protein | Compare 100+ Protein Supplements & Calculate Your Needs</title>
-    <meta name="description" content="Find the best protein for your goal and budget. Compare protein powders, calculate your daily protein gap, scan product barcodes, and check label transparency in India.">
-    <style>
-        :root {
-            --primary: #f36c21;
-            --primary-hover: #d95a14;
-            --bg-dark: #0f172a;
-            --surface: #1e293b;
-            --surface-2: #162032;
-            --border: #334155;
-            --text: #ffffff;
-            --muted: #94a3b8;
-            --nav-text: #cbd5e1;
-            --good: #4ade80;
-            --ok: #fbbf24;
-            --poor: #f87171;
-        }
-        * { box-sizing: border-box; }
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-        }
-        header {
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--surface);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .brand-logo {
-            color: var(--text);
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
-        .main-nav {
-            display: flex;
-            gap: 1.25rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .main-nav a {
-            color: var(--nav-text);
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-        .main-nav a:hover { color: var(--primary); }
+<section id="barcode-scanner" class="scanner-section">
+    <div class="scanner-box">
+        <h2>Barcode &amp; Label Scanner</h2>
+        <p class="scanner-lead">Scan a barcode with your camera, upload a barcode photo, or type the number below.</p>
 
-        .hero {
-            text-align: center;
-            padding: 3.5rem 1rem 2.5rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .hero h1 { font-size: 2.5rem; margin: 0 0 1rem; }
-        .hero p { color: var(--muted); font-size: 1.1rem; margin: 0 auto 2rem; max-width: 640px; }
-        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            background-color: var(--primary);
-            color: var(--text);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .btn:hover { background-color: var(--primary-hover); }
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--border);
-        }
-        .btn-secondary:hover { background: var(--surface); }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            padding: 1.5rem 2rem 2.5rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .feature-card {
-            background: var(--surface);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        .feature-card h3 { margin: 0 0 0.5rem; }
-        .feature-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
-
-        /* Scanner Section */
-        .scanner-section {
-            max-width: 640px;
-            margin: 1rem auto 4rem;
-            padding: 0 1.5rem;
-        }
-        .scanner-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.5rem;
-        }
-        .scanner-box h2 { margin: 0 0 0.35rem; font-size: 1.5rem; }
-        .scanner-lead { color: var(--muted); margin: 0 0 1.25rem; font-size: 0.95rem; }
-        .scan-btn {
-            width: 100%;
-            padding: 0.95rem 1.25rem;
-            border-radius: 10px;
-            background: var(--primary);
-            color: var(--text);
-            border: none;
-            font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-        }
-        .scan-btn:hover { background: var(--primary-hover); }
-        .cam { display: none; margin-top: 1rem; position: relative; }
-        .cam video {
-            width: 100%;
-            border-radius: 10px;
-            background: #000;
-            aspect-ratio: 4/3;
-            object-fit: cover;
-        }
-        .cam .guide {
-            position: absolute;
-            inset: 30% 12%;
-            border: 3px solid var(--primary);
-            border-radius: 8px;
-            pointer-events: none;
-        }
-        .cam .stop-btn {
-            margin-top: 0.5rem;
-            width: 100%;
-            padding: 0.65rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-dark);
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .manual-form { display: flex; gap: 0.5rem; margin-top: 1rem; }
-        .manual-form input {
-            flex: 1;
-            min-width: 0;
-            padding: 0.75rem 0.9rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-dark);
-            color: var(--text);
-            font-size: 1rem;
-        }
-        .manual-form .go-btn {
-            padding: 0.75rem 1.1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--surface-2);
-            color: var(--text);
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
-        .chip {
-            padding: 0.35rem 0.75rem;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: var(--bg-dark);
-            color: var(--nav-text);
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-        .chip:hover { border-color: var(--primary); color: var(--text); }
-        .status-msg { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.88rem; min-height: 1.3em; }
-
-        .add-wrap {
-            display: none;
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--bg-dark);
-        }
-        .add-wrap h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
-        .preset-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0 0.75rem; }
-        .add-form { display: grid; gap: 0.6rem; }
-        .add-form input {
-            padding: 0.6rem 0.75rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text);
-            font-size: 0.92rem;
-        }
-        .nut-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
-        .nut-grid .span-2 { grid-column: 1 / -1; }
-        .add-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
-        .cancel-btn {
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--surface-2);
-            color: var(--text);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.92rem;
-        }
-
-        .result-card {
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-top: 1.25rem;
-        }
-        .result-top { display: flex; gap: 1rem; align-items: center; }
-        .score-ring {
-            flex: none;
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            border: 5px solid currentColor;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        .good { color: var(--good); }
-        .ok { color: var(--ok); }
-        .poor { color: var(--poor); }
-        .prod-name { margin: 0; font-size: 1.1rem; font-weight: 700; }
-        .prod-grade { margin: 0.15rem 0; font-weight: 700; font-size: 0.95rem; }
-        .prod-brand { margin: 0; color: var(--muted); font-size: 0.85rem; }
-        .scanner-box h3 { font-size: 1rem; margin: 1.25rem 0 0.5rem; }
-        table.nut-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
-        table.nut-table td { padding: 0.4rem 0; border-bottom: 1px solid var(--surface); }
-        table.nut-table td:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
-        .pos { color: var(--good); }
-        .neg { color: var(--poor); }
-        .ing-text { font-size: 0.88rem; color: var(--muted); margin: 0; }
-        .note-text { font-size: 0.8rem; color: var(--muted); margin: 1rem 0 0; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <a href="/" class="brand-logo">pickmyprotein.com</a>
-        <nav class="main-nav" aria-label="Primary">
-            <a href="/calculators/">Calculators</a>
-            <a href="/compare/">Compare</a>
-            <a href="/best-protein/">Best Guides</a>
-            <a href="#barcode-scanner">Scanner</a>
-        </nav>
-    </header>
-
-    <main class="hero">
-        <h1>Find the Best Protein for Your Goal and Budget</h1>
-        <p>Stop guessing. Calculate your exact protein gap, compare 100+ supplements side-by-side, and find the true cost per gram before you buy.</p>
-        <div class="cta-buttons">
-            <a href="/calculators/" class="btn">Calculate Now</a>
-            <a href="/compare/" class="btn btn-secondary">Compare Proteins</a>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <button class="scan-btn" id="scanBtn" type="button" style="flex:1 1 200px;">Scan barcode</button>
+            <label for="barcodePhoto" class="go-btn" style="display:inline-flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;">Upload photo</label>
         </div>
-    </main>
+        <input id="barcodePhoto" type="file" accept="image/*" capture="environment" style="display:none">
 
-    <section class="features">
-        <div class="feature-card">
-            <h3>📊 Protein Cost Calculator</h3>
-            <p>Find out exactly how much protein you are getting per rupee spent.</p>
+        <div class="cam" id="cam">
+            <video id="video" playsinline autoplay muted></video>
+            <div class="guide"></div>
+            <button class="stop-btn" id="stopBtn" type="button">Stop camera</button>
         </div>
-        <div class="feature-card">
-            <h3>⚔️ Direct Brand Face-Offs</h3>
-            <p>Compare MuscleBlaze, Avvatar, Nakpro, and ON side-by-side.</p>
-        </div>
-        <div class="feature-card">
-            <h3>🛡️ Lab-Tested Scoring</h3>
-            <p>Check purity, amino profiles, and independent test results.</p>
-        </div>
-    </section>
 
-    <section id="barcode-scanner" class="scanner-section">
-        <div class="scanner-box">
-            <h2>Barcode &amp; Label Scanner</h2>
-            <p class="scanner-lead">Scan a barcode, type a number, or add any product (like creatine, ghee, or snacks) if it isn't in the database yet.</p>
+        <form class="manual-form" id="manual">
+            <input id="code" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
+            <button class="go-btn" type="submit">Check</button>
+        </form>
 
-            <button class="scan-btn" id="scanBtn" type="button">Scan barcode</button>
-            <input id="barcodePhoto" type="file" accept="image/*" capture="environment" style="display:none">
+        <div class="chips" id="chips"></div>
+        <p class="status-msg" id="msg" role="status" aria-live="polite"></p>
 
-            <div class="cam" id="cam">
-                <video id="video" playsinline muted></video>
-                <div class="guide"></div>
-                <button class="stop-btn" id="stopBtn" type="button">Stop camera</button>
+        <div id="addFormWrap" class="add-wrap">
+            <h3>Add product for barcode <span id="addCodeLabel"></span></h3>
+            <p class="ing-text">Not in database yet. Fill label values per 100g or use a quick preset below—saved on your device.</p>
+            <div class="preset-row">
+                <button type="button" class="chip" id="presetCreatine">Fill Creatine Monohydrate</button>
+                <button type="button" class="chip" id="presetGhee">Fill Pure Ghee</button>
             </div>
-
-            <form class="manual-form" id="manual">
-                <input id="code" inputmode="numeric" pattern="[0-9]*" placeholder="Or type the barcode number" aria-label="Barcode number">
-                <button class="go-btn" type="submit">Check</button>
+            <form id="addProductForm" class="add-form">
+                <input id="pName" type="text" required placeholder="Product name (e.g., Creatine Monohydrate / Cow Ghee)">
+                <input id="pBrand" type="text" placeholder="Brand (e.g., MuscleBlaze, Amul, Nandini)">
+                <div class="nut-grid">
+                    <input id="pSugar" type="number" step="any" min="0" placeholder="Sugar / 100g (g)">
+                    <input id="pSat" type="number" step="any" min="0" placeholder="Sat. fat / 100g (g)">
+                    <input id="pSodium" type="number" step="any" min="0" placeholder="Sodium / 100g (mg)">
+                    <input id="pFiber" type="number" step="any" min="0" placeholder="Fibre / 100g (g)">
+                    <input id="pProtein" type="number" step="any" min="0" placeholder="Protein / 100g (g)" class="span-2">
+                </div>
+                <input id="pIng" type="text" placeholder="Ingredients (e.g., 100% Creatine Monohydrate or Milk fat)">
+                <div class="add-actions">
+                    <button type="submit" class="btn" style="padding:0.6rem 1rem;font-size:0.92rem;">Save &amp; Score</button>
+                    <button type="button" id="cancelAddBtn" class="cancel-btn">Cancel</button>
+                </div>
             </form>
-
-            <div class="chips" id="chips"></div>
-            <p class="status-msg" id="msg" role="status" aria-live="polite"></p>
-
-            <div id="addFormWrap" class="add-wrap">
-                <h3>Add product for barcode <span id="addCodeLabel"></span></h3>
-                <p class="ing-text">Not in database yet. Fill label values per 100g or use a quick preset below—saved on your device.</p>
-                <div class="preset-row">
-                    <button type="button" class="chip" id="presetCreatine">Fill Creatine Monohydrate</button>
-                    <button type="button" class="chip" id="presetGhee">Fill Pure Ghee</button>
-                </div>
-                <form id="addProductForm" class="add-form">
-                    <input id="pName" type="text" required placeholder="Product name (e.g., Creatine Monohydrate / Cow Ghee)">
-                    <input id="pBrand" type="text" placeholder="Brand (e.g., MuscleBlaze, Amul, Nandini)">
-                    <div class="nut-grid">
-                        <input id="pSugar" type="number" step="any" min="0" placeholder="Sugar / 100g (g)">
-                        <input id="pSat" type="number" step="any" min="0" placeholder="Sat. fat / 100g (g)">
-                        <input id="pSodium" type="number" step="any" min="0" placeholder="Sodium / 100g (mg)">
-                        <input id="pFiber" type="number" step="any" min="0" placeholder="Fibre / 100g (g)">
-                        <input id="pProtein" type="number" step="any" min="0" placeholder="Protein / 100g (g)" class="span-2">
-                    </div>
-                    <input id="pIng" type="text" placeholder="Ingredients (e.g., 100% Creatine Monohydrate or Milk fat)">
-                    <div class="add-actions">
-                        <button type="submit" class="btn" style="padding:0.6rem 1rem;font-size:0.92rem;">Save &amp; Score</button>
-                        <button type="button" id="cancelAddBtn" class="cancel-btn">Cancel</button>
-                    </div>
-                </form>
-            </div>
-
-            <div id="out"></div>
         </div>
-    </section>
 
-    <script>
-    (function () {
-        const STORAGE_KEY = "pmp_custom_barcodes_v1";
-        const BUILTIN = {
-            "8900000000011": { name: "Choco Crunch cereal (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
-            "8900000000028": { name: "Plain rolled oats (sample)", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
-            "8900000000035": { name: "Chocolate whey protein (sample)", brand: "Sample brand", ingredients: "Whey protein concentrate, cocoa powder, sucralose, acesulfame potassium, soy lecithin, xanthan gum, flavour", per100: { sugar: 4, sat: 3, sodium: 420, fiber: 2, protein: 72 } },
-            "8900000000042": { name: "Cream biscuits (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, palm oil, invert syrup, milk solids, raising agents (INS 500), artificial flavour, colour (INS 102)", per100: { sugar: 32, sat: 12, sodium: 310, fiber: 1, protein: 5 } },
-            "8900000000059": { name: "Unsweetened muesli (sample)", brand: "Sample brand", ingredients: "Oats, almonds, sunflower seeds, raisins, wheat flakes", per100: { sugar: 9, sat: 1.8, sodium: 30, fiber: 8, protein: 11 } }
-        };
+        <div id="out"></div>
+    </div>
+</section>
 
-        function loadCustom() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
-            catch (e) { return {}; }
+<script>
+(function () {
+    const STORAGE_KEY = "pmp_custom_barcodes_v1";
+    const BUILTIN = {
+        "8900000000011": { name: "Choco Crunch cereal (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, cocoa powder, glucose syrup, palm oil, maltodextrin, salt, colour (INS 150d), emulsifier (INS 322)", per100: { sugar: 28, sat: 2, sodium: 350, fiber: 2, protein: 7 } },
+        "8900000000028": { name: "Plain rolled oats (sample)", brand: "Sample brand", ingredients: "Rolled oats", per100: { sugar: 1, sat: 1.4, sodium: 5, fiber: 10, protein: 13 } },
+        "8900000000035": { name: "Chocolate whey protein (sample)", brand: "Sample brand", ingredients: "Whey protein concentrate, cocoa powder, sucralose, acesulfame potassium, soy lecithin, xanthan gum, flavour", per100: { sugar: 4, sat: 3, sodium: 420, fiber: 2, protein: 72 } },
+        "8900000000042": { name: "Cream biscuits (sample)", brand: "Sample brand", ingredients: "Refined wheat flour, sugar, palm oil, invert syrup, milk solids, raising agents (INS 500), artificial flavour, colour (INS 102)", per100: { sugar: 32, sat: 12, sodium: 310, fiber: 1, protein: 5 } },
+        "8900000000059": { name: "Unsweetened muesli (sample)", brand: "Sample brand", ingredients: "Oats, almonds, sunflower seeds, raisins, wheat flakes", per100: { sugar: 9, sat: 1.8, sodium: 30, fiber: 8, protein: 11 } }
+    };
+
+    function loadCustom() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+        catch (e) { return {}; }
+    }
+    function saveCustom(map) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); }
+        catch (e) {}
+    }
+    function getCatalog() {
+        return Object.assign({}, BUILTIN, loadCustom());
+    }
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const band = (v, steps) => { for (const [l, p] of steps) if (v <= l) return p; return 0; };
+    const atLeast = (v, steps) => { for (const [l, p] of steps) if (v >= l) return p; return 0; };
+
+    let lastMissingCode = "";
+
+    function setMsg(text) {
+        const el = $("msg");
+        if (el) el.textContent = text;
+    }
+
+    function hideAddForm() {
+        if ($("addFormWrap")) $("addFormWrap").style.display = "none";
+    }
+
+    function showAddForm(code) {
+        lastMissingCode = code;
+        if ($("addCodeLabel")) $("addCodeLabel").textContent = code;
+        if ($("pName")) $("pName").value = "";
+        if ($("pBrand")) $("pBrand").value = "";
+        if ($("pSugar")) $("pSugar").value = "";
+        if ($("pSat")) $("pSat").value = "";
+        if ($("pSodium")) $("pSodium").value = "";
+        if ($("pFiber")) $("pFiber").value = "";
+        if ($("pProtein")) $("pProtein").value = "";
+        if ($("pIng")) $("pIng").value = "";
+        if ($("addFormWrap")) {
+            $("addFormWrap").style.display = "block";
+            $("pName").focus();
         }
-        function saveCustom(map) {
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); }
-            catch (e) {}
-        }
-        function getCatalog() {
-            return Object.assign({}, BUILTIN, loadCustom());
-        }
+    }
 
-        const $ = id => document.getElementById(id);
-        const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-        const band = (v, steps) => { for (const [l, p] of steps) if (v <= l) return p; return 0; };
-        const atLeast = (v, steps) => { for (const [l, p] of steps) if (v >= l) return p; return 0; };
+    if ($("presetCreatine")) {
+        $("presetCreatine").addEventListener("click", () => {
+            if (!$("pName").value) $("pName").value = "Creatine Monohydrate";
+            $("pSugar").value = 0;
+            $("pSat").value = 0;
+            $("pSodium").value = 0;
+            $("pFiber").value = 0;
+            $("pProtein").value = 0;
+            if (!$("pIng").value) $("pIng").value = "100% Creatine Monohydrate";
+        });
+    }
 
-        let lastMissingCode = "";
+    if ($("presetGhee")) {
+        $("presetGhee").addEventListener("click", () => {
+            if (!$("pName").value) $("pName").value = "Pure Ghee";
+            $("pSugar").value = 0;
+            $("pSat").value = 62;
+            $("pSodium").value = 0;
+            $("pFiber").value = 0;
+            $("pProtein").value = 0;
+            if (!$("pIng").value) $("pIng").value = "Milk fat (Ghee)";
+        });
+    }
 
-        function setMsg(text) {
-            const el = $("msg");
-            if (el) el.textContent = text;
-        }
+    function scoreProduct(p) {
+        const n = p.per100;
+        const nut = [
+            ["Sugar", n.sugar + "g", band(n.sugar, [[2, 20], [5, 16], [10, 11], [15, 6]]), 20],
+            ["Saturated fat", n.sat + "g", band(n.sat, [[1, 10], [3, 7], [5, 4]]), 10],
+            ["Sodium", Math.round(n.sodium) + "mg", band(n.sodium, [[120, 10], [400, 7], [700, 3]]), 10],
+            ["Fibre", n.fiber + "g", atLeast(n.fiber, [[6, 10], [3, 6], [1.5, 3]]), 10],
+            ["Protein", n.protein + "g", atLeast(n.protein, [[15, 10], [8, 6], [4, 3]]), 10]
+        ];
+        let nutTotal = 0;
+        nut.forEach(r => nutTotal += r[2]);
 
-        function hideAddForm() {
-            if ($("addFormWrap")) $("addFormWrap").style.display = "none";
-        }
+        const ing = (p.ingredients || "").toLowerCase();
+        const parts = ing.split(",").map(s => s.trim()).filter(Boolean);
+        const ded = [];
+        const count = re => { const m = ing.match(new RegExp(re.source, "g")); return m ? new Set(m).size : 0; };
 
-        function showAddForm(code) {
-            lastMissingCode = code;
-            if ($("addCodeLabel")) $("addCodeLabel").textContent = code;
-            if ($("pName")) $("pName").value = "";
-            if ($("pBrand")) $("pBrand").value = "";
-            if ($("pSugar")) $("pSugar").value = "";
-            if ($("pSat")) $("pSat").value = "";
-            if ($("pSodium")) $("pSodium").value = "";
-            if ($("pFiber")) $("pFiber").value = "";
-            if ($("pProtein")) $("pProtein").value = "";
-            if ($("pIng")) $("pIng").value = "";
-            if ($("addFormWrap")) {
-                $("addFormWrap").style.display = "block";
-                $("pName").focus();
-            }
-        }
+        const sweet = count(/aspartame|sucralose|acesulfame|saccharin|ins ?95\d/);
+        if (sweet) ded.push(["Artificial sweetener" + (sweet > 1 ? "s (" + sweet + ")" : ""), -Math.min(10, 5 * sweet)]);
+        const col = count(/tartrazine|sunset yellow|carmoisine|brilliant blue|ins ?1[0-9]{2}[a-z]?|artificial colou?r/);
+        if (col) ded.push(["Added colour" + (col > 1 ? "s (" + col + ")" : ""), -Math.min(10, 5 * col)]);
+        const trans = /hydrogenated|trans fat|vanaspati|margarine/.test(ing);
+        if (trans) ded.push(["Hydrogenated fat or trans fat", -10]);
+        if (/palm/.test(ing)) ded.push(["Palm oil", -3]);
+        if (parts.length && /refined (wheat )?flour|maida/.test(parts[0])) ded.push(["Refined flour is the first ingredient", -5]);
+        const sugars = count(/sugar|maltodextrin|dextrose|glucose|invert|fructose|syrup/);
+        if (sugars) ded.push(["Added sugar in " + sugars + " form" + (sugars > 1 ? "s" : ""), -Math.min(8, 2 * sugars)]);
+        const pres = count(/sodium benzoate|potassium sorbate|propionate|ins ?2[0-9]{2}/);
+        if (pres) ded.push(["Preservative" + (pres > 1 ? "s (" + pres + ")" : ""), -Math.min(6, 2 * pres)]);
+        if (parts.length > 15) ded.push(["Very long ingredient list", -3]);
 
-        if ($("presetCreatine")) {
-            $("presetCreatine").addEventListener("click", () => {
-                if (!$("pName").value) $("pName").value = "Creatine Monohydrate";
-                $("pSugar").value = 0;
-                $("pSat").value = 0;
-                $("pSodium").value = 0;
-                $("pFiber").value = 0;
-                $("pProtein").value = 0;
-                if (!$("pIng").value) $("pIng").value = "100% Creatine Monohydrate";
-            });
-        }
+        let ingTotal = 30;
+        ded.forEach(d => ingTotal += d[1]);
+        ingTotal = Math.max(0, ingTotal);
 
-        if ($("presetGhee")) {
-            $("presetGhee").addEventListener("click", () => {
-                if (!$("pName").value) $("pName").value = "Pure Ghee";
-                $("pSugar").value = 0;
-                $("pSat").value = 62;
-                $("pSodium").value = 0;
-                $("pFiber").value = 0;
-                $("pProtein").value = 0;
-                if (!$("pIng").value) $("pIng").value = "Milk fat (Ghee)";
-            });
-        }
+        let score = Math.round((nutTotal + ingTotal) / 90 * 100);
+        if (trans) score = Math.min(score, 59);
+        return { score, nut, ded, nutTotal, ingTotal };
+    }
 
-        function scoreProduct(p) {
-            const n = p.per100;
-            const nut = [
-                ["Sugar", n.sugar + "g", band(n.sugar, [[2, 20], [5, 16], [10, 11], [15, 6]]), 20],
-                ["Saturated fat", n.sat + "g", band(n.sat, [[1, 10], [3, 7], [5, 4]]), 10],
-                ["Sodium", Math.round(n.sodium) + "mg", band(n.sodium, [[120, 10], [400, 7], [700, 3]]), 10],
-                ["Fibre", n.fiber + "g", atLeast(n.fiber, [[6, 10], [3, 6], [1.5, 3]]), 10],
-                ["Protein", n.protein + "g", atLeast(n.protein, [[15, 10], [8, 6], [4, 3]]), 10]
-            ];
-            let nutTotal = 0;
-            nut.forEach(r => nutTotal += r[2]);
+    const grade = s => s >= 80 ? ["Excellent", "good"] : s >= 60 ? ["Good", "good"] : s >= 40 ? ["Mediocre", "ok"] : ["Poor", "poor"];
 
-            const ing = (p.ingredients || "").toLowerCase();
-            const parts = ing.split(",").map(s => s.trim()).filter(Boolean);
-            const ded = [];
-            const count = re => { const m = ing.match(new RegExp(re.source, "g")); return m ? new Set(m).size : 0; };
+    function render(p, code) {
+        hideAddForm();
+        const r = scoreProduct(p);
+        const [g, cls] = grade(r.score);
+        const nutRows = r.nut.map(x => `<tr><td>${x[0]} ${esc(x[1])} per 100g</td><td class="${x[2] >= x[3] * 0.6 ? "pos" : "neg"}">${x[2]} of ${x[3]}</td></tr>`).join("");
+        const dedRows = r.ded.length
+            ? r.ded.map(d => `<tr><td>${esc(d[0])}</td><td class="neg">${d[1]}</td></tr>`).join("")
+            : `<tr><td>No flagged ingredients</td><td class="pos">30 of 30</td></tr>`;
 
-            const sweet = count(/aspartame|sucralose|acesulfame|saccharin|ins ?95\d/);
-            if (sweet) ded.push(["Artificial sweetener" + (sweet > 1 ? "s (" + sweet + ")" : ""), -Math.min(10, 5 * sweet)]);
-            const col = count(/tartrazine|sunset yellow|carmoisine|brilliant blue|ins ?1[0-9]{2}[a-z]?|artificial colou?r/);
-            if (col) ded.push(["Added colour" + (col > 1 ? "s (" + col + ")" : ""), -Math.min(10, 5 * col)]);
-            const trans = /hydrogenated|trans fat|vanaspati|margarine/.test(ing);
-            if (trans) ded.push(["Hydrogenated fat or trans fat", -10]);
-            if (/palm/.test(ing)) ded.push(["Palm oil", -3]);
-            if (parts.length && /refined (wheat )?flour|maida/.test(parts[0])) ded.push(["Refined flour is the first ingredient", -5]);
-            const sugars = count(/sugar|maltodextrin|dextrose|glucose|invert|fructose|syrup/);
-            if (sugars) ded.push(["Added sugar in " + sugars + " form" + (sugars > 1 ? "s" : ""), -Math.min(8, 2 * sugars)]);
-            const pres = count(/sodium benzoate|potassium sorbate|propionate|ins ?2[0-9]{2}/);
-            if (pres) ded.push(["Preservative" + (pres > 1 ? "s (" + pres + ")" : ""), -Math.min(6, 2 * pres)]);
-            if (parts.length > 15) ded.push(["Very long ingredient list", -3]);
-
-            let ingTotal = 30;
-            ded.forEach(d => ingTotal += d[1]);
-            ingTotal = Math.max(0, ingTotal);
-
-            let score = Math.round((nutTotal + ingTotal) / 90 * 100);
-            if (trans) score = Math.min(score, 59);
-            return { score, nut, ded, nutTotal, ingTotal };
-        }
-
-        const grade = s => s >= 80 ? ["Excellent", "good"] : s >= 60 ? ["Good", "good"] : s >= 40 ? ["Mediocre", "ok"] : ["Poor", "poor"];
-
-        function render(p, code) {
-            hideAddForm();
-            const r = scoreProduct(p);
-            const [g, cls] = grade(r.score);
-            const nutRows = r.nut.map(x => `<tr><td>${x[0]} ${esc(x[1])} per 100g</td><td class="${x[2] >= x[3] * 0.6 ? "pos" : "neg"}">${x[2]} of ${x[3]}</td></tr>`).join("");
-            const dedRows = r.ded.length
-                ? r.ded.map(d => `<tr><td>${esc(d[0])}</td><td class="neg">${d[1]}</td></tr>`).join("")
-                : `<tr><td>No flagged ingredients</td><td class="pos">30 of 30</td></tr>`;
-
-            $("out").innerHTML = `<section class="result-card" aria-live="polite">
-                <div class="result-top">
-                    <div class="score-ring ${cls}" aria-label="Score ${r.score} out of 100">${r.score}</div>
-                    <div>
-                        <p class="prod-name">${esc(p.name)}</p>
-                        <p class="prod-grade ${cls}">${g}, ${r.score} out of 100</p>
-                        <p class="prod-brand">${esc(p.brand || "")} ${esc(code)}</p>
-                    </div>
+        $("out").innerHTML = `<section class="result-card" aria-live="polite">
+            <div class="result-top">
+                <div class="score-ring ${cls}" aria-label="Score ${r.score} out of 100">${r.score}</div>
+                <div>
+                    <p class="prod-name">${esc(p.name)}</p>
+                    <p class="prod-grade ${cls}">${g}, ${r.score} out of 100</p>
+                    <p class="prod-brand">${esc(p.brand || "")} ${esc(code)}</p>
                 </div>
-                <h3>Nutrition</h3>
-                <table class="nut-table">${nutRows}</table>
-                <h3>Ingredients</h3>
-                <table class="nut-table">${dedRows}</table>
-                <h3>Ingredient list</h3>
-                <p class="ing-text">${esc(p.ingredients || "Not available")}</p>
-                <p class="note-text">Score is based on label data only, using method v1.0. Source: ${esc(p.source || "Saved / Sample data")}. General information only, not medical advice.</p>
-            </section>`;
-            $("out").scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
+            </div>
+            <h3>Nutrition</h3>
+            <table class="nut-table">${nutRows}</table>
+            <h3>Ingredients</h3>
+            <table class="nut-table">${dedRows}</table>
+            <h3>Ingredient list</h3>
+            <p class="ing-text">${esc(p.ingredients || "Not available")}</p>
+            <p class="note-text">Score is based on label data only, using method v1.0. Source: ${esc(p.source || "Saved / Sample data")}. General information only, not medical advice.</p>
+        </section>`;
+        $("out").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
 
-        async function getProduct(code) {
-            const catalog = getCatalog();
-            if (catalog[code]) {
-                return Object.assign({ source: BUILTIN[code] ? "Sample data" : "Saved product" }, catalog[code]);
-            }
-            try {
-                const res = await fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json?fields=product_name,brands,ingredients_text,nutriments");
-                const j = await res.json();
-                if (j.status === 1 && j.product) {
-                    const p = j.product, n = p.nutriments || {};
-                    const hasAnyNutriment = n.sugars_100g != null || n.proteins_100g != null || n["saturated-fat_100g"] != null || n.sodium_100g != null || n.salt_100g != null || n.fiber_100g != null;
-                    if (hasAnyNutriment || p.ingredients_text) {
-                        const sodiumMg = n.sodium_100g != null ? (+n.sodium_100g) * 1000 : (n.salt_100g != null ? (+n.salt_100g) * 400 : 0);
-                        return {
-                            name: p.product_name || "Unnamed product",
-                            brand: p.brands || "",
-                            ingredients: p.ingredients_text || "",
-                            source: "Open Food Facts",
-                            per100: {
-                                sugar: +(n.sugars_100g || 0),
-                                sat: +(n["saturated-fat_100g"] || 0),
-                                sodium: sodiumMg,
-                                fiber: +(n.fiber_100g || 0),
-                                protein: +(n.proteins_100g || 0)
-                            }
-                        };
-                    }
+    async function getProduct(code) {
+        const catalog = getCatalog();
+        if (catalog[code]) {
+            return Object.assign({ source: BUILTIN[code] ? "Sample data" : "Saved product" }, catalog[code]);
+        }
+        try {
+            const res = await fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json?fields=product_name,brands,ingredients_text,nutriments");
+            const j = await res.json();
+            if (j.status === 1 && j.product) {
+                const p = j.product, n = p.nutriments || {};
+                const hasAnyNutriment = n.sugars_100g != null || n.proteins_100g != null || n["saturated-fat_100g"] != null || n.sodium_100g != null || n.salt_100g != null || n.fiber_100g != null;
+                if (hasAnyNutriment || p.ingredients_text) {
+                    const sodiumMg = n.sodium_100g != null ? (+n.sodium_100g) * 1000 : (n.salt_100g != null ? (+n.salt_100g) * 400 : 0);
+                    return {
+                        name: p.product_name || "Unnamed product",
+                        brand: p.brands || "",
+                        ingredients: p.ingredients_text || "",
+                        source: "Open Food Facts",
+                        per100: {
+                            sugar: +(n.sugars_100g || 0),
+                            sat: +(n["saturated-fat_100g"] || 0),
+                            sodium: sodiumMg,
+                            fiber: +(n.fiber_100g || 0),
+                            protein: +(n.proteins_100g || 0)
+                        }
+                    };
                 }
-            } catch (e) {}
-            return null;
-        }
-
-        async function lookup(raw) {
-            const code = String(raw || "").replace(/\D/g, "");
-            if (!code) { setMsg("Enter the digits printed under the barcode or pick a sample below."); return; }
-            setMsg("Looking up " + code + "…");
-            const p = await getProduct(code);
-            if (!p) {
-                $("out").innerHTML = "";
-                setMsg("Barcode " + code + " wasn't found automatically. Add its label details below to score and save it.");
-                showAddForm(code);
-                return;
             }
-            setMsg("");
-            render(p, code);
+        } catch (e) {}
+        return null;
+    }
+
+    async function lookup(raw) {
+        const code = String(raw || "").replace(/\D/g, "");
+        if (!code) { setMsg("Enter the digits printed under the barcode or pick a sample below."); return; }
+        setMsg("Looking up " + code + "…");
+        const p = await getProduct(code);
+        if (!p) {
+            $("out").innerHTML = "";
+            setMsg("Barcode " + code + " wasn't found automatically. Add its label details below to score and save it.");
+            showAddForm(code);
+            return;
         }
+        setMsg("");
+        render(p, code);
+    }
 
-        if ($("addProductForm")) {
-            $("addProductForm").addEventListener("submit", e => {
-                e.preventDefault();
-                if (!lastMissingCode) return;
-                const entry = {
-                    name: ($("pName").value || "").trim() || ("Product " + lastMissingCode),
-                    brand: ($("pBrand").value || "").trim(),
-                    ingredients: ($("pIng").value || "").trim(),
-                    per100: {
-                        sugar: +($("pSugar").value || 0),
-                        sat: +($("pSat").value || 0),
-                        sodium: +($("pSodium").value || 0),
-                        fiber: +($("pFiber").value || 0),
-                        protein: +($("pProtein").value || 0)
-                    }
-                };
-                const custom = loadCustom();
-                custom[lastMissingCode] = entry;
-                saveCustom(custom);
-                setMsg("Saved " + entry.name + " for barcode " + lastMissingCode + ".");
-                render(Object.assign({ source: "Saved product" }, entry), lastMissingCode);
-            });
-        }
-
-        if ($("cancelAddBtn")) {
-            $("cancelAddBtn").addEventListener("click", () => {
-                hideAddForm();
-                setMsg("");
-            });
-        }
-
-        let stream = null, scanning = false;
-        function stopCam() {
-            scanning = false;
-            if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-            if ($("cam")) $("cam").style.display = "none";
-        }
-
-        async function startCam() {
-            setMsg("Checking camera & barcode scanner support…");
-            const hasMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-            const hasDetector = ("BarcodeDetector" in window);
-
-            if (!hasMedia || !hasDetector) {
-                setMsg("Live camera barcode scanning isn't supported in this browser. Choose a barcode photo or type the number below.");
-                if ($("barcodePhoto")) $("barcodePhoto").click();
-                return;
-            }
-
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } } });
-            } catch (e) {
-                setMsg("Camera unavailable or blocked. Choose a barcode photo or type the barcode number below.");
-                if ($("barcodePhoto")) $("barcodePhoto").click();
-                return;
-            }
-
-            const v = $("video");
-            v.srcObject = stream;
-            await v.play();
-            $("cam").style.display = "block";
-            setMsg("Hold the barcode inside the orange guide box.");
-            scanning = true;
-
-            let det;
-            try {
-                det = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"] });
-            } catch (e) {
-                det = new BarcodeDetector();
-            }
-
-            const tick = async () => {
-                if (!scanning) return;
-                try {
-                    const c = await det.detect(v);
-                    if (c && c.length && c[0].rawValue) {
-                        stopCam();
-                        lookup(c[0].rawValue);
-                        return;
-                    }
-                } catch (e) {}
-                requestAnimationFrame(tick);
+    if ($("addProductForm")) {
+        $("addProductForm").addEventListener("submit", e => {
+            e.preventDefault();
+            if (!lastMissingCode) return;
+            const entry = {
+                name: ($("pName").value || "").trim() || ("Product " + lastMissingCode),
+                brand: ($("pBrand").value || "").trim(),
+                ingredients: ($("pIng").value || "").trim(),
+                per100: {
+                    sugar: +($("pSugar").value || 0),
+                    sat: +($("pSat").value || 0),
+                    sodium: +($("pSodium").value || 0),
+                    fiber: +($("pFiber").value || 0),
+                    protein: +($("pProtein").value || 0)
+                }
             };
-            tick();
+            const custom = loadCustom();
+            custom[lastMissingCode] = entry;
+            saveCustom(custom);
+            setMsg("Saved " + entry.name + " for barcode " + lastMissingCode + ".");
+            render(Object.assign({ source: "Saved product" }, entry), lastMissingCode);
+        });
+    }
+
+    if ($("cancelAddBtn")) {
+        $("cancelAddBtn").addEventListener("click", () => {
+            hideAddForm();
+            setMsg("");
+        });
+    }
+
+    let stream = null, scanning = false;
+    function stopCam() {
+        scanning = false;
+        if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+        if ($("cam")) $("cam").style.display = "none";
+    }
+
+    async function startCam() {
+        stopCam();
+        setMsg("Requesting camera access…");
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            setMsg("Camera isn't available here. Tap 'Upload photo' or type the barcode number below.");
+            return;
         }
 
-        if ($("barcodePhoto")) {
-            $("barcodePhoto").addEventListener("change", async e => {
-                const file = e.target.files && e.target.files[0];
-                if (!file) return;
-                if (!("BarcodeDetector" in window)) {
-                    setMsg("Photo barcode reading isn't supported in this browser. Please type the barcode digits below.");
-                    $("code").focus();
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: { ideal: "environment" } },
+                audio: false
+            });
+        } catch (e) {
+            setMsg("Camera permission was blocked or unavailable. Allow camera access in browser settings, tap 'Upload photo', or type the barcode.");
+            return;
+        }
+
+        const v = $("video");
+        v.srcObject = stream;
+        try { await v.play(); } catch (e) {}
+        $("cam").style.display = "block";
+
+        if (!("BarcodeDetector" in window)) {
+            setMsg("Camera opened. Your browser doesn't support live barcode auto-detect—tap 'Upload photo' or type the barcode number below.");
+            return;
+        }
+
+        setMsg("Hold the barcode inside the orange guide box.");
+        scanning = true;
+
+        let det;
+        try {
+            det = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"] });
+        } catch (e) {
+            det = new BarcodeDetector();
+        }
+
+        const tick = async () => {
+            if (!scanning) return;
+            try {
+                const c = await det.detect(v);
+                if (c && c.length && c[0].rawValue) {
+                    stopCam();
+                    lookup(c[0].rawValue);
                     return;
                 }
-                try {
-                    setMsg("Reading barcode from image…");
-                    const img = new Image();
-                    const url = URL.createObjectURL(file);
-                    img.onload = async () => {
-                        try {
-                            const det = new BarcodeDetector();
-                            const codes = await det.detect(img);
-                            URL.revokeObjectURL(url);
-                            if (codes && codes.length && codes[0].rawValue) {
-                                $("code").value = codes[0].rawValue;
-                                lookup(codes[0].rawValue);
+            } catch (e) {}
+            requestAnimationFrame(tick);
+        };
+        tick();
+    }
+
+    if ($("barcodePhoto")) {
+        $("barcodePhoto").addEventListener("change", async e => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            if (!("BarcodeDetector" in window)) {
+                setMsg("Photo barcode auto-read isn't supported in this browser. Type the barcode digits below to check or add it.");
+                if ($("code")) $("code").focus();
+                return;
+            }
+            try {
+                setMsg("Reading barcode from image…");
+                const img = new Image();
+                const url = URL.createObjectURL(file);
+                img.onload = async () => {
+                    try {
+                        const det = new BarcodeDetector();
+                        const codes = await det.detect(img);
+                        URL.revokeObjectURL(url);
+                        if (codes && codes.length && codes[0].rawValue) {
+                            $("code").value = codes[0].rawValue;
+                            lookup(codes[0].rawValue);
+                        } else {
+                            setMsg("No barcode detected in the photo. Type the number below to check or add it.");
+                        }
+                    } catch (err) {
+                        URL.revokeObjectURL(url);
+                        setMsg("Could not read barcode from photo. Type the number below.");
+                    }
+                };
+                img.src = url;
+            } catch (err) {
+                setMsg("Could not process image. Type the barcode number below.");
+            }
+        });
+    }
+
+    if ($("scanBtn")) $("scanBtn").addEventListener("click", startCam);
+    if ($("stopBtn")) $("stopBtn").addEventListener("click", () => { stopCam(); setMsg(""); });
+    if ($("manual")) $("manual").addEventListener("submit", e => { e.preventDefault(); lookup($("code").value); });
+    if ($("chips")) {
+        $("chips").innerHTML = '<span class="status-msg" style="margin:0;width:100%">Try a sample product:</span>' +
+            Object.keys(BUILTIN).map(k => `<button class="chip" type="button" data-c="${k}">${esc(BUILTIN[k].name.replace(" (sample)", ""))}</button>`).join("");
+        $("chips").addEventListener("click", e => {
+            const btn = e.target.closest(".chip");
+            const c = btn && btn.dataset && btn.dataset.c;
+            if (c) { $("code").value = c; lookup(c); }
+        });
+    }
+})();
+</script>
